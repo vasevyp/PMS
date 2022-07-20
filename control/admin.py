@@ -3,7 +3,7 @@ from  .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem
 
 # Register your models here.
 class BuyItemAdmin(admin.ModelAdmin):
-    list_display = ['code', 'name', 'unit','unit_cost','quantity','cost' ]
+    list_display = ['code', 'name', 'unit','unit_cost','quantity', 'cost' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['code','name',]

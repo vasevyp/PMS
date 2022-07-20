@@ -53,9 +53,9 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 class RecipeIngredientAdmin(admin.ModelAdmin):
     list_display = ['recipe_name','ingredient', 'unit','quantity']
-    prepopulated_fields= {'slug': ('recipe_name',)}
+    # prepopulated_fields= {'slug': ('recipe_name',)}
     save_on_top = True
-    search_fields = ['name__ingredient', ]
+    search_fields = ['recipe_name__name', 'ingredient__name']
     list_filter= ('recipe_name', 'ingredient')
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
 

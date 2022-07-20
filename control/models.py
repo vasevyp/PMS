@@ -9,8 +9,8 @@ class BuyItem(models.Model):
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit= models.ForeignKey(Item, related_name='unit_buy', on_delete=models.PROTECT)
     unit_cost=models.ForeignKey(Item, related_name='unit_cost_buy', on_delete=models.PROTECT)
-    quantity= models.DecimalField(max_digits=10, decimal_places=2)
-    cost= models.DecimalField(max_digits=10, decimal_places=2)
+    quantity= models.DecimalField(max_digits=10,help_text="Не более 10 знаков", decimal_places=2)
+    cost= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):        
@@ -31,14 +31,14 @@ class StockItem(models.Model):
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit= models.ForeignKey(Item, related_name='unit_stock', on_delete=models.PROTECT)
     unit_cost=models.ForeignKey(Item, related_name='unit_cost_stock', on_delete=models.PROTECT)
-    open=models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    sales =	models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    received = models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    transfer =models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    move =models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    waste=models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    actual=models.DecimalField(max_digits=10, decimal_places=0, default=0)
-    actual_cost=models.DecimalField(max_digits=12, decimal_places=2, default=0)	
+    open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    sales =	models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    move =models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)	
 
     def get_absolute_url(self):        
         return reverse('stock', kwargs={'slug': self.slug})
@@ -59,8 +59,8 @@ class SaleProduct(models.Model):
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     # unit= models.ForeignKey(Product, related_name='unit_buy', on_delete=models.PROTECT)
     price=models.ForeignKey(Product, related_name='price_sale', on_delete=models.PROTECT)
-    quantity= models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    revenue= models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    quantity= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0)
+    revenue= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0)
     created_date = models.DateField(auto_now_add=True)
     
 
@@ -86,14 +86,14 @@ class OrderItem(models.Model):
         ('complete', 'Complete'),
         ('bulk', 'Bulk'),
     )
-    order_number = models.CharField(max_length=10)
+    order_number = models.CharField(max_length=10, help_text="Не более 10 знаков",)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     code=models.ForeignKey(Product, related_name='code_order',on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='product_order', on_delete=models.CASCADE)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit= models.ForeignKey(Item, related_name='unit_order', on_delete=models.PROTECT, null=True)
     order_quantity = models.PositiveIntegerField(null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICE)
+    status = models.CharField(max_length=10, help_text="Не более 10 знаков", choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 
 
@@ -125,7 +125,7 @@ class DeliverItem(models.Model):
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit= models.ForeignKey(Item, related_name='unit_deliver', on_delete=models.PROTECT, null=True)
     order_quantity = models.PositiveIntegerField(null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICE)
+    status = models.CharField(max_length=10, help_text="Не более 10 знаков", choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):        
