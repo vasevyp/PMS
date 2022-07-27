@@ -1,0 +1,11 @@
+asgiref==3.5.2
+beautifulsoup4==4.11.1
+Django==4.0.5
+django-bootstrap-v5==1.0.11
+django-debug-toolbar==3.5.0
+django-ranged-response==0.2.0
+django-simple-captcha==0.5.17
+Pillow==9.1.1
+Pint==0.19.2
+soupsieve==2.3.2.post1
+sqlparse==0.4.2

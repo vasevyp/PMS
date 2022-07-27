@@ -43,7 +43,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['code','name', ]
+    list_display = ['code','name', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
@@ -52,7 +52,7 @@ class ProductAdmin(admin.ModelAdmin):
     
 admin.site.register(Product, ProductAdmin)
 class RecipeIngredientAdmin(admin.ModelAdmin):
-    list_display = ['recipe_name','ingredient', 'unit','quantity']
+    list_display = ['recipe_name','ingredient', 'unit', 'unit_cost', 'quantity', 'updated_at']
     # prepopulated_fields= {'slug': ('recipe_name',)}
     save_on_top = True
     search_fields = ['recipe_name__name', 'ingredient__name']

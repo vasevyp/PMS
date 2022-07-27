@@ -1,6 +1,21 @@
 from django.db import models
 from django.urls import reverse
 
+from django.template.defaultfilters import slugify  # new
+
+
+UNITS=(
+        (None, 'Выбрать ед.изм.'),
+        ('кг', 'кг'),        
+        ('г', 'г'),
+        ('л', 'л'),
+        ('шт.',' шт.'),
+        ('м','м'),
+        ('m2','м2'),
+        ('m3','м3'),
+        
+    )
+
 '''Модель поставщиков закупаемых товаров'''
 class Supplier(models.Model):
     code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
@@ -41,16 +56,7 @@ class CategoryItem(models.Model):
         
 '''Модель закупаемых товаров'''
 class Item(models.Model):
-    UNITS=(
-        ('kg', 'кг'),
-        ('gram', 'г'),
-        ('liter', 'л'),
-        ('piece',' шт.'),
-        ('meter','м'),
-        ('m2','м2'),
-        ('m3','м3'),
-        
-    )
+   
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, unique=True, verbose_name='Код товара')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     category = models.ForeignKey(
@@ -61,6 +67,8 @@ class Item(models.Model):
     description = models.TextField(blank=True, null=True)
     available = models.BooleanField(default=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
         return reverse('item', kwargs={'slug': self.slug})
@@ -77,22 +85,16 @@ class Item(models.Model):
 '''Модель ингредиентов для рецептов''' 
 
 class RecipeIngredient(models.Model):
-    UNITS=(
-        ('kg', 'кг'),
-        ('gram', 'г'),
-        ('liter', 'л'),
-        ('piece',' шт.'),
-        ('meter','м'),
-        ('m2','м2'),
-        ('m3','м3'),
-        
-    )
+   
     recipe_name=models.ForeignKey('Product', null=True,related_name='product', on_delete=models.CASCADE) 
     ingredient= models.ForeignKey(Item, related_name='recipe_ingredient',  on_delete=models.CASCADE)
     # unit= models.ForeignKey(Item, related_name='recipe_unit',  on_delete=models.CASCADE)
-    unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='gram', choices=UNITS, null=True ) 
+    unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
+    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     quantity= models.FloatField(blank=True, null = True)  
-    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)  
+    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
+    created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
     
     def get_absolute_url(self):        
         return reverse('recipeingredient', kwargs={'slug': self.slug})
@@ -101,6 +103,10 @@ class RecipeIngredient(models.Model):
         ordering = ('recipe_name',)
         verbose_name = 'Рецепт с ингредиентами'
         verbose_name_plural = 'Рецепты с ингредиентами'
+    
+    @property
+    def ingredient_cost(self):
+        return format((float(self.unit_cost) * float(self.quantity)), '.2f')    
 
 
 '''Модель категорий готовых продуктов'''
@@ -118,7 +124,12 @@ class Category(models.Model):
         verbose_name_plural = 'Категории продуктов'
 
     def __str__(self):
-        return self.name        
+        return self.name   
+    
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)     
         
 '''Модель готовых продуктов'''
 
@@ -137,6 +148,8 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     cooking= models.TextField(blank=True, null = True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
     
     def get_absolute_url(self):        
         return reverse('product', kwargs={'slug': self.slug})

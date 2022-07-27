@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+  <h1>Control</h1>
+  <h2>Buy Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit_cost</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total_cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for buyitem in buyitems%}
+      <tr>
+        <th scope="row">{{buyitem.id}}</th>
+        <td>{{buyitem.name}}</td>
+        <td>{{buyitem.code}}</td>
+        <td>{{buyitem.unit}}</td>
+        <td>{{buyitem.unit_cost}}</td>
+        <td>{{buyitem.quantity}}</td>
+        <td>{{buyitem.get_cost}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Stock Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit_cost</th>
+        <th scope="col">Open</th>
+        <th scope="col">Sales</th>
+        <th scope="col">Received</th>
+        <th scope="col">transfer</th>
+        <th scope="col">move</th>
+        <th scope="col">waste</th>
+        <th scope="col">Actual</th>
+        <th scope="col">Actual_cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stockitem in stockitems%}
+      <tr>
+        <th scope="row">{{stockitem.id}}</th>
+        <td>{{stockitem.name}}</td>
+        <td>{{stockitem.code}}</td>
+        <td>{{stockitem.unit}}</td>
+        <td>{{stockitem.unit_cost}}</td>
+        <td>{{stockitem.open}}</td>
+        <td>{{stockitem.sales}}</td>
+        <td>{{stockitem.received}}</td>
+        <td>{{stockitem.transfer}}</td>
+        <td>{{stockitem.move}}</td>
+        <td>{{stockitem.waste}}</td>
+        <td>{{stockitem.get_actual}}</td>
+        <td>{{stockitem.get_actual_cost}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+  <h2>Sale Product</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Revenue</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for saleproduct in saleproducts%}
+      <tr>
+        <th scope="row">{{saleproduct.id}}</th>
+        <td>{{saleproduct.name}}</td>
+        <td>{{saleproduct.code}}</td>
+        <td>{{saleproduct.price}}</td>
+        <td>{{saleproduct.quantity}}</td>
+        <td>{{saleproduct.get_revenue}}</td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Order Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Order</th>
+        <th scope="col">Supplier</th>
+        <th scope="col">Item</th>
+        <th scope="col">Item Code</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit cost</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Order_cost</th>
+        <th scope="col">status</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for orderitem in orderitems%}
+      <tr>
+        <th scope="row">{{orderitem.id}}</th>
+        <td>{{orderitem.order_number}}</td>
+        <td>{{orderitem.supplier}}</td>
+        <td>{{orderitem.item}}</td>
+        <td>{{orderitem.code}}</td>
+        <td>{{orderitem.unit}}</td>
+        <td>{{orderitem.unit_cost}}</td>
+        <td>{{orderitem.order_quantity}}</td>
+        <td>{{orderitem.get_order_cost}}</td>
+        <td>{{orderitem.status}}</td>
+
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Deliver Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Item</th>
+        <th scope="col">Order</th>
+        <th scope="col">Supplier</th>
+        <th scope="col">Item Code</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit cost</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Deliver_cost</th>
+        <th scope="col">status</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for deliveritem in deliveritems%}
+      <tr>
+        <th scope="row">{{deliveritem.id}}</th>
+        <td>{{deliveritem.order_item}}</td>
+        <td>{{deliveritem.order_number}}</td>
+        <td>{{deliveritem.supplier}}</td>
+        <td>{{deliveritem.code}}</td>
+        <td>{{deliveritem.unit}}</td>
+        <td>{{deliveritem.unit_cost}}</td>
+        <td>{{deliveritem.order_quantity}}</td>
+        <td>{{deliveritem.get_deliver_cost}}</td>
+        <td>{{deliveritem.status}}</td>
+
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+</div>
+{% endblock %}

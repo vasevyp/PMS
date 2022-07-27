@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }}: ItemCategories
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+  <h1 class="custom">Item Categories </h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col ">Name</th>
+        <th scope="col">Code</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for categoryitem in categoryitems%}
+      <tr>
+        <th scope="row">{{categoryitem.id}}</th>
+        <td>{{categoryitem.name}}</td>
+        <td>{{categoryitem.code}}</td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

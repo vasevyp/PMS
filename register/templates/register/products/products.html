@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+
+  <h2 class="custom">Products</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Category</th>
+        <th scope="col">difficulty</th>
+        <th scope="col">price</th>
+        <th scope="col">cooking</th>
+        <th scope="col">created_date</th>
+        <th scope="col">updated_date</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products%}
+      <tr>
+        <th scope="row">{{product.id}}</th>
+        <td>{{product.name}}</td>
+        <td>{{product.code}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.difficulty}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.cooking}}</td>
+        <td>{{product.created_date}}</td>
+        <td>{{product.updated_date}}</td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

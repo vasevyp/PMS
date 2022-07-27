@@ -6,11 +6,11 @@ from register.models import Item, Product, Supplier
 
 UNITS=(
         (None, 'Выбрать ед.изм.'),
-        ('kg', 'кг'),        
-        ('gram', 'г'),
-        ('liter', 'л'),
-        ('piece',' шт.'),
-        ('meter','м'),
+        ('кг', 'кг'),        
+        ('г', 'г'),
+        ('л', 'л'),
+        ('шт.',' шт.'),
+        ('м','м'),
         ('m2','м2'),
         ('m3','м3'),
         
@@ -76,12 +76,20 @@ class StockItem(models.Model):
         
     def __str__(self):
         return str(self.name)  
+    
+    @property
+    def get_actual(self):
+        return self.open-self.sales+self.received-self.transfer-self.move-self.waste 
+    
+    @property
+    def get_actual_cost(self):
+        return (self.open-self.sales+self.received-self.transfer-self.move-self.waste )*self.unit_cost
 
 
 '''Модель продаж продуктов''' 
 class SaleProduct(models.Model):
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     name = models.ForeignKey(Product,related_name='name_sale', on_delete=models.PROTECT)
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     price=models.PositiveIntegerField(verbose_name='Цена, руб',null=True)
     quantity= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0)
@@ -123,6 +131,7 @@ class OrderItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')   
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
+    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     order_quantity = models.PositiveIntegerField(null=True)
     status = models.CharField(max_length=10, help_text="Не более 10 знаков", choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
@@ -138,6 +147,9 @@ class OrderItem(models.Model):
         
     def __str__(self):
         return str(self.item)
+    @property
+    def get_order_cost(self):
+        return self.unit_cost * self.order_quantity
 
 '''Модель товаров в стадии поставки (на путях)''' 
 class DeliverItem(models.Model):
@@ -156,7 +168,8 @@ class DeliverItem(models.Model):
     product = models.ForeignKey(Item, related_name='item_deliver', on_delete=models.CASCADE)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
-    order_quantity = models.PositiveIntegerField(null=True)
+    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
+    order_quantity = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     status = models.CharField(max_length=10, help_text="Не более 10 знаков", choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 
@@ -170,3 +183,7 @@ class DeliverItem(models.Model):
         
     def __str__(self):
         return str(self.order_item) 
+    
+    @property
+    def get_deliver_cost(self):
+        return int(self.unit_cost) * int(self.order_quantity)

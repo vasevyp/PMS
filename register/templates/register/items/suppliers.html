@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }}: Suppliers
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+  <h1 class="custom">Suppliers</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">address</th>
+        <th scope="col">created_date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for supplier in suppliers%}
+      <tr>
+        <th scope="row">{{supplier.id}}</th>
+        <td>{{supplier.name}}</td>
+        <td>{{supplier.code}}</td>
+        <td>{{supplier.address}}</td>
+        <td>{{supplier.created_date}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

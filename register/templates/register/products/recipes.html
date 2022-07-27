@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }}: {{ title }}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+
+  <h2 class="custom">Recipes list</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">ingredient</th>
+        <th scope="col">unit</th>
+        <th scope="col">unit_cost</th>
+        <th scope="col">quantity</th>
+        <th scope="col">ingredient_cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipes%}
+      <tr>
+        <th scope="row">{{recipe.id}}</th>
+        <td>{{recipe.recipe_name}}</td>
+        <td>{{recipe.ingredient}}</td>
+        <td>{{recipe.unit}}</td>
+        <td>{{recipe.unit_cost}}</td>
+        <td>{{recipe.quantity}}</td>
+        <td>{{recipe.ingredient_cost}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}
