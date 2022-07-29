@@ -28,7 +28,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['code', 'name', ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
-    search_fields=['name',]
+    search_fields=['name', 'code']
     list_filter= ('name',)
     
     # class Meta:
@@ -43,19 +43,19 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['code','name', 'created_date' ]
+    list_display = ['code','name', 'category', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
-    list_filter = ['code','name']
+    list_filter = ['category','code','name']
  
     
 admin.site.register(Product, ProductAdmin)
 class RecipeIngredientAdmin(admin.ModelAdmin):
-    list_display = ['recipe_name','ingredient', 'unit', 'unit_cost', 'quantity', 'updated_at']
+    list_display = ['recipe_name', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'quantity', 'updated_at']
     # prepopulated_fields= {'slug': ('recipe_name',)}
     save_on_top = True
-    search_fields = ['recipe_name__name', 'ingredient__name']
+    search_fields = ['recipe_name__name', 'code', 'code_ingr','ingredient__name']
     list_filter= ('recipe_name', 'ingredient')
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
 

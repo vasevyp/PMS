@@ -7,14 +7,18 @@ from register.models import Item, Product, Supplier
 UNITS=(
         (None, 'Выбрать ед.изм.'),
         ('кг', 'кг'),        
-        ('г', 'г'),
         ('л', 'л'),
         ('шт.',' шт.'),
-        ('м','м'),
-        ('m2','м2'),
-        ('m3','м3'),
-        
     )
+
+STATUS_CHOICE = (
+        ('pending', 'ожидание '),
+        ('decline', 'отклонить' ),
+        ('approved', 'одобрено'),
+        ('processing', 'обработка'),
+        ('complete', 'готов')
+    )
+
 
 '''Модель покупок товаров''' 
 
@@ -35,7 +39,7 @@ class BuyItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Закупка'
         verbose_name_plural = 'Закупки' 
         
@@ -70,7 +74,7 @@ class StockItem(models.Model):
         return reverse('stock', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Остаток'
         verbose_name_plural = 'Остатки' 
         
@@ -101,7 +105,7 @@ class SaleProduct(models.Model):
         return reverse('sale', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Продажа'
         verbose_name_plural = 'Продажи' 
         
@@ -115,16 +119,7 @@ class SaleProduct(models.Model):
 
 '''Модель заказа товаров''' 
 class OrderItem(models.Model):
-    STATUS_CHOICE = (
-        ('pending', 'Pending'),
-        ('decline', 'Decline'),
-        ('approved', 'Approved'),
-        ('processing', 'Processing'),
-        ('complete', 'Complete'),
-        ('bulk', 'Bulk'),
-    )
-    # def __init__(self):
-    #     self.unit='unit'
+    
     order_number = models.CharField(max_length=10, unique=True, help_text="Не более 10 знаков",)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='item_order', on_delete=models.CASCADE, null=True)
@@ -141,7 +136,7 @@ class OrderItem(models.Model):
         return reverse('order', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('order_number',)
+        ordering = ['order_number']
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы' 
         
@@ -153,14 +148,7 @@ class OrderItem(models.Model):
 
 '''Модель товаров в стадии поставки (на путях)''' 
 class DeliverItem(models.Model):
-    STATUS_CHOICE = (
-        ('pending', 'Pending'),
-        ('decline', 'Decline'),
-        ('approved', 'Approved'),
-        ('processing', 'Processing'),
-        ('complete', 'Complete'),
-        ('bulk', 'Bulk'),
-    )
+  
     order_item = models.ForeignKey(OrderItem, related_name='order_deliver', on_delete=models.CASCADE, null=True)
     order_number=models.DecimalField(max_digits=10,decimal_places=0,null=True,verbose_name='Номер заказа')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
@@ -177,7 +165,7 @@ class DeliverItem(models.Model):
         return reverse('deliver', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('order_number',)
+        ordering = ['order_number']
         verbose_name = 'На пути'
         verbose_name_plural = 'На путях' 
         

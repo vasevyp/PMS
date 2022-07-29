@@ -6,13 +6,9 @@ from django.template.defaultfilters import slugify  # new
 
 UNITS=(
         (None, 'Выбрать ед.изм.'),
-        ('кг', 'кг'),        
-        ('г', 'г'),
+        ('кг', 'кг'),      
         ('л', 'л'),
         ('шт.',' шт.'),
-        ('м','м'),
-        ('m2','м2'),
-        ('m3','м3'),
         
     )
 
@@ -28,7 +24,7 @@ class Supplier(models.Model):
         return reverse('supplier', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщики' 
         
@@ -45,7 +41,7 @@ class CategoryItem(models.Model):
         return reverse('categoryitem', kwargs={'slug': self.slug})
     
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Категория товара'
         verbose_name_plural = 'Категории товаров'
 
@@ -74,7 +70,7 @@ class Item(models.Model):
         return reverse('item', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ('name',)
+        ordering = ['category','name']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
@@ -84,11 +80,11 @@ class Item(models.Model):
     
 '''Модель ингредиентов для рецептов''' 
 
-class RecipeIngredient(models.Model):
-   
-    recipe_name=models.ForeignKey('Product', null=True,related_name='product', on_delete=models.CASCADE) 
+class RecipeIngredient(models.Model): 
+    recipe_name=models.ForeignKey('Product', null=True, verbose_name='Рецепт на Продукт',  on_delete=models.CASCADE)#related_name='product_name',
+    code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", verbose_name='Код продукта',decimal_places=0, null=True)
     ingredient= models.ForeignKey(Item, related_name='recipe_ingredient',  on_delete=models.CASCADE)
-    # unit= models.ForeignKey(Item, related_name='recipe_unit',  on_delete=models.CASCADE)
+    code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     quantity= models.FloatField(blank=True, null = True)  
@@ -100,7 +96,7 @@ class RecipeIngredient(models.Model):
         return reverse('recipeingredient', kwargs={'slug': self.slug})
     
     class Meta:
-        ordering = ('recipe_name',)
+        ordering = ['recipe_name', 'ingredient']
         verbose_name = 'Рецепт с ингредиентами'
         verbose_name_plural = 'Рецепты с ингредиентами'
     
@@ -119,7 +115,7 @@ class Category(models.Model):
         return reverse('category', kwargs={'slug': self.slug})
     
     class Meta:
-        ordering = ('name',)
+        ordering = ['name']
         verbose_name = 'Категория продукта'
         verbose_name_plural = 'Категории продуктов'
 
@@ -155,7 +151,7 @@ class Product(models.Model):
         return reverse('product', kwargs={'slug': self.slug})
     
     class Meta:
-        ordering = ('code',)
+        ordering = ['category', 'name']
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 

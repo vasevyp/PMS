@@ -1,6 +1,6 @@
 .custom {
   color: #ebeef1;
-  background: #130337;
+  background: #3a3837;
   font-size: 2rem;
   text-align: center;
   border-radius: 10px;
@@ -11,9 +11,18 @@
 }
 
 .navbutt {
-
-  background: #0dcaf0;
-  font-size: 1.5rem;
+  color: #ebeef1;
+  background: #3a3837;
+  /* font-size: 1rem; */
   border-radius: 10px;
   padding: 0 10px;
+}
+
+.font1-b {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+hr {
+  color: #ebeef1;
 }

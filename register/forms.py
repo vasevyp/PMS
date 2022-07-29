@@ -46,14 +46,14 @@ class AddItemForm(ModelForm):
             'category':forms.Select(attrs={'class':'form-control'}),
             'supplier':forms.Select(attrs={'class':'form-control'}),
             'unit':forms.Select(attrs={'class':'form-control'},),
-            'unit_cost':forms.TextInput(attrs={'class':'form-control'}),
+            'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control',  'rows':3}),
             'slug':forms.TextInput(attrs={'class':'form-control'}),
               
         }           
         
 class AddProductForm(ModelForm):
-    price= forms.DecimalField(max_digits=10, decimal_places=2)
+    # price= forms.DecimalField(max_digits=10, decimal_places=2)
     class Meta:
         model = Product
         fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking','slug']
@@ -63,7 +63,7 @@ class AddProductForm(ModelForm):
             'code':forms.TextInput(attrs={'class':'form-control'}),
             'category':forms.Select(attrs={'class':'form-control'}),
             'difficulty':forms.Select(attrs={'class':'form-control'}),
-            'price':forms.TextInput(attrs={'class':'form-control'},),
+            'price':forms.NumberInput(attrs={'class':'form-control'},),
             'description':forms.Textarea(attrs={'class':'form-control',  'rows':3}),
             'cooking':forms.TextInput(attrs={'class':'form-control'}),
             'slug':forms.TextInput(attrs={'class':'form-control'}),
@@ -73,14 +73,15 @@ class AddProductForm(ModelForm):
 class AddRecipeIngredientForm(ModelForm):
     class Meta:
         model = RecipeIngredient
-        fields=['recipe_name', 'ingredient','unit', 'unit_cost', 'quantity']
+        fields=['recipe_name', 'ingredient', 'code_ingr','unit', 'unit_cost', 'quantity']
         field_classes={'unit_cost':DecimalField, 'quantity':DecimalField}
         widgets={
             'recipe_name':forms.Select(attrs={'class':'form-control','id': 'recipe_name'}),
             'ingredient':forms.Select(attrs={'class':'form-control'}),
+            'code_ingr':forms.NumberInput(attrs={'class':'form-control'}),
             'unit':forms.Select(attrs={'class':'form-control'}),
-            'unit_cost':forms.TextInput(attrs={'class':'form-control'},),
-            'quantity':forms.TextInput(attrs={'class':'form-control'}),
+            'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
+            'quantity':forms.NumberInput(attrs={'class':'form-control'}),
             'error_messages': {'required':"This field is required."}        
             
               
