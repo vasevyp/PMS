@@ -2,7 +2,6 @@
 {# Load the tag library #}
 {% load bootstrap5 %}
 
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -23,10 +22,7 @@
 </head>
 
 <body>
-
   {% block navbar %}
-
-
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand font1-b navbutt" href="{% url 'dashbord' %}">Dashbord</a>
@@ -84,16 +80,186 @@
     </div>
   </nav>
   {% endblock %}
+  <div class="ms-3">
+    {% block menu%}
+
+    <div class="row">
+
+      <div class="col-2 navbutt text-muted">
+        <h4>Directory:</h4>
+        <hr class="dropdown-divider">
+        <ul class="nav navbar-nav">
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Suppliers
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'addsupplier' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'supplier-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Item Categories
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-itemcategory' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'itemcategories-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Items
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-item' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'items-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Buy Item
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'buy_item' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'buy_item_list' %}">View</a></li>
+
+            </ul>
+          </li>
+
+          <hr class="dropdown-divider">
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Product Categories
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-category' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'categories-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Products
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-product' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'products-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Recipe
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Sold Product
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'sold_product' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'sold_product_list' %}">View</a></li>
+
+            </ul>
+          </li>
+
+          <hr class="dropdown-divider">
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Inventory
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+            </ul>
+          </li>
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Transfer
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Waste
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+            </ul>
+          </li>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Stock Move
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+            </ul>
+          </li>
+
+
+          <hr class="dropdown-divider">
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Users
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'supplier-list' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'supplier-list' %}">View</a></li>
+
+            </ul>
+          </li>
 
 
 
-  {% block content %}CONTENT{% endblock %}
+          {% endblock %}
+      </div>
+
+      <div class="col-10">
+        {% block content %}CONTENT{% endblock %}
+      </div>
 
 
 
-  <!-- <script async src="{% static 'bootstrap5/js/bootstrap.bundle.min.js'%}" crossorigin="anonymous"> -->
-  <!-- </script> -->
-  <!-- <script type="importmap"> -->
+
+
+      <!-- <script async src="{% static 'bootstrap5/js/bootstrap.bundle.min.js'%}" crossorigin="anonymous"> -->
+      <!-- </script> -->
+      <!-- <script type="importmap"> -->
 
 
 </body>

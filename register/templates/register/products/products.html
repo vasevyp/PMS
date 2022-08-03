@@ -1,15 +1,6 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}
-{{ block.super }}: {{ title }}
-{% endblock %}
-
-
-{% block content %}
+{% extends 'base_simple.html' %} {% load static %} {% block title %} {{
+block.super }}: {{ title }} {% endblock %} {% block content %}
 <div class="container">
-
-
   <h2 class="custom">Products</h2>
   <table class="table table-striped">
     <thead>
@@ -23,7 +14,6 @@
         <th scope="col">cooking</th>
         <th scope="col">created_date</th>
         <th scope="col">updated_date</th>
-
       </tr>
     </thead>
     <tbody>
@@ -38,11 +28,9 @@
         <td>{{product.cooking}}</td>
         <td>{{product.created_date}}</td>
         <td>{{product.updated_date}}</td>
-
       </tr>
       {% endfor %}
     </tbody>
   </table>
-
 </div>
 {% endblock %}

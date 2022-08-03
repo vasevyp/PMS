@@ -1,12 +1,5 @@
-{% extends 'base.html' %}
-
-{% block title %}
-{{ block.super }}: {{ title }}
-{% endblock %}
-
-
-
-{% block content %}
+{% extends 'base_simple.html' %} {% block title %} {{ block.super }}: {{ title
+}} {% endblock %} {% block content %}
 <div class="container">
   <h1>Control</h1>
   <h2>Buy Item</h2>
@@ -46,11 +39,11 @@
         <th scope="col">Code</th>
         <th scope="col">Unit</th>
         <th scope="col">Unit_cost</th>
+        <th scope="col">place</th>
         <th scope="col">Open</th>
         <th scope="col">Sales</th>
         <th scope="col">Received</th>
         <th scope="col">transfer</th>
-        <th scope="col">move</th>
         <th scope="col">waste</th>
         <th scope="col">Actual</th>
         <th scope="col">Actual_cost</th>
@@ -64,11 +57,11 @@
         <td>{{stockitem.code}}</td>
         <td>{{stockitem.unit}}</td>
         <td>{{stockitem.unit_cost}}</td>
+        <td>{{stockitem.place}}</td>
         <td>{{stockitem.open}}</td>
         <td>{{stockitem.sales}}</td>
         <td>{{stockitem.received}}</td>
         <td>{{stockitem.transfer}}</td>
-        <td>{{stockitem.move}}</td>
         <td>{{stockitem.waste}}</td>
         <td>{{stockitem.get_actual}}</td>
         <td>{{stockitem.get_actual_cost}}</td>
@@ -76,7 +69,6 @@
       {% endfor %}
     </tbody>
   </table>
-
 
   <h2>Sale Product</h2>
   <table class="table">
@@ -99,7 +91,6 @@
         <td>{{saleproduct.price}}</td>
         <td>{{saleproduct.quantity}}</td>
         <td>{{saleproduct.get_revenue}}</td>
-
       </tr>
       {% endfor %}
     </tbody>
@@ -119,8 +110,6 @@
         <th scope="col">Quantity</th>
         <th scope="col">Order_cost</th>
         <th scope="col">status</th>
-
-
       </tr>
     </thead>
     <tbody>
@@ -136,8 +125,6 @@
         <td>{{orderitem.order_quantity}}</td>
         <td>{{orderitem.get_order_cost}}</td>
         <td>{{orderitem.status}}</td>
-
-
       </tr>
       {% endfor %}
     </tbody>
@@ -157,8 +144,6 @@
         <th scope="col">Quantity</th>
         <th scope="col">Deliver_cost</th>
         <th scope="col">status</th>
-
-
       </tr>
     </thead>
     <tbody>
@@ -174,14 +159,9 @@
         <td>{{deliveritem.order_quantity}}</td>
         <td>{{deliveritem.get_deliver_cost}}</td>
         <td>{{deliveritem.status}}</td>
-
-
       </tr>
       {% endfor %}
     </tbody>
   </table>
-
-
-
 </div>
 {% endblock %}

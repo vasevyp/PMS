@@ -1,0 +1,44 @@
+{% extends 'base_simple.html' %} {% block title %} {{ block.super }}: {{ title
+}} {% endblock %} {% block content %}
+<div class="container">
+  <h2>Stock Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit_cost</th>
+        <th scope="col">place</th>
+        <th scope="col">Open</th>
+        <th scope="col">Sales</th>
+        <th scope="col">Received</th>
+        <th scope="col">transfer</th>
+        <th scope="col">waste</th>
+        <th scope="col">Actual</th>
+        <th scope="col">Actual_cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stockitem in stockitems%}
+      <tr>
+        <th scope="row">{{stockitem.id}}</th>
+        <td>{{stockitem.name}}</td>
+        <td>{{stockitem.code}}</td>
+        <td>{{stockitem.unit}}</td>
+        <td>{{stockitem.unit_cost}}</td>
+        <td>{{stockitem.place}}</td>
+        <td>{{stockitem.open}}</td>
+        <td>{{stockitem.sales}}</td>
+        <td>{{stockitem.received}}</td>
+        <td>{{stockitem.transfer}}</td>
+        <td>{{stockitem.waste}}</td>
+        <td>{{stockitem.get_actual}}</td>
+        <td>{{stockitem.get_actual_cost}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

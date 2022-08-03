@@ -43,7 +43,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['code','name', 'category', 'created_date' ]
+    list_display = ['code','name', 'price','category', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
