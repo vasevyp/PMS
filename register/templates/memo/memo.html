@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+<div class="ms-3">
+
+
+  <div class="row">
+
+    <div class="col-3 navbutt text-muted">
+      <h4>Directory:</h4>
+      <hr class="dropdown-divider">
+      <ul class="nav navbar-nav">
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Suppliers
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'addsupplier' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'supplier-list' %}">View</a></li>
+
+          </ul>
+        </li>
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Item Categories
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'add-itemcategory' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'itemcategories-list' %}">View</a></li>
+
+          </ul>
+        </li>
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Items
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'add-item' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'items-list' %}">View</a></li>
+
+          </ul>
+        </li>
+
+        <hr class="dropdown-divider">
+
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Product Categories
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'add-category' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'categories-list' %}">View</a></li>
+
+          </ul>
+        </li>
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Products
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'add-product' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'products-list' %}">View</a></li>
+
+          </ul>
+        </li>
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Recipe
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'add-to-recipe' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'recipes-list' %}">View</a></li>
+
+          </ul>
+        </li>
+
+        <hr class="dropdown-divider">
+
+        <li class="navbar-nav nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Users
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'supplier-list' %}">Add</a></li>
+            <li><a class="dropdown-item" href="{% url 'supplier-list' %}">View</a></li>
+
+          </ul>
+        </li>
+
+
+    </div>
+
+    <div class="col-9">
+      <div class="container">
+
+        <header id="header" class="header">
+          <div class="top-left">
+            <div class="navbar-header text-center" style="background: black">
+              <h1 class="navbar-brand " style="color: white">Inventory Management System</h1>
+
+            </div>
+          </div>
+          <h4>Предложения по системе управления запасами:</h4>
+          <ul>
+            <li>Продажи, текущие поставки (пути),</li>
+            <li>Закупки на отгрузки,</li>
+            <li> Критические остатки,</li>
+            <li> Периоды покрытые
+              запасами и путями,</li>
+            <li>Прогноз продаж на следующую неделю,</li>
+            <li>Рассчитать заказ для подтверждения или корректировки.</li>
+            <li>Сделать заказ в формате документа для согласования и печати/отправки.</li>
+            <li>Продукты с истекающим сроком годности.</li>
+            <li> Срок поставки товара поставщиком.</li>
+            <li> Срок доставки товара в магазин.</li>
+            <li>Продукция без движения.</li>
+            <li>Несоответствие плана продаж реальным продажам. </li>
+            <li>Выявлять отрицательные отстатки.</li>
+            <li>График доставок в магазины (меняет supply planer).</li>
+            <li>Меню для сезонного планирования (указать в базе
+              сезонность: 23 февраля, Новый год и тд.)</li>
+            <li>В модель/форму покупки добавить поле документа/накладной.</li>
+
+          </ul>
+          <p>Роли: 1)supply planer заказывают товары у поставщика (остатки). 2)sales manager планируют продажи (вносит
+            план) 3) order specialist заказывает товар со склада в магазин</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>posicion</th>
+                <th>functions</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>supply planer</td>
+                <td>заказывают товары у поставщика (остатки)</td>
+              </tr>
+              <tr>
+                <td>sales manager</td>
+                <td>планируют продажи (вносит
+                  план)</td>
+              </tr>
+              <tr>
+                <td>order specialist</td>
+                <td>заказывает товар со склада в магазин</td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </header>
+
+      </div>
+      <div class="bgc-green">ДАЛЕЕ
+        <ul>
+          <li>Сделать Цены: договора, last - фактическая, средневзвешенная.</li>
+          <li>Внесение прочих транзакций transfer move waste в StockItem.</li>
+          <li style="background:rgb(128, 239, 128)">Внесение продаж в StockItem.</li>
+          <li>Среднесуточные продажи, Норматив Запаса в днях продаж.</li>
+          <li> Фильтр на низкие запасы.</li>
+          <li>Запас + пути на дни продаж.</li>
+          <li>Номенклатура товаров к заказу с подтверждением.</li>
+          <li>Сохранение Заказа, печать заказа.</li>
+        </ul>
+        <h4>На Dashbord:</h4>
+        <ul>
+          <li>Продажи за период</li>
+          <li>Себестоимость продаж, Валовая прибыль.</li>
+          <li>Закупки за период (Заказы)</li>
+          <li>Денежный поток за период (Продажи - Заказы)</li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  {% endblock %}

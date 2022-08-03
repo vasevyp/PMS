@@ -25,9 +25,9 @@ STATUS_CHOICE = (
 # cost = ('BuyItem'.objects.aggregate(total=Sum(F('unit_cost') * F('quantity'))) 
 #     ['cost'])  
 class BuyItem(models.Model):
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код товара')
-    name = models.ForeignKey(Item, verbose_name='Наименование', on_delete=models.PROTECT)
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    code=models.ForeignKey(Item, help_text="Не более 12 знаков",null=True,verbose_name='Код товара', related_name='buyitem_code', on_delete=models.CASCADE)
+    name = models.ForeignKey(Item,related_name='buyitem_name', verbose_name='Наименование', on_delete=models.CASCADE)
+    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',)
@@ -57,7 +57,7 @@ class BuyItem(models.Model):
 '''Модель склада товаров'''
 class StockItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    name = models.ForeignKey(Item,related_name='name_stock', on_delete=models.PROTECT)
+    name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
@@ -95,8 +95,9 @@ class SaleProduct(models.Model):
     name = models.ForeignKey(Product,related_name='name_sale', on_delete=models.PROTECT)
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
-    price=models.PositiveIntegerField(verbose_name='Цена, руб',null=True)
-    quantity= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0)
+    price=models.PositiveIntegerField(verbose_name='Цена, руб', default=0)
+    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=0)
+    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')
     revenue= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
     
@@ -114,7 +115,9 @@ class SaleProduct(models.Model):
     
     @property
     def get_revenue(self):
-        return self.price * self.quantity
+        # return format((float(self.price) * float(self.sold)), '.2f')
+        return self.price*self.sold
+    
 
 
 '''Модель заказа товаров''' 
@@ -124,7 +127,7 @@ class OrderItem(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='item_order', on_delete=models.CASCADE, null=True)
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')   
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     order_quantity = models.PositiveIntegerField(null=True)
@@ -154,7 +157,7 @@ class DeliverItem(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     product = models.ForeignKey(Item, related_name='item_deliver', on_delete=models.CASCADE)
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     order_quantity = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)

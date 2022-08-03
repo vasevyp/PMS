@@ -53,7 +53,7 @@ class CategoryItem(models.Model):
 '''Модель закупаемых товаров'''
 class Item(models.Model):
    
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, unique=True, verbose_name='Код товара')
+    code=models.CharField(max_length=200, help_text="Не более 12 знаков", unique=True, verbose_name='Код товара')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     category = models.ForeignKey(
         CategoryItem, related_name='item', on_delete=models.CASCADE)
@@ -87,7 +87,7 @@ class RecipeIngredient(models.Model):
     code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
-    quantity= models.FloatField(blank=True, null = True)  
+    ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True)  
     # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
@@ -102,7 +102,7 @@ class RecipeIngredient(models.Model):
     
     @property
     def ingredient_cost(self):
-        return format((float(self.unit_cost) * float(self.quantity)), '.2f')    
+        return format((float(self.unit_cost) * float(self.ratio)), '.2f')    
 
 
 '''Модель категорий готовых продуктов'''

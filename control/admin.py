@@ -21,7 +21,7 @@ admin.site.register(StockItem, StockItemAdmin)
 
 @admin.register(SaleProduct)
 class SaleProductAdmin(admin.ModelAdmin):
-    list_display = [ 'name', 'code','price','quantity','created_date' ]
+    list_display = [ 'name', 'code','price','sold', 'unit','created_date' ]
     # prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['code', 'name__name', 'created_date']

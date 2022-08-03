@@ -23,6 +23,10 @@
   font-weight: 600;
 }
 
+.bgc-green {
+  background-color: green;
+}
+
 hr {
   color: #ebeef1;
 }

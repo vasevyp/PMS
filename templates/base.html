@@ -46,15 +46,30 @@
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Dropdown
+              Operation
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="{% url 'buy_item' %}">Buy Item Form</a></li>
+              <li><a class="dropdown-item" href="{% url 'sold_product' %}">Sold Product Form</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="{% url 'dashbord' %}">to Home here</a></li>
+            </ul>
+          </li>
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Memo
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link active navbutt" href="{% url 'memo' %}">Заметки</a></li>
+              <li><a class="dropdown-item" href="#">###</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">###</a></li>
             </ul>
           </li>
           <li class="nav-item">

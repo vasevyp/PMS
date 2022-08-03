@@ -3,12 +3,15 @@ from django.views.generic import ListView
 
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
 from .forms import AddSupplierForm, AddCategoryForm, AddItemCategoryForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
+from control.models import StockItem
 
 def index(request):
     context={
         'title': 'Main'
     }
     return render(request, template_name='register/index.html', context=context)
+def memo(request):
+    return render(request, template_name='memo/memo.html', context={'title':'Заметки'})
 
 def register(request):
     suppliers = Supplier.objects.all()
@@ -108,6 +111,12 @@ def add_item(request):
     if request.method == 'POST':
         form = AddItemForm(request.POST)
         if form.is_valid():
+            code= form.cleaned_data.get("code")
+            name= form.cleaned_data.get("name")
+            slug= form.cleaned_data.get("slug")
+            unit= form.cleaned_data.get("unit")
+            unit_cost= form.cleaned_data.get("unit_cost")
+            StockItem.objects.create(code=code, name=name, slug=slug, unit=unit, unit_cost=unit_cost)   
             form.save()
             return redirect('items-list')
     context = {

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Buy Item {% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <strong class="card-title">Buy Item</strong>
+      </div>
+      <div class="card-body">
+        <!-- Credit Card -->
+        <div id="pay-invoice">
+          <div class="card-body">
+            <form action="#" method="post" novalidate="novalidate">
+
+              {% csrf_token %}
+
+
+              <div class="form-group">
+                <label for="name" class="control-label mb-1">Buy Item Name</label>
+                {{ form.name }}
+              </div>
+              <div class="form-group">
+                <label for="name" class="control-label mb-1"> Code</label>
+                {{ form.code }}
+              </div>
+
+
+              <div class="form-group">
+                <label for="name" class="control-label mb-1">Unit</label>
+                {{ form.unit }}
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="control-label mb-1">Unit_cost</label>
+                {{ form.unit_cost }}
+              </div>
+              <div class="form-group">
+                <label for="name" class="control-label mb-1">Quantity</label>
+                {{ form.quantity }}
+              </div>
+
+
+
+
+              <div>
+                <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
+                  <span id="payment-button-amount">Save</span>
+                </button>
+              </div>
+
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div> <!-- .card -->
+
+  </div>
+  <!--/.col-->
+</div>
+{% endblock content %}
