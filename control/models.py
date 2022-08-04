@@ -1,5 +1,9 @@
 from django.db import models
 from django.urls import reverse
+
+# from django.db.models.functions import Upper
+# from django.db.models.indexes import Index
+
 from django.db.models import F, Sum
 from register.models import Item, Product, Supplier
 
@@ -78,7 +82,10 @@ class StockItem(models.Model):
     class Meta:
         ordering = ['name']
         verbose_name = 'Остаток'
-        verbose_name_plural = 'Остатки' 
+        verbose_name_plural = 'Остатки'
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ] 
         
     def __str__(self):
         return str(self.name)  
@@ -101,11 +108,7 @@ class SaleProduct(models.Model):
     sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')
     revenue= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0, blank=True, null=True)
-    created_date = models.DateField(auto_now_add=True)
-    
-    
- 
-      
+    created_date = models.DateField(auto_now_add=True)      
 
     def get_absolute_url(self):        
         return reverse('sale', kwargs={'slug': self.slug})
@@ -126,8 +129,7 @@ class SaleProduct(models.Model):
 
 
 '''Модель заказа товаров''' 
-class OrderItem(models.Model):
-    
+class OrderItem(models.Model):    
     order_number = models.CharField(max_length=10, unique=True, help_text="Не более 10 знаков",)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='item_order', on_delete=models.CASCADE, null=True)

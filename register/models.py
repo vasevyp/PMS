@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 
+# from django.db.models.functions import Upper
+# from django.db.models.indexes import Index
+
 from django.template.defaultfilters import slugify  # new
 
 
@@ -27,6 +30,10 @@ class Supplier(models.Model):
         ordering = ['name']
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщики' 
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ]
+             
         
     def __str__(self):
         return self.name  
@@ -44,6 +51,9 @@ class CategoryItem(models.Model):
         ordering = ['name']
         verbose_name = 'Категория товара'
         verbose_name_plural = 'Категории товаров'
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ]
 
     def __str__(self):
         return self.name
@@ -51,10 +61,9 @@ class CategoryItem(models.Model):
       
         
 '''Модель закупаемых товаров'''
-class Item(models.Model):
-   
+class Item(models.Model):   
     code=models.CharField(max_length=200, help_text="Не более 12 знаков", unique=True, verbose_name='Код товара')
-    name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
+    name = models.CharField(max_length=200, help_text="Не более 200 знаков", unique=True,db_index=True)
     category = models.ForeignKey(
         CategoryItem, related_name='item', on_delete=models.CASCADE)
     supplier=models.ForeignKey(Supplier, related_name='item',on_delete=models.CASCADE)
@@ -73,6 +82,10 @@ class Item(models.Model):
         ordering = ['category','name']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ]
+        
 
     def __str__(self):
         return self.name  
@@ -118,6 +131,9 @@ class Category(models.Model):
         ordering = ['name']
         verbose_name = 'Категория продукта'
         verbose_name_plural = 'Категории продуктов'
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ]
 
     def __str__(self):
         return self.name   
@@ -154,6 +170,9 @@ class Product(models.Model):
         ordering = ['category', 'name']
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        # indexes = [
+        #     Index(Upper('name'), name='name_upper_index'),
+        #            ]
 
     def __str__(self):
         return self.name         

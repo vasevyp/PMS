@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
 from .forms import AddSupplierForm, AddCategoryForm, AddItemCategoryForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
-from control.models import StockItem
+from control.models import StockItem, BuyItem
 
 def index(request):
     context={
@@ -116,7 +116,13 @@ def add_item(request):
             slug= form.cleaned_data.get("slug")
             unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
-            StockItem.objects.create(code=code, name=name, slug=slug, unit=unit, unit_cost=unit_cost)   
+            StockItem.objects.create(code=code, name=name, slug=slug, unit=unit, unit_cost=unit_cost)
+            code2= form.cleaned_data.get("code")
+            name2= form.cleaned_data.get("name")
+            slug2= form.cleaned_data.get("slug")
+            unit2= form.cleaned_data.get("unit")
+            unit_cost2= form.cleaned_data.get("unit_cost")
+            BuyItem.objects.create(code=code2, name=name2, slug=slug2, unit=unit2, unit_cost=unit_cost2)    
             form.save()
             return redirect('items-list')
     context = {
