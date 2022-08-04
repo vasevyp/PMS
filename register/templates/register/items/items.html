@@ -5,9 +5,9 @@ block.super }}: Items {% endblock %} {% block content %}
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">Name</th>
         <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
         <th scope="col">Category</th>
         <th scope="col">Supplier</th>
         <th scope="col">unit</th>
@@ -19,9 +19,9 @@ block.super }}: Items {% endblock %} {% block content %}
     <tbody>
       {% for item in items%}
       <tr>
-        <th scope="row">{{item.id}}</th>
+        <th scope="row">{{item.code}}</th>
         <td>{{item.name}}</td>
-        <td>{{item.code}}</td>
+        <td>{{item.id}}</td>
         <td>{{item.category}}</td>
         <td>{{item.supplier}}</td>
         <td>{{item.unit}}</td>

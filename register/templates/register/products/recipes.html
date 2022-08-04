@@ -5,18 +5,16 @@
 {{ block.super }}: {{ title }}
 {% endblock %}
 
-
 {% block content %}
 <div class="container">
-
 
   <h2 class="custom">Recipes list</h2>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">id</th>
+        <th scope="col">Code</th>
         <th scope="col">Name</th>
-        <th scope="col">Код</th>
+        <th scope="col">ID</th>
         <th scope="col">ingredient</th>
         <th scope="col">ingr_code</th>
         <th scope="col">unit</th>
@@ -28,9 +26,9 @@
     <tbody>
       {% for recipe in recipes%}
       <tr>
-        <th scope="row">{{recipe.id}}</th>
+        <th scope="row">{{recipe.code}}</th>
         <td>{{recipe.recipe_name}}</td>
-        <td>{{recipe.code}}</td>
+        <td>{{recipe.id}}</td>
         <td>{{recipe.ingredient}}</td>
         <td>{{recipe.code_ingr}}</td>
         <td>{{recipe.unit}}</td>
