@@ -5,14 +5,13 @@ from .models import BuyItem, SaleProduct
 class BuyItemForm(ModelForm):
     class Meta:
         model = BuyItem
-        fields=['name', 'code', 'unit', 'unit_cost', 'quantity','supplier', 'invoice' ]
+        fields=['name',  'unit', 'unit_cost', 'quantity','supplier', 'invoice' ]
         widgets={
-            'name':forms.Select(attrs={'class':'form-control'}),
-            'code':forms.Select(attrs={'class':'form-control'}),
+            'name':forms.Select(attrs={'class':'form-control'}),        
             'unit':forms.Select(attrs={'class':'form-control'},),
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'quantity':forms.NumberInput(attrs={'class':'form-control'}),
-            'supplier':forms.Select(attrs={'class':'form-control'},),
+            'supplier':forms.TextInput(attrs={'class':'form-control'},),
             'invoice':forms.TextInput(attrs={'class':'form-control'})              
         }
         

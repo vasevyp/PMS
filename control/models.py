@@ -29,17 +29,18 @@ STATUS_CHOICE = (
 # cost = ('BuyItem'.objects.aggregate(total=Sum(F('unit_cost') * F('quantity'))) 
 #     ['cost'])  
 class BuyItem(models.Model):
-    code=models.ForeignKey(Item, help_text="Не более 12 знаков",null=True,verbose_name='Код товара', related_name='buyitem_code', on_delete=models.CASCADE)
-    name = models.ForeignKey(Item,related_name='buyitem_name', verbose_name='Наименование', on_delete=models.CASCADE)
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
+    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
+    name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
-    unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', null=True)
-    quantity= models.PositiveIntegerField(verbose_name='Кол.',)
+    unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
+    quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
     cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
     supplier= models.ForeignKey(Supplier, on_delete=models.CASCADE, null=True)
     invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №         , дата 202_-__-__')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
-      
+    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
         return reverse('buy', kwargs={'slug': self.slug})
@@ -64,7 +65,7 @@ class BuyItem(models.Model):
 class StockItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    slug= models.SlugField(max_length=255, verbose_name='Url')
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     place = models.CharField(max_length=100,verbose_name='Место', null=True ,default='store')

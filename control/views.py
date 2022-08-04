@@ -31,14 +31,18 @@ def buy_item(request):
         form = BuyItemForm(request.POST)
         if form.is_valid():
             name= form.cleaned_data.get("name")
-            code= form.cleaned_data.get("code")
             unit_cost= form.cleaned_data.get("unit_cost")
             quantity= form.cleaned_data.get("quantity")
             item=StockItem.objects.get(name=name)
             actual=item.open +item.received-item.sales-item.transfer-item.waste           
             item.unit_cost=((actual*item.unit_cost + unit_cost*quantity)/(actual+quantity))            
             item.received=(item.received + quantity)
-            item.save()                       
+            item.save()
+            name2= form.cleaned_data.get("name")
+            quantity2= form.cleaned_data.get("quantity")
+            item2=BuyItem.objects.get(item=name2)
+            item2.quantity=item2.quantity+quantity2
+            item2.save()        
             form.save()
             return redirect('buy_item')
     

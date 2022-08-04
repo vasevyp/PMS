@@ -122,7 +122,7 @@ def add_item(request):
             slug2= form.cleaned_data.get("slug")
             unit2= form.cleaned_data.get("unit")
             unit_cost2= form.cleaned_data.get("unit_cost")
-            BuyItem.objects.create(code=code2, name=name2, slug=slug2, unit=unit2, unit_cost=unit_cost2)    
+            BuyItem.objects.create(code=code2, item=name2, slug=slug2, unit=unit2, unit_cost=unit_cost2)    
             form.save()
             return redirect('items-list')
     context = {
