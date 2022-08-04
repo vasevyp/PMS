@@ -51,6 +51,15 @@ class BuyItemsListView(ListView):
     model=BuyItem
     template_name = 'control/buy_items_list.html'
     context_object_name = 'buyitems'
+     
+
+class InventoryListView(ListView):
+    model = StockItem
+    template_name='control/inventory_list.html'
+    context_object_name='stockitems'
+    
+def inventory_about(request):
+    return render(request,'control/inventory_about.html')    
     
 
 def sold_product(request):

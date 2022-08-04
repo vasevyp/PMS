@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{block.super}}: Help
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+  <header id="header" class="header">
+    <div class="top-left">
+      <div class="navbar-header text-center" style="background: black">
+        <h1 class="navbar-brand " style="color: white">Inventory Management System</h1>
+
+      </div>
+    </div>
+    <h4>Пояснения по полям Item Inventory list</h4>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Поле</th>
+          <th>Содержит</th>
+          <th>Источник заполнения</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td>Code</td>
+          <td>код товара</td>
+          <td> При создании товара Add Items</td>
+        </tr>
+        <tr>
+          <td>ID</td>
+          <td>id товара в таблице</td>
+          <td>Автоматически при создании товара</td>
+        </tr>
+        <tr>
+          <td>Unit</td>
+          <td>Ед.Изм товара</td>
+          <td>При создании товара Add Items</td>
+        </tr>
+
+        <tr>
+          <td>Unit_cost</td>
+          <td>Стоимость товара</td>
+          <td>При заполнении формы Add Buy Item</td>
+        </tr>
+        <tr>
+          <td>place</td>
+          <td>место товара на складе</td>
+          <td>При заполнении формы ??</td>
+        </tr>
+        <tr>
+          <td>Open</td>
+          <td>входящий остаток</td>
+          <td>Расчетно при пересчете</td>
+        </tr>
+        <tr>
+          <td>Sales</td>
+          <td>продажа товаров в составе продуктов/блюд</td>
+          <td>при заполнении формы Add Sold Product</td>
+        </tr>
+        <tr>
+          <td>Received</td>
+          <td>получение товара</td>
+          <td>при заполнении формы Add Buy Item</td>
+        </tr>
+
+        <tr>
+          <td>transfer</td>
+          <td>передача/продажа товара отдельно от продуктов/блюд</td>
+          <td>при заполнении формы Add Transfer</td>
+        </tr>
+        <tr>
+          <td>waste</td>
+          <td>списание товара, потери/брак/выбытие</td>
+          <td>при заполнении формы Add Waste</td>
+        </tr>
+        <tr>
+          <td>Actual</td>
+          <td>остаток товара</td>
+          <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>Actual_cost</td>
+          <td>стоимость товара в остатках</td>
+          <td>Расчетно</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </header>
+
+</div>
+
+
+
+</div>
+
+
+
+
+{% endblock %}
