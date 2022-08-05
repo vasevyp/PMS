@@ -6,25 +6,27 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">Name</th>
         <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
         <th scope="col">Unit</th>
         <th scope="col">Price</th>
         <th scope="col">Quantity</th>
         <th scope="col">Revenue</th>
+        <th scope="col">Date</th>
       </tr>
     </thead>
     <tbody>
       {% for saleproduct in sold_products%}
       <tr>
-        <th scope="row">{{saleproduct.id}}</th>
-        <td>{{saleproduct.name}}</td>
-        <td>{{saleproduct.code}}</td>
+        <th scope="row">{{saleproduct.code}}</th>
+        <td>{{saleproduct.product}}</td>
+        <td>{{saleproduct.id}}</td>
         <td>{{saleproduct.unit}}</td>
         <td>{{saleproduct.price}}</td>
         <td>{{saleproduct.sold}}</td>
         <td>{{saleproduct.get_revenue}}</td>
+        <td>{{saleproduct.created_date}}</td>
       </tr>
       {% endfor %}
     </tbody>

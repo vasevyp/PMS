@@ -38,13 +38,12 @@ def add_buy_item(request):
             invoice= form.cleaned_data.get("invoice")
             #Запись покупки в StockItem 
             code=Item.objects.get(name=name).code
-            bitem=StockItem.objects.filter(name=name)
-            for i in bitem:
+            buy_item=StockItem.objects.filter(name=name)
+            for i in buy_item:
                 actual=i.open +i.received-i.sales-i.transfer-i.waste 
                 i.unit_cost=((actual*i.unit_cost + unit_cost*quantity)/(actual+quantity)) 
                 i.received=(i.received + quantity)
-                i.save()
-            # bitem.save()               
+                i.save()               
                        
            # запись в BuyItem и в buy_items_list
             BuyItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, item_supplier=supplier, invoice=invoice)       
@@ -70,7 +69,7 @@ class InventoryListView(ListView):
 def inventory_about(request):
     return render(request,'control/inventory_about.html')    
     
-
+# Продажа товара с занесением проданных ингредиентов в Остатки
 def sold_product(request):
     form = SoldProductForm()
     if request.method == 'POST':
@@ -79,19 +78,21 @@ def sold_product(request):
             name= form.cleaned_data.get("name")
             sold= form.cleaned_data.get("sold")
             p=Product.objects.filter(name=name)
-            for i in p:
-                product_code=i.code     
-            recipe_product=RecipeIngredient.objects.filter(code=product_code)  
-            n=recipe_product.count() #количество ингредиентов в продукте
             
+            for i in p:
+                code=i.code 
+                price=i.price    
+            recipe_product=RecipeIngredient.objects.filter(code=code)  
+            n=recipe_product.count() #количество ингредиентов в продукте            
             for j in range(n):
                 icode=recipe_product[j].code_ingr
-                irecipe=RecipeIngredient.objects.get(code=product_code, code_ingr=icode)
+                irecipe=RecipeIngredient.objects.get(code=code, code_ingr=icode)
                 rate=irecipe.ratio
-                istock=StockItem.objects.get(code=icode)
-                istock.sales=istock.sales + sold*rate
-                istock.save()
-            form.save()
+                i_stock=StockItem.objects.get(code=icode)
+                i_stock.sales=i_stock.sales + sold*rate
+                i_stock.save()
+            # запись в SaleProduct и в SaleProduct_list
+            SaleProduct.objects.create(product=name,code=code, price=price, sold=sold)  
             return redirect('sold_product')
         
     context = {

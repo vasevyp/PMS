@@ -71,7 +71,7 @@ class StockItem(models.Model):
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     place = models.CharField(max_length=100,verbose_name='Место', null=True ,default='store')
     open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, null=True, default=0)
-    sales =	models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    sales =	models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=3, default=0)
     received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", null=True, decimal_places=0, default=0)
     transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
     waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
@@ -103,7 +103,8 @@ class StockItem(models.Model):
 
 '''Модель продаж продуктов''' 
 class SaleProduct(models.Model):    
-    name = models.ForeignKey(Product,related_name='name_sale', on_delete=models.PROTECT)
+    name = models.ForeignKey(Product,related_name='name_sale', null=True, on_delete=models.PROTECT)
+    product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     price=models.PositiveIntegerField(verbose_name='Цена, руб', default=1)
