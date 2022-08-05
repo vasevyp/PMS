@@ -62,7 +62,7 @@ class CategoryItem(models.Model):
         
 '''Модель закупаемых товаров'''
 class Item(models.Model):   
-    code=models.CharField(max_length=200, help_text="Не более 12 знаков", unique=True, verbose_name='Код товара')
+    code=models.DecimalField(max_digits=12, unique=True, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", unique=True,db_index=True)
     category = models.ForeignKey(
         CategoryItem, related_name='item', on_delete=models.CASCADE)
