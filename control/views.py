@@ -35,10 +35,16 @@ def add_buy_item(request):
             unit_cost= form.cleaned_data.get("unit_cost")
             quantity= form.cleaned_data.get("quantity")
             supplier= form.cleaned_data.get("supplier")
-            invoice= form.cleaned_data.get("invoice")             
-          
+            invoice= form.cleaned_data.get("invoice")
+            #Запись покупки в StockItem 
             code=Item.objects.get(name=name).code
-            
+            bitem=StockItem.objects.filter(name=name)
+            for i in bitem:
+                actual=i.open +i.received-i.sales-i.transfer-i.waste 
+                i.unit_cost=((actual*i.unit_cost + unit_cost*quantity)/(actual+quantity)) 
+                i.received=(i.received + quantity)
+                i.save()
+            # bitem.save()               
                        
            # запись в BuyItem и в buy_items_list
             BuyItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, item_supplier=supplier, invoice=invoice)       
