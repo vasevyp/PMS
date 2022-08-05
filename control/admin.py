@@ -1,5 +1,5 @@
 from django.contrib import admin
-from  .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem
+from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, OrderItem, DeliverItem
 
 # Register your models here.
 class BuyItemAdmin(admin.ModelAdmin):
@@ -28,6 +28,24 @@ class SaleProductAdmin(admin.ModelAdmin):
     list_filter= ('product', 'code', 'created_date')
     # list_horizontal =('code', 'name', 'price')
 # admin.site.register(SaleProduct, SaleProductAdmin)
+
+
+class TransferItemAdmin(admin.ModelAdmin):
+    list_display = ['item','code', 'unit','unit_cost','quantity', 'partner', 'created_date' ]
+    prepopulated_fields= {'slug': ('item',)}  
+    save_on_top = True
+    search_fields = ['code','item', 'partner',]
+    list_filter= ('name', 'partner',)
+admin.site.register(TransferItem, TransferItemAdmin)
+
+
+class WasteItemAdmin(admin.ModelAdmin):
+    list_display = ['item','code', 'unit','unit_cost','quantity', 'partner', 'created_date' ]
+    prepopulated_fields= {'slug': ('item',)}  
+    save_on_top = True
+    search_fields = ['code','item', 'partner']
+    list_filter= ('name', 'partner',)
+admin.site.register(WasteItem, WasteItemAdmin)
 
 
 class OrderItemAdmin(admin.ModelAdmin):

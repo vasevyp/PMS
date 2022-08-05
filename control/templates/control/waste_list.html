@@ -1,0 +1,42 @@
+{% extends 'base_simple.html' %}
+{% block title %} {{ block.super }}: Waste Item
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Waste Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Unit_cost</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total_cost</th>
+        <th scope="col">Partner</th>
+        <th scope="col">Invoice</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for waste in wastes%}
+
+      <tr>
+        <th scope="row">{{waste.code}}</th>
+        <td>{{waste.item}}</td>
+        <td>{{waste.id}}</td>
+        <td>{{waste.unit}}</td>
+        <td>{{waste.unit_cost}}</td>
+        <td>{{waste.quantity}}</td>
+        <td>{{waste.get_cost}}</td>
+        <td>{{waste.partner}}</td>
+        <td>{{waste.invoice}}</td>
+        <td>{{waste.created_date}}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

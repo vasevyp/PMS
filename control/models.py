@@ -101,6 +101,68 @@ class StockItem(models.Model):
         return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
 
 
+'''Модель передачи товаров (transfer)''' 
+ 
+class TransferItem(models.Model):
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
+    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в transfer_list.html
+    name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)# для form buy_item.html
+    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
+    unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
+    quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
+    cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
+    partner=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
+    invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №     , дата   ')   
+    created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
+    
+    
+    def get_absolute_url(self):        
+        return reverse('buy', kwargs={'slug': self.slug})
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Передача'
+        verbose_name_plural = 'Передачи' 
+        
+    def __str__(self):
+        return str(self.name)  
+    @property
+    def get_cost(self):
+        return self.unit_cost * self.quantity
+
+
+'''Модель  для списания товаров (waste)''' 
+ 
+class WasteItem(models.Model):
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
+    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в transfer_list.html
+    name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)# для form buy_item.html
+    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
+    unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
+    quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
+    cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
+    partner=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
+    invoice= models.CharField(max_length=250,verbose_name='Акт',  null=True ,default='Акт №     , дата   ')   
+    created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
+    
+    
+    def get_absolute_url(self):        
+        return reverse('buy', kwargs={'slug': self.slug})
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Списание'
+        verbose_name_plural = 'Списания' 
+        
+    def __str__(self):
+        return str(self.name)  
+    @property
+    def get_cost(self):
+        return self.unit_cost * self.quantity
+
+
 '''Модель продаж продуктов''' 
 class SaleProduct(models.Model):    
     name = models.ForeignKey(Product,related_name='name_sale', null=True, on_delete=models.PROTECT)

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
-from .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem
-from .forms import BuyItemForm, SoldProductForm
+from .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem, TransferItem, WasteItem
+from .forms import BuyItemForm, SoldProductForm, TransferItemForm, WasteItemForm
 
 from register.models import Product, RecipeIngredient, Item
 
@@ -119,9 +119,74 @@ class SoldProductListView(ListView):
 #     }
     
 #     return render(request, template_name='control/control.html', context=context)
+
+
+def add_transfer_item(request):
+    form = TransferItemForm()
+    if request.method == 'POST':
+        form = TransferItemForm(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data.get("name")
+            unit= form.cleaned_data.get("unit")
+            unit_cost= form.cleaned_data.get("unit_cost")
+            quantity= form.cleaned_data.get("quantity")
+            partner= form.cleaned_data.get("partner")
+            invoice= form.cleaned_data.get("invoice")
+            #Запись трансфера в StockItem 
+            code=Item.objects.get(name=name).code
+            item=StockItem.objects.filter(name=name)
+            for i in item:
+                i.transfer=( i.transfer + quantity)
+                i.save()               
+                       
+           # запись в TransferItem и в transfer_list
+            TransferItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, partner=partner, invoice=invoice)       
+            
+            return redirect('transfer')
     
+    context = {
+        'form': form,
+            }
+    return render(request, 'forms/transfer.html', context)
+
+class TransferItemsListView(ListView):
+    model=TransferItem
+    template_name = 'control/transfer_list.html'
+    context_object_name = 'transfers'
+
+
+def add_waste_item(request):
+    form = WasteItemForm()
+    if request.method == 'POST':
+        form = WasteItemForm(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data.get("name")
+            unit= form.cleaned_data.get("unit")
+            unit_cost= form.cleaned_data.get("unit_cost")
+            quantity= form.cleaned_data.get("quantity")
+            partner= form.cleaned_data.get("partner")
+            invoice= form.cleaned_data.get("invoice")
+            #Запись списания в StockItem 
+            code=Item.objects.get(name=name).code
+            buy_item=StockItem.objects.filter(name=name)
+            for i in buy_item:
+                i.waste=(i.waste + quantity)
+                i.save()               
+                       
+           # запись в BuyItem и в buy_items_list
+            WasteItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, partner=partner, invoice=invoice)       
+            
+            return redirect('waste')
     
-        
+    context = {
+        'form': form,
+            }
+    return render(request, 'forms/waste.html', context)
+    
+class WasteItemsListView(ListView):
+    model=WasteItem
+    template_name = 'control/waste_list.html'
+    context_object_name = 'wastes'        
                 
                 
     
