@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem
 from .forms import BuyItemForm, SoldProductForm
 
-from register.models import Product, RecipeIngredient
+from register.models import Product, RecipeIngredient, Item
 
 
 def control(request):
@@ -25,25 +25,24 @@ def control(request):
     
     return render(request, template_name='control/control.html', context=context)
 
-def buy_item(request):
+def add_buy_item(request):
     form = BuyItemForm()
     if request.method == 'POST':
         form = BuyItemForm(request.POST)
         if form.is_valid():
             name= form.cleaned_data.get("name")
+            unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
             quantity= form.cleaned_data.get("quantity")
-            item=StockItem.objects.get(name=name)
-            actual=item.open +item.received-item.sales-item.transfer-item.waste           
-            item.unit_cost=((actual*item.unit_cost + unit_cost*quantity)/(actual+quantity))            
-            item.received=(item.received + quantity)
-            item.save()
-            name2= form.cleaned_data.get("name")
-            quantity2= form.cleaned_data.get("quantity")
-            item2=BuyItem.objects.get(item=name2)
-            item2.quantity=item2.quantity+quantity2
-            item2.save()        
-            form.save()
+            supplier= form.cleaned_data.get("supplier")
+            invoice= form.cleaned_data.get("invoice")             
+          
+            code=Item.objects.get(name=name).code
+            
+                       
+           # запись в BuyItem и в buy_items_list
+            BuyItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, item_supplier=supplier, invoice=invoice)       
+            
             return redirect('buy_item')
     
     context = {

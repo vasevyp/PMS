@@ -30,15 +30,16 @@ STATUS_CHOICE = (
 #     ['cost'])  
 class BuyItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
-    name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)
+    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в buy_items_list.html
+    name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)# для form buy_item.html
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
     cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
+    item_supplier=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
     supplier= models.ForeignKey(Supplier, on_delete=models.CASCADE, null=True)
-    invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №         , дата 202_-__-__')   
+    invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №     , дата   ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
@@ -69,11 +70,11 @@ class StockItem(models.Model):
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     place = models.CharField(max_length=100,verbose_name='Место', null=True ,default='store')
-    open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, null=True, default=0)
     sales =	models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
-    received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
-    transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
-    waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", null=True, decimal_places=0, default=0)
+    transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
+    waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
     actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
     actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)	
 

@@ -11,7 +11,7 @@ class BuyItemForm(ModelForm):
             'unit':forms.Select(attrs={'class':'form-control'},),
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'quantity':forms.NumberInput(attrs={'class':'form-control'}),
-            'supplier':forms.TextInput(attrs={'class':'form-control'},),
+            'supplier':forms.Select(attrs={'class':'form-control'},),
             'invoice':forms.TextInput(attrs={'class':'form-control'})              
         }
         

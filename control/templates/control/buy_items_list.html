@@ -1,35 +1,40 @@
-{% extends 'base_simple.html' %} {% block title %} {{ block.super }}: {{ title
-}} {% endblock %} {% block content %}
+{% extends 'base_simple.html' %}
+{% block title %} {{ block.super }}: Buy Item
+{% endblock %}
+{% block content %}
 <div class="container">
-  <h1>Control</h1>
   <h2>Buy Item</h2>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">Name</th>
         <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
         <th scope="col">Unit</th>
         <th scope="col">Unit_cost</th>
         <th scope="col">Quantity</th>
         <th scope="col">Total_cost</th>
         <th scope="col">Supplier</th>
         <th scope="col">Invoice</th>
+        <th scope="col">updated_date</th>
       </tr>
     </thead>
     <tbody>
       {% for buyitem in buyitems%}
+
       <tr>
-        <th scope="row">{{buyitem.id}}</th>
+        <th scope="row">{{buyitem.code}}</th>
         <td>{{buyitem.item}}</td>
-        <td>{{buyitem.code}}</td>
+        <td>{{buyitem.id}}</td>
         <td>{{buyitem.unit}}</td>
         <td>{{buyitem.unit_cost}}</td>
         <td>{{buyitem.quantity}}</td>
         <td>{{buyitem.get_cost}}</td>
-        <td>{{buyitem.supplier}}</td>
+        <td>{{buyitem.item_supplier}}</td>
         <td>{{buyitem.invoice}}</td>
+        <td>{{buyitem.updated_date}}</td>
       </tr>
+
       {% endfor %}
     </tbody>
   </table>
