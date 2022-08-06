@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
-    'control.apps.ControlConfig',
     'bootstrap5',
+    'import_export',
+    # 'import_export_celery',
+    'control.apps.ControlConfig',
+    
     
 ]
 
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'author.middlewares.AuthorDefaultBackendMiddleware',  # == 'import_export_celery',
 ]
 
 ROOT_URLCONF = 'mms22.urls'
@@ -103,7 +107,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+#Определяет, будет ли библиотека использовать транзакции базы данных при импорте данных. Использование транзакций делает импорт более безопасным, поскольку сбой во время импорта не приведет к импорту только части набора данных.
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
+#Если установлено, перечисляет код разрешения, который требуется пользователям для выполнения действия «импорт». По умолчанию None, что означает, что каждый может выполнять импорт.
+#IMPORT_EXPORT_IMPORT_PERMISSION_CODE = True
+
+# Целое число, определяющее размер фрагментов при повторении QuerySet для экспорта данных. По умолчанию 100. Вы можете сэкономить память, уменьшив ее, или ускорить экспорт, увеличив ее.
+#IMPORT_EXPORT_CHUNK_SIZE =500
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
