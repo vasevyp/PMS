@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'register.apps.RegisterConfig',
     'bootstrap5',
     'import_export',
     # 'import_export_celery',
+    'register.apps.RegisterConfig',
     'control.apps.ControlConfig',
+    'impex.apps.ImpexConfig',
+    'acore.apps.AcoreConfig',
     
     
 ]
