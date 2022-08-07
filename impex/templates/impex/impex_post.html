@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Impex {% endblock title %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <strong class="card-title">Impex</strong>
+      </div>
+      <!--container-->
+      <div class="container">
+        <!--row-->
+        <div class="row g-2">
+
+          <!--cell-->
+          <div class="col-6">
+            <h5>Импорт товаров</h5>
+            <div class="p-3 border bg-light">
+
+              {% if item_success %}
+              <div class="alert alert-success d-flex">
+                {{item_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт Item из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xitem' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Импортировать Item из IMPEX" />
+              </form>
+              {% endif %}
+              {{e_data}}
+            </div>
+          </div>
+          <!--/cell-->
+          <!--cell-->
+          <div class="col-6">
+            <h5>Импорт категорий продуктов</h5>
+            <div class="p-3 border bg-light">
+
+              {% if category_success %}
+              <div class="alert alert-success d-flex">
+                {{category_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт Category из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xcategory' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Импортировать Category из IMPEX" />
+              </form>
+              {% endif %}
+              {{e_data}}
+            </div>
+          </div>
+          <!--/cell-->
+        </div>
+      </div>
+      <!--/row-->
+    </div>
+
+    <!--/container-->
+
+  </div>
+  <!--/.col-->
+</div>
+<!--card-->
+<!-- <div class="row">
+
+</div>
+<div class="card col-6">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> -->
+<!--/card-->
+{% endblock content %}

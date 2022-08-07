@@ -20,7 +20,7 @@ class AddCategoryForm(ModelForm):
         fields=['code', 'name', 'slug']
         widgets={
             'code':forms.TextInput(attrs={'class':'form-control'}),
-            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'name':forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Название категории',}),
             'slug':forms.TextInput(attrs={'class':'form-control'}),   
 
         } 
@@ -41,7 +41,7 @@ class AddItemForm(ModelForm):
         model = Item
         fields=['name', 'code','category', 'supplier', 'unit','unit_cost', 'description', 'slug']
         widgets={
-            'name':forms.TextInput(attrs={'class':'form-control','id': 'recipe_name'}),
+            'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
             'code':forms.TextInput(attrs={'class':'form-control'}),
             'category':forms.Select(attrs={'class':'form-control'}),
             'supplier':forms.Select(attrs={'class':'form-control'}),
@@ -59,7 +59,7 @@ class AddProductForm(ModelForm):
         fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking','slug']
         # field_classes={'price':DecimalField}
         widgets={
-            'name':forms.TextInput(attrs={'class':'form-control','id': 'recipe_name'}),
+            'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
             'code':forms.TextInput(attrs={'class':'form-control'}),
             'category':forms.Select(attrs={'class':'form-control'}),
             'difficulty':forms.Select(attrs={'class':'form-control'}),
@@ -73,10 +73,10 @@ class AddProductForm(ModelForm):
 class AddRecipeIngredientForm(ModelForm):
     class Meta:
         model = RecipeIngredient
-        fields=['recipe_name','code','ingredient', 'code_ingr','unit', 'unit_cost', 'ratio']
+        fields=['product','code','ingredient', 'code_ingr','unit', 'unit_cost', 'ratio']
         field_classes={'unit_cost':DecimalField, 'quantity':DecimalField}
         widgets={
-            'recipe_name':forms.Select(attrs={'class':'form-control','id': 'recipe_name'}),
+            'product':forms.Select(attrs={'class':'form-control','id': 'product'}),
             'code':forms.NumberInput(attrs={'class':'form-control'}),
             'ingredient':forms.Select(attrs={'class':'form-control'}),
             'code_ingr':forms.NumberInput(attrs={'class':'form-control'}),
@@ -84,3 +84,8 @@ class AddRecipeIngredientForm(ModelForm):
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'ratio':forms.NumberInput(attrs={'class':'form-control'}),
         }             
+        
+# class AddImpexProductForm(ModelForm):
+#     class Meta:
+#         model = Product
+#         fields=['ingredient']        

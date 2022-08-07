@@ -3,7 +3,9 @@ from django.views.generic import ListView
 
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
 from .forms import AddSupplierForm, AddCategoryForm, AddItemCategoryForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
-from control.models import StockItem, BuyItem
+from control.models import StockItem
+
+
 
 def index(request):
     context={
@@ -33,6 +35,8 @@ def register(request):
     return render(request, template_name='register/register.html', context=context)
 
 
+
+ 
 # def suppliers(request):
 #     suppliers = Supplier.objects.all()
 #     context={

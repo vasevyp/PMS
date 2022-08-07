@@ -1,5 +1,9 @@
-{% extends 'base_simple.html' %} {% load static %} {% block title %} {{
-block.super }}: {{ title }} {% endblock %} {% block content %}
+{% extends 'base_simple.html' %}
+{% load static %}
+{% block title %}
+{{block.super }}: Products
+{% endblock %}
+{% block content %}
 <div class="container">
   <h2 class="custom">Products</h2>
   <table class="table table-striped">

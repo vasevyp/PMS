@@ -15,6 +15,7 @@ UNITS=(
         
     )
 
+
 '''Модель поставщиков закупаемых товаров'''
 class Supplier(models.Model):
     code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
@@ -94,7 +95,7 @@ class Item(models.Model):
 '''Модель ингредиентов для рецептов''' 
 
 class RecipeIngredient(models.Model): 
-    recipe_name=models.ForeignKey('Product', null=True, verbose_name='Рецепт на Продукт',  on_delete=models.CASCADE)#related_name='product_name',
+    product=models.ForeignKey('Product', null=True, verbose_name='Рецепт на Продукт',  on_delete=models.CASCADE)#related_name='product_name',
     code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", verbose_name='Код продукта',decimal_places=0, null=True)
     ingredient= models.ForeignKey(Item, related_name='recipe_ingredient',  on_delete=models.CASCADE)
     code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
@@ -109,7 +110,7 @@ class RecipeIngredient(models.Model):
         return reverse('recipeingredient', kwargs={'slug': self.slug})
     
     class Meta:
-        ordering = ['recipe_name', 'ingredient']
+        ordering = ['product', 'ingredient']
         verbose_name = 'Рецепт с ингредиентами'
         verbose_name_plural = 'Рецепты с ингредиентами'
     

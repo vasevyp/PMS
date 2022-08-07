@@ -1,8 +1,11 @@
 from django.contrib import admin
 
+from import_export.admin import ImportExportModelAdmin
+
 from .models import Category, CategoryItem, Supplier, Item, Product, RecipeIngredient
 
-class SupplierAdmin(admin.ModelAdmin):
+
+class SupplierAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
@@ -12,7 +15,7 @@ admin.site.register(Supplier, SupplierAdmin)
 
 
 
-class CategoryItemAdmin(admin.ModelAdmin):
+class CategoryItemAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name', ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
@@ -24,7 +27,7 @@ class CategoryItemAdmin(admin.ModelAdmin):
     #     ordering = ['code'] #Sort in desc order
 admin.site.register(CategoryItem, CategoryItemAdmin)
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name', ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
@@ -34,7 +37,7 @@ class CategoryAdmin(admin.ModelAdmin):
     # class Meta:
     #     ordering = ['code'] #Sort in desc order
 admin.site.register(Category, CategoryAdmin)
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name', 'category', 'supplier', 'unit_cost',] 
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
@@ -42,7 +45,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter= ('name', 'code')
 admin.site.register(Item, ItemAdmin)
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
     list_display = ['code','name', 'price','category', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
@@ -51,11 +54,11 @@ class ProductAdmin(admin.ModelAdmin):
  
     
 admin.site.register(Product, ProductAdmin)
-class RecipeIngredientAdmin(admin.ModelAdmin):
-    list_display = ['recipe_name', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
-    # prepopulated_fields= {'slug': ('recipe_name',)}
+class RecipeIngredientAdmin(ImportExportModelAdmin):
+    list_display = ['product', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
+    # prepopulated_fields= {'slug': ('product',)}
     save_on_top = True
-    search_fields = ['recipe_name__name', 'code', 'code_ingr','ingredient__name']
-    list_filter= ('recipe_name', 'ingredient')
+    search_fields = ['product__name', 'code', 'code_ingr','ingredient__name']
+    list_filter= ('product', 'ingredient')
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
 
