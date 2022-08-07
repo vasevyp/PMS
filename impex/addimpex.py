@@ -19,25 +19,25 @@ def post_impex_category(request):
 
     return render(request, 'impex/impex_post.html', context={'category_success':success})
 
-# def post_impex_product(request):    
-#     print('Выполняется Функция add_impex_product')
-    # req=Product.objects.all()
-    # for i in req:
-    #     name=i.name
-    #     code=i.code 
-    #     category=i.category
-    #     difficulty=i.difficulty
-    #     price=i.price
-    #     description=i.description
-    #     cooking=i.cooking        
-    #     slug=i.slug
-    #     print('Это объект = ', i, '--', name)
-    #     ImpexProduct.objects.get_or_create(name=name, code=code, difficulty=difficulty, description=description,  price=price, category=category, category_id=c_id, cooking=cooking, slug=slug)
+def post_impex_product(request):    
+    print('Выполняется Функция add_impex_product')
+    req=ImpexProduct.objects.all()
+    for i in req:
+        c_id=Category.objects.get(name=i.category).id
+        Product.objects.get_or_create(
+            name=i.name,
+            code=i.code,
+            difficulty=i.difficulty,
+            description=i.description,
+            price=i.price,
+            category_id=c_id,
+            cooking=i.cooking,
+            slug=i.slug)
         
-    #     print('Конец выполнения функции End-OK.')
-    # success='Импорт Product выполнен успешно!'
+        print('Конец выполнения функции End-OK.')
+    success='Импорт Product выполнен успешно!'
 
-    # return render(request, 'impex/impex_post.html', context={'product_success':success})
+    return render(request, 'impex/impex_post.html', context={'product_success':success})
 
 def post_impex_item(request):    
     print('Выполняется Функция post_impex_item')
