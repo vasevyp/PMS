@@ -41,7 +41,7 @@ class BuyItem(models.Model):
     supplier= models.ForeignKey(Supplier, on_delete=models.CASCADE, null=True)
     invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №     , дата   ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
-    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
+    # updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
         return reverse('buy', kwargs={'slug': self.slug})

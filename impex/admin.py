@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ImpexCategory, ImpexCategoryItem, ImpexSupplier, ImpexItem, ImpexProduct, ImpexRecipeIngredient, ImpexBuyItem, ImpexStockItem, ImpexSaleProduct, ImpexTransferItem, ImpexWasteItem, ImpexOrderItem, ImpexDeliverItem
+from .models import ImpexCategory, ImpexCategoryItem, ImpexSupplier, ImpexItem, ImpexProduct, ImpexRecipeIngredient, ImpexBuyItem, ImpexSaleProduct, ImpexTransferItem, ImpexWasteItem, ImpexOrderItem, ImpexDeliverItem
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -48,22 +48,11 @@ class ImpexRecipeIngredientAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexBuyItem)
 class ImpexBuyItemAdmin(ImportExportModelAdmin):
-    list_display = ['item','code', 'unit','unit_cost','quantity','created_date' ]
+    list_display = ['name','code', 'unit','unit_cost','quantity', 'supplier', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['code','name__name',]
     list_filter= ('name',)
-
-
-
-@admin.register(ImpexStockItem)
-class ImpexStockItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'unit','unit_cost','place','open', 'sales', 'received', 'transfer', 'waste' ]
-    prepopulated_fields= {'slug': ('name',)}  
-    save_on_top = True
-    search_fields = ['name', 'code']
-    list_filter= ('name', 'code')
-
 
 @admin.register(ImpexSaleProduct)
 class ImpexSaleProductAdmin(ImportExportModelAdmin):

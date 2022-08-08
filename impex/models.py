@@ -25,7 +25,7 @@ STATUS_CHOICE = (
     )
 
 
-'''Модель поставщиков закупаемых товаров'''
+'''Модель IMPEX поставщиков закупаемых товаров'''
 class ImpexSupplier(models.Model):
     code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
@@ -45,7 +45,7 @@ class ImpexSupplier(models.Model):
     def __str__(self):
         return self.name  
 
-'''Модель категорий закупаемых товаров'''
+'''Модель IMPEX категорий закупаемых товаров'''
 class ImpexCategoryItem(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
@@ -64,7 +64,7 @@ class ImpexCategoryItem(models.Model):
     
       
         
-'''Модель закупаемых товаров'''
+'''Модель IMPEX закупаемых товаров -РАБОТАЕТ'''
 class ImpexItem(models.Model):   
     code=models.DecimalField(max_digits=12, unique=True, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", unique=True,db_index=True)
@@ -90,7 +90,7 @@ class ImpexItem(models.Model):
         return self.name  
     
     
-'''Модель ингредиентов для рецептов''' 
+'''Модель IMPEX ингредиентов для рецептов''' 
 
 class ImpexRecipeIngredient(models.Model): 
     product=models.CharField(max_length=200, help_text="Не более 200 знаков")#related_name='product_name',
@@ -117,7 +117,7 @@ class ImpexRecipeIngredient(models.Model):
         return format((float(self.unit_cost) * float(self.ratio)), '.2f')    
 
 
-'''Модель категорий готовых продуктов'''
+'''Модель IMPEX категорий готовых продуктов -РАБОТАЕТ'''
 class ImpexCategory(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
@@ -139,7 +139,7 @@ class ImpexCategory(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)     
         
-'''Модель готовых продуктов'''
+'''Модель IMPEX готовых продуктов -РАБОТАЕТ'''
 
 class ImpexProduct(models.Model):
     DIFFICULTY_LEVELS = (
@@ -150,8 +150,8 @@ class ImpexProduct(models.Model):
     code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, null=True,verbose_name='Код')    
     name = models.CharField(max_length=200,help_text="Не более 200 знаков", null=True, verbose_name='Продукт')
     category = models.CharField(max_length=200, null=True, help_text="Не более 200 знаков")
-    category_id = models.CharField(max_length=200, null=True, help_text="Не более 200 знаков")     
-    ingredient = models.CharField(max_length=200,null=True, blank=True, help_text="Не более 200 знаков",)
+    # category_id = models.CharField(max_length=200, null=True, help_text="Не более 200 знаков")     
+    # ingredient = models.CharField(max_length=200,null=True, blank=True, help_text="Не более 200 знаков",)
     difficulty = models.CharField(choices=DIFFICULTY_LEVELS, max_length=10)
     price = models.DecimalField(max_digits=10,help_text="Не более 10 знаков", null=True, decimal_places=2)
     description = models.TextField(blank=True, null=True)
@@ -173,24 +173,24 @@ class ImpexProduct(models.Model):
         return self.name         
 
 
-'''Модель покупок товаров''' 
+'''Модель IMPEX покупок товаров -РАБОТАЕТ''' 
 
 # cost = ('BuyItem'.objects.aggregate(total=Sum(F('unit_cost') * F('quantity'))) 
 #     ['cost'])  
 class ImpexBuyItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в buy_items_list.html
+    # item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в buy_items_list.html
     name = models.CharField(max_length=200, help_text="Не более 200 знаков")# для form buy_item.html
     slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
     cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
-    item_supplier=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
+    # item_supplier=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
     supplier= models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
     invoice= models.CharField(max_length=250,verbose_name='Накладная',  null=True ,default='Накладная №     , дата   ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
-    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
+    # updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
         return reverse('buy', kwargs={'slug': self.slug})
@@ -206,44 +206,9 @@ class ImpexBuyItem(models.Model):
     def get_cost(self):
         return self.unit_cost * self.quantity
  
-    
-'''Модель склада товаров'''
-class ImpexStockItem(models.Model):
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
-    slug= models.SlugField(max_length=255, verbose_name='Url')
-    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
-    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
-    place = models.CharField(max_length=100,verbose_name='Место', null=True ,default='store')
-    open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, null=True, default=0)
-    sales =	models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=3, default=0)
-    received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", null=True, decimal_places=0, default=0)
-    transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
-    waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
-    actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
-    actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)	
+ 
 
-    def get_absolute_url(self):        
-        return reverse('stock', kwargs={'slug': self.slug})
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'X-Остаток'
-        verbose_name_plural = 'X-Остатки' 
-        
-    def __str__(self):
-        return str(self.name)  
-    
-    @property
-    def get_actual(self):
-        return self.open-self.sales+self.received-self.transfer-self.waste 
-    
-    @property
-    def get_actual_cost(self):
-        return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
-
-
-'''Модель передачи товаров (transfer)''' 
+'''Модель IMPEX передачи товаров (transfer)''' 
  
 class ImpexTransferItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
@@ -274,7 +239,7 @@ class ImpexTransferItem(models.Model):
         return self.unit_cost * self.quantity
 
 
-'''Модель  для списания товаров (waste)''' 
+'''Модель IMPEX  для списания товаров (waste)''' 
  
 class ImpexWasteItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
@@ -305,7 +270,7 @@ class ImpexWasteItem(models.Model):
         return self.unit_cost * self.quantity
 
 
-'''Модель продаж продуктов''' 
+'''Модель IMPEX продаж продуктов''' 
 class ImpexSaleProduct(models.Model):    
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
     product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
@@ -335,7 +300,7 @@ class ImpexSaleProduct(models.Model):
     
 
 
-'''Модель заказа товаров''' 
+'''Модель IMPEX заказа товаров''' 
 class ImpexOrderItem(models.Model):    
     order_number = models.CharField(max_length=10, unique=True, help_text="Не более 10 знаков",)
     supplier = models.CharField(max_length=200, help_text="Не более 200 знаков")
@@ -363,7 +328,7 @@ class ImpexOrderItem(models.Model):
     def get_order_cost(self):
         return self.unit_cost * self.order_quantity
 
-'''Модель товаров в стадии поставки (на путях)''' 
+'''Модель IMPEX товаров в стадии поставки (на путях)''' 
 class ImpexDeliverItem(models.Model):
   
     order_item = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)

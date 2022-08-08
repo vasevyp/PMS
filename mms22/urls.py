@@ -24,11 +24,11 @@ urlpatterns = [
     path('', include('register.urls')),
     path('control/', include('control.urls')),
     path('impex/', include('impex.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #     # import debug_toolbar
 #     # urlpatterns += STATIC_URL()
 #     # urlpatterns=[

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Impex {% endblock title %}
 
@@ -18,7 +19,35 @@
           <div class="col-6">
             <h5>Импорт продуктов</h5>
             <div class="p-3 border bg-light">
+              <p style="font-size:1rem">В таблице закупок для импорта ОБЯЗАТЕЛНЫ: наименование и поставщик продукта.
+              </p>
+              {% if buyitem_success %}
+              <div class="alert alert-success d-flex">
+                {{buyitem_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт BuyItem из IMPEX" />
+              </form>
+              {% else %}
 
+              <form action="{% url 'xbuyitem' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить BuyIten из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
+          <!--cell-->
+          <div class="col-6">
+            <h5>Импорт продуктов</h5>
+            <div class="p-3 border bg-light">
+              <p style="font-size:1rem">В таблице продуктов для импорта ОБЯЗАТЕЛНЫ: наименование, категория продукта.
+              </p>
               {% if product_success %}
               <div class="alert alert-success d-flex">
                 {{product_success}}
@@ -45,7 +74,7 @@
           <div class="col-6">
             <h5>Импорт товаров</h5>
             <div class="p-3 border bg-light">
-
+              <p class="ht05">В таблице товаров для импорта ОБЯЗАТЕЛНЫ: наименование, поставщик, категория товара.</p>
               {% if item_success %}
               <div class="alert alert-success d-flex">
                 {{item_success}}
