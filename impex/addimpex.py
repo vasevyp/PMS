@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from impex.models import ImpexProduct,ImpexItem
 from . models import ImpexProduct,ImpexCategory
 from register.models import Category, Product, Item, Supplier, CategoryItem
+from control.models import StockItem
 
 def post_impex_category(request):    
     print('Выполняется Функция add_impex_product2')
@@ -57,6 +58,7 @@ def post_impex_item(request):
                             available=i.available, 
                             slug=i.slug
                             )
+        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=i.slug, unit=i.unit, unit_cost=i.unit_cost) 
         
         print('Конец выполнения функции post_impex_item = End-OK.')
     success='Импорт Items выполнен успешно!'
