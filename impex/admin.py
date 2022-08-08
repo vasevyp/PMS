@@ -66,21 +66,19 @@ class ImpexSaleProductAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexTransferItem)
 class ImpexTransferItemAdmin(ImportExportModelAdmin):
-    list_display = ['item','code', 'unit','unit_cost','quantity', 'partner', 'created_date' ]
-    prepopulated_fields= {'slug': ('item',)}  
+    list_display = ['item_name','code', 'unit','unit_cost','quantity', 'partner', 'created_date' ] 
     save_on_top = True
-    search_fields = ['code','item', 'partner',]
-    list_filter= ('name', 'partner',)
+    search_fields = ['code','item_name', 'partner',]
+    list_filter= ('item_name', 'partner',)
 
 
 
 @admin.register(ImpexWasteItem)
 class ImpexWasteItemAdmin(ImportExportModelAdmin):
-    list_display = ['item','code', 'unit','unit_cost','quantity', 'approve', 'created_date' ]
-    prepopulated_fields= {'slug': ('item',)}  
+    list_display = ['item_name','code', 'unit','unit_cost','quantity', 'approve', 'created_date' ] 
     save_on_top = True
-    search_fields = ['code','item', 'approve']
-    list_filter= ('name', 'approve',)
+    search_fields = ['code','item_name', 'approve']
+    list_filter= ('item_name', 'approve',)
 
 
 

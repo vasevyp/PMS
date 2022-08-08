@@ -212,9 +212,7 @@ class ImpexBuyItem(models.Model):
  
 class ImpexTransferItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в transfer_list.html
-    name = models.CharField(max_length=200, help_text="Не более 200 знаков")# для form buy_item.html
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    item_name =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
@@ -228,12 +226,12 @@ class ImpexTransferItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['item_name']
         verbose_name = 'X-Передача'
         verbose_name_plural = 'X-Передачи' 
         
     def __str__(self):
-        return str(self.name)  
+        return str(self.item_name)  
     @property
     def get_cost(self):
         return self.unit_cost * self.quantity
@@ -243,14 +241,12 @@ class ImpexTransferItem(models.Model):
  
 class ImpexWasteItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
-    item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в transfer_list.html
-    name = models.CharField(max_length=200, help_text="Не более 200 знаков")# для form buy_item.html
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    item_name =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
     cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
-    approve=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
+    approve=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
     document= models.CharField(max_length=250,verbose_name='Акт',  null=True ,default='Акт №     , дата   ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
     
@@ -259,12 +255,12 @@ class ImpexWasteItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['item_name']
         verbose_name = 'X-Списание'
         verbose_name_plural = 'X-Списания' 
         
     def __str__(self):
-        return str(self.name)  
+        return str(self.item_name)  
     @property
     def get_cost(self):
         return self.unit_cost * self.quantity

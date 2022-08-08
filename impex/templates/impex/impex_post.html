@@ -18,7 +18,7 @@
         <div class="row g-2">
           <!--cell-->
           <div class="col-6">
-            <h5>Импорт закупок товаров</h5>
+            <h5>1 Импорт закупок товаров</h5>
             <div class="p-3 border bg-light">
               <p style="font-size:1rem">В таблице закупок для импорта ОБЯЗАТЕЛНЫ: наименование и поставщик продукта.
               </p>
@@ -36,7 +36,7 @@
               <form action="{% url 'xbuyitem' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
-                  value="Загрузить BuyIten из IMPEX" />
+                  value="Загрузить BuyItem из IMPEX" />
               </form>
               {% endif %}
 
@@ -45,7 +45,7 @@
           <!--/cell-->
           <!--cell-->
           <div class="col-6">
-            <h5>Импорт продуктов</h5>
+            <h5>2 Импорт продуктов</h5>
             <div class="p-3 border bg-light">
               <p style="font-size:1rem">В таблице продуктов для импорта ОБЯЗАТЕЛНЫ: наименование, категория продукта.
               </p>
@@ -73,7 +73,62 @@
 
           <!--cell-->
           <div class="col-6">
-            <h5>Импорт товаров</h5>
+            <h5>3 Импорт трансферов товаров</h5>
+            <div class="p-3 border bg-light">
+              <p class="ht05">В таблице трансферов для импорта ОБЯЗАТЕЛНЫ: наименование товара.</p>
+              {% if transferitem_success %}
+              <div class="alert alert-success d-flex">
+                {{transferitem_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт TransferItem из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xtransfer' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить TransferItem из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
+
+          <!--cell-->
+          <div class="col-6">
+            <h5>4 Импорт списания товаров</h5>
+            <div class="p-3 border bg-light">
+              <p class="ht05">В таблице товаров для импорта ОБЯЗАТЕЛНЫ: наименование, поставщик, категория товара.</p>
+              {% if wasteitem_success %}
+              <div class="alert alert-success d-flex">
+                {{wasteitem_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт WasteItem из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xwaste' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить WasteItem из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
+
+
+          <!--cell-->
+          <div class="col-6">
+            <h5>5 Импорт товаров</h5>
             <div class="p-3 border bg-light">
               <p class="ht05">В таблице товаров для импорта ОБЯЗАТЕЛНЫ: наименование, поставщик, категория товара.</p>
               {% if item_success %}
@@ -99,7 +154,7 @@
           <!--/cell-->
           <!--cell-->
           <div class="col-6">
-            <h5>Импорт категорий продуктов</h5>
+            <h5>6 Импорт категорий продуктов</h5>
             <div class="p-3 border bg-light">
               <p style="font-size:1rem">В таблице категорий для импорта ОБЯЗАТЕЛНЫ: наименование категории и код. </p>
               {% if category_success %}
