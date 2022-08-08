@@ -42,12 +42,12 @@ class TransferItemForm(ModelForm):
 class WasteItemForm(ModelForm):
     class Meta:
         model = WasteItem
-        fields=['name',  'unit', 'unit_cost', 'quantity','partner', 'invoice' ]
+        fields=['name',  'unit', 'unit_cost', 'quantity','approve', 'document' ]
         widgets={
             'name':forms.Select(attrs={'class':'form-control'}),        
             'unit':forms.Select(attrs={'class':'form-control'},),
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'quantity':forms.NumberInput(attrs={'class':'form-control'}),
-            'partner':forms.TextInput(attrs={'class':'form-control'},),
-            'invoice':forms.TextInput(attrs={'class':'form-control'})              
+            'approve':forms.TextInput(attrs={'class':'form-control'},),
+            'document':forms.TextInput(attrs={'class':'form-control'})              
         }                     

@@ -143,8 +143,8 @@ class WasteItem(models.Model):
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
     cost= models.PositiveIntegerField(verbose_name='Сумма, руб', blank=True,null=True)
-    partner=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
-    invoice= models.CharField(max_length=250,verbose_name='Акт',  null=True ,default='Акт №     , дата   ')   
+    approve=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)#отражение в buy_items_list.html
+    document= models.CharField(max_length=250,verbose_name='Акт',  null=True ,default='Акт №     , дата   ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
     
     

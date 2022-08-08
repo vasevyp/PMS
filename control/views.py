@@ -23,7 +23,7 @@ def control(request):
         'title':'Control'
     }
     
-    return render(request, template_name='control/control.html', context=context)
+    return render(request, template_name='lists/control.html', context=context)
 
 def add_buy_item(request):
     form = BuyItemForm()
@@ -57,17 +57,17 @@ def add_buy_item(request):
 
 class BuyItemsListView(ListView):
     model=BuyItem
-    template_name = 'control/buy_items_list.html'
+    template_name = 'lists/buy_items_list.html'
     context_object_name = 'buyitems'
      
 
 class InventoryListView(ListView):
     model = StockItem
-    template_name='control/inventory_list.html'
+    template_name='lists/inventory_list.html'
     context_object_name='stockitems'
     
 def inventory_about(request):
-    return render(request,'control/inventory_about.html')    
+    return render(request,'lists/inventory_about.html')    
     
 # Продажа товара с занесением проданных ингредиентов в Остатки
 def sold_product(request):
@@ -102,7 +102,7 @@ def sold_product(request):
     
 class SoldProductListView(ListView):
     model=SaleProduct
-    template_name = 'control/sold_product_list.html'
+    template_name = 'lists/sold_product_list.html'
     context_object_name = 'sold_products'
     
 # def sold_product_list(request):
@@ -151,7 +151,7 @@ def add_transfer_item(request):
 
 class TransferItemsListView(ListView):
     model=TransferItem
-    template_name = 'control/transfer_list.html'
+    template_name = 'lists/transfer_list.html'
     context_object_name = 'transfers'
 
 
@@ -185,7 +185,7 @@ def add_waste_item(request):
     
 class WasteItemsListView(ListView):
     model=WasteItem
-    template_name = 'control/waste_list.html'
+    template_name = 'lists/waste_list.html'
     context_object_name = 'wastes'        
                 
                 

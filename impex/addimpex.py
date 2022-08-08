@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect
 
-from impex.models import ImpexProduct,ImpexItem, ImpexBuyItem
-from . models import ImpexProduct,ImpexCategory
-from register.models import Category, Product, Item, Supplier, CategoryItem
-from control.models import StockItem,BuyItem
 
-'''Импорт Категории Продуктов'''
+from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem
+from register.models import Category, Product, Item, Supplier, CategoryItem
+from control.models import StockItem,BuyItem, TransferItem, WasteItem
+
+'''Импорт списка Категории Продуктов в Базу Данных'''
 def post_impex_category(request):    
     print('Выполняется Функция add_impex_product2')
     category=Category.objects.all()
@@ -20,7 +20,7 @@ def post_impex_category(request):
     success='Импорт Category выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'category_success':success})
-'''Импорт Продуктов'''
+'''Импорт списка Продуктов в Базу Данных'''
 def post_impex_product(request):    
     print('Выполняется Функция add_impex_product')
     req=ImpexProduct.objects.all()
@@ -40,7 +40,7 @@ def post_impex_product(request):
     success='Импорт Product выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'product_success':success})
-'''Импорт Товаров'''
+'''Импорт списка Товаров в Базу Данных'''
 def post_impex_item(request):    
     print('Выполняется Функция post_impex_item')
     req=ImpexItem.objects.all()
@@ -67,7 +67,7 @@ def post_impex_item(request):
     return render(request, 'impex/impex_post.html', context={'item_success':success})
 
 
-'''Импорт Закупленных Товаров'''
+'''Импорт списка Закупленных Товаров в Базу Данных'''
 def post_impex_buyitem(request):    
     print('Выполняется Функция post_impex_buyitem')
     req=ImpexBuyItem.objects.all()
@@ -102,3 +102,36 @@ def post_impex_buyitem(request):
     return render(request, 'impex/impex_post.html', context={'buyitem_success':success})
 
 
+'''Импорт списка Переданных Товаров в Базу Данных'''
+def post_impex_transfer_item(request):    
+    print('Выполняется Функция post_impex_buyitem')
+    req=ImpexTransferItem.objects.all()
+    for i in req:
+        s_id=Supplier.objects.get(name=i.supplier).id
+        n_id=Item.objects.get(name=i.name).id
+        quantity=i.quantity
+        unit_cost=i.unit_cost
+        
+        BuyItem.objects.get_or_create(
+                            item=i.name,
+                            code=i.code,
+                            unit=i.unit,
+                            unit_cost=i.unit_cost,
+                            slug=i.slug,
+                            item_supplier=i.supplier,
+                            name_id=n_id,
+                            quantity=i.quantity,
+                            supplier_id=s_id, 
+                            invoice=i.invoice                            
+                            )
+        buy_item=StockItem.objects.filter(name=i.name)
+        for item in buy_item:
+                actual=item.open +item.received-item.sales-item.transfer-item.waste 
+                item.unit_cost=((actual*item.unit_cost + unit_cost*quantity)/(actual+quantity)) 
+                item.received=(item.received + quantity)
+                item.save()      
+        
+        print('Конец выполнения функции post_impex_buyitem = End-OK.')
+    success='Импорт BuyItems выполнен успешно!'
+
+    return render(request, 'impex/impex_post.html', context={'buyitem_success':success})

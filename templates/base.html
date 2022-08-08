@@ -50,22 +50,22 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="{% url 'dashbord' %}">to Home here</a></li>
+              <li><a class="dropdown-item" href="{% url 'impex' %}">IMPEX</a></li>
             </ul>
           </li>
 
           <li class="navbar-nav nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
+            <a class="nav-link dropdown-toggle navbutt active" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               Memo
             </a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link active navbutt" href="{% url 'memo' %}">Заметки</a></li>
+              <li><a class="dropdown-item" href="{% url 'memo' %}">Заметки</a></li>
               <li><a class="dropdown-item" href="{% url 'impex' %}">IMPEX</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">###</a></li>
+              <li><a class="dropdown-item" href="{% url 'memo' %}">memo</a></li>
             </ul>
           </li>
           <li class="nav-item">
