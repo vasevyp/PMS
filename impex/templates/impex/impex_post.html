@@ -45,9 +45,9 @@
           <!--/cell-->
           <!--cell-->
           <div class="col-6">
-            <h5>2 Импорт продуктов</h5>
+            <h5>2 Импорт продаж продуктов НЕ СДЕЛАН</h5>
             <div class="p-3 border bg-light">
-              <p style="font-size:1rem">В таблице продуктов для импорта ОБЯЗАТЕЛНЫ: наименование, категория продукта.
+              <p style="font-size:1rem">В таблице продаж для импорта ОБЯЗАТЕЛНЫ: наименование продукта.
               </p>
               {% if product_success %}
               <div class="alert alert-success d-flex">
@@ -56,14 +56,14 @@
               <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-                  value="Завершить импорт Product из IMPEX" />
+                  value="Завершить импорт SoldProduct из IMPEX" />
               </form>
               {% else %}
 
               <form action="{% url 'xproduct' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
-                  value="Загрузить Product из IMPEX" />
+                  value="Загрузить soldProduct из IMPEX" />
               </form>
               {% endif %}
               {{e_data}}
@@ -102,7 +102,7 @@
           <div class="col-6">
             <h5>4 Импорт списания товаров</h5>
             <div class="p-3 border bg-light">
-              <p class="ht05">В таблице товаров для импорта ОБЯЗАТЕЛНЫ: наименование, поставщик, категория товара.</p>
+              <p class="ht05">В таблице списаний для импорта ОБЯЗАТЕЛНЫ: наименование товара.</p>
               {% if wasteitem_success %}
               <div class="alert alert-success d-flex">
                 {{wasteitem_success}}
@@ -154,7 +154,61 @@
           <!--/cell-->
           <!--cell-->
           <div class="col-6">
-            <h5>6 Импорт категорий продуктов</h5>
+            <h5>6 Импорт продуктов</h5>
+            <div class="p-3 border bg-light">
+              <p style="font-size:1rem">В таблице продуктов для импорта ОБЯЗАТЕЛНЫ: наименование, категория продукта.
+              </p>
+              {% if product_success %}
+              <div class="alert alert-success d-flex">
+                {{product_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт Product из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xproduct' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить Product из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
+          <!--cell-->
+          <div class="col-6">
+            <h5>7 Импорт РЕЦЕПТОВ продуктов НЕ Сделан</h5>
+            <div class="p-3 border bg-light">
+              <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛНЫ: наименование продукта и ингредиента.
+              </p>
+              {% if recipe_success %}
+              <div class="alert alert-success d-flex">
+                {{recipe_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт Recipe из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xproduct' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить Recipe из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
+          <!--cell-->
+          <div class="col-6">
+            <h5>8 Импорт категорий продуктов</h5>
             <div class="p-3 border bg-light">
               <p style="font-size:1rem">В таблице категорий для импорта ОБЯЗАТЕЛНЫ: наименование категории и код. </p>
               {% if category_success %}
@@ -174,7 +228,7 @@
                   value="Загрузить Category из IMPEX" />
               </form>
               {% endif %}
-              {{e_data}}
+
             </div>
           </div>
           <!--/cell-->

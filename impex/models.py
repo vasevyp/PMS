@@ -93,22 +93,22 @@ class ImpexItem(models.Model):
 '''Модель IMPEX ингредиентов для рецептов''' 
 
 class ImpexRecipeIngredient(models.Model): 
-    product=models.CharField(max_length=200, help_text="Не более 200 знаков")#related_name='product_name',
-    code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", verbose_name='Код продукта',decimal_places=0, null=True)
-    ingredient= models.CharField(max_length=200, help_text="Не более 200 знаков")
-    code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
+    name=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
+    code=models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
+    name_ingr= models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
+    code_ingr= models.CharField(max_length=12, help_text="Не более 12 знаков", null=True)
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
-    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
-    ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True)  
+    unit_cost = models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
+    ratio= models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
     # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
     
     def get_absolute_url(self):        
-        return reverse('recipeingredient', kwargs={'slug': self.slug})
+        return reverse('xrecipeingredient', kwargs={'name': self.name})
     
     class Meta:
-        ordering = ['product', 'ingredient']
+        ordering = ['name', 'name_ingr']
         verbose_name = 'X-Рецепт с ингредиентами'
         verbose_name_plural = 'X-Рецепты с ингредиентами'
     

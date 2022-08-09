@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 
 
-from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem
-from register.models import Category, Product, Item, Supplier, CategoryItem
+from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem, ImpexRecipeIngredient
+from register.models import Category, Product, Item, Supplier, CategoryItem, RecipeIngredient
 from control.models import StockItem,BuyItem, TransferItem, WasteItem
 
 '''Импорт списка Категории Продуктов в Базу Данных'''
@@ -158,3 +158,28 @@ def post_impex_waste_item(request):
     success='Импорт WasteItems выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'wasteitem_success':success})
+
+
+
+'''Импорт списка Рецептов продуктов в Базу Данных'''
+def post_impex_recipe(request):    
+    print('Выполняется Функция add_impex_recipe')
+    req=ImpexRecipeIngredient.objects.all()
+    for i in req:
+        # ingredient_id=Item.objects.get(name=i.ingredient).id
+        # code_ingr=Item.objects.get(name=i.ingredient).code
+        # product_id=Product.objects.get(product=i.product).id
+        # code=Product.objects.get(product=i.product).code
+        RecipeIngredient.objects.get_or_create(
+            code=Product.objects.get(name=i.name).code,
+            code_ingr=Item.objects.get(name=i.name_ingr).code,
+            unit=Item.objects.get(name=i.name_ingr).unit,
+            unit_cost=Item.objects.get(name=i.name_ingr).unit_cost,
+            ratio=i.ratio,
+            ingredient_id=Item.objects.get(name=i.name_ingr).id,
+            product_id=Product.objects.get(name=i.name).id
+            )
+        
+        print('Конец выполнения функции End-OK.')
+    success='Импорт Recipe выполнен успешно!'
+    return render(request, 'impex/impex_post.html', context={'recipe_success':success})

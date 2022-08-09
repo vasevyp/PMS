@@ -38,11 +38,10 @@ class ImpexProductAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexRecipeIngredient)
 class ImpexRecipeIngredientAdmin(ImportExportModelAdmin):
-    list_display = ['product', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
+    list_display = ['name', 'code','name_ingr', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
     # prepopulated_fields= {'slug': ('product',)}
     save_on_top = True
-    search_fields = ['product__name', 'code', 'code_ingr','ingredient__name']
-    list_filter= ('product', 'ingredient')
+    list_filter= ('name', 'name_ingr')
 
 
 
