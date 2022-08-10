@@ -5,6 +5,17 @@ from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTra
 from register.models import Category, Product, Item, Supplier, CategoryItem, RecipeIngredient
 from control.models import StockItem,BuyItem, TransferItem, WasteItem
 
+from django.template.defaultfilters import slugify
+
+'''Функция для создания slug из имени на кирилице'''
+def do_slug(name):
+    my_string = str(name).translate(str.maketrans("абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ","abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_Y_EUA"))
+    slug=slugify(my_string)
+    return slug
+
+
+
+
 '''Импорт списка Категории Продуктов в Базу Данных'''
 def post_impex_category(request):    
     print('Выполняется Функция add_impex_product2')
@@ -34,7 +45,7 @@ def post_impex_product(request):
             price=i.price,
             category_id=c_id,
             cooking=i.cooking,
-            slug=i.slug)
+            slug=do_slug(i.name))
         
         print('Конец выполнения функции End-OK.')
     success='Импорт Product выполнен успешно!'
@@ -57,9 +68,9 @@ def post_impex_item(request):
                             category_id=c_id,
                             supplier_id=s_id, 
                             available=i.available, 
-                            slug=i.slug
+                            slug=do_slug(i.name)
                             )
-        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=i.slug, unit=i.unit, unit_cost=i.unit_cost) 
+        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost) 
         
         print('Конец выполнения функции post_impex_item = End-OK.')
     success='Импорт Items выполнен успешно!'
@@ -166,18 +177,14 @@ def post_impex_recipe(request):
     print('Выполняется Функция add_impex_recipe')
     req=ImpexRecipeIngredient.objects.all()
     for i in req:
-        # ingredient_id=Item.objects.get(name=i.ingredient).id
-        # code_ingr=Item.objects.get(name=i.ingredient).code
-        # product_id=Product.objects.get(product=i.product).id
-        # code=Product.objects.get(product=i.product).code
         RecipeIngredient.objects.get_or_create(
-            code=Product.objects.get(name=i.name).code,
-            code_ingr=Item.objects.get(name=i.name_ingr).code,
-            unit=Item.objects.get(name=i.name_ingr).unit,
-            unit_cost=Item.objects.get(name=i.name_ingr).unit_cost,
+            code=Product.objects.get(code=i.code).code,
+            code_ingr=Item.objects.get(code=i.code_ingr).code,
+            unit=Item.objects.get(code=i.code_ingr).unit,
+            unit_cost=Item.objects.get(code=i.code_ingr).unit_cost,
             ratio=i.ratio,
-            ingredient_id=Item.objects.get(name=i.name_ingr).id,
-            product_id=Product.objects.get(name=i.name).id
+            ingredient_id=Item.objects.get(code=i.code_ingr).id,
+            product_id=Product.objects.get(code=i.code).id
             )
         
         print('Конец выполнения функции End-OK.')

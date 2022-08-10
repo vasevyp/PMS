@@ -1,6 +1,6 @@
 from django.contrib import admin
-from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, OrderItem, DeliverItem
-
+from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, OrderItem, DeliverItem, MoveItem
+from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 class BuyItemAdmin(admin.ModelAdmin):
     list_display = ['item','code', 'unit','unit_cost','quantity','created_date' ]
@@ -11,7 +11,7 @@ class BuyItemAdmin(admin.ModelAdmin):
 admin.site.register(BuyItem, BuyItemAdmin)
 
 
-class StockItemAdmin(admin.ModelAdmin):
+class StockItemAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name', 'unit','unit_cost','place','open', 'sales', 'received', 'transfer', 'waste' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
@@ -46,6 +46,13 @@ class WasteItemAdmin(admin.ModelAdmin):
     search_fields = ['code','item', 'approve']
     list_filter= ('name', 'approve',)
 admin.site.register(WasteItem, WasteItemAdmin)
+
+class MoveItemAdmin(admin.ModelAdmin):
+    list_display = ['name','place', 'document' ]
+    save_on_top = True
+    search_fields = ['name','place', 'document']
+    list_filter= ('name',)
+admin.site.register(MoveItem, MoveItemAdmin)
 
 
 class OrderItemAdmin(admin.ModelAdmin):

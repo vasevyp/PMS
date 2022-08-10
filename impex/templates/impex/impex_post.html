@@ -196,7 +196,7 @@
               </form>
               {% else %}
 
-              <form action="{% url 'xproduct' %}" method="post" novalidate="novalidate">
+              <form action="{% url 'xrecipe' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
                   value="Загрузить Recipe из IMPEX" />

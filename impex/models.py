@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.urls import reverse
+from decimal import Decimal
 
 
 from django.template.defaultfilters import slugify  # new
@@ -29,12 +30,12 @@ STATUS_CHOICE = (
 class ImpexSupplier(models.Model):
     code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     address = models.CharField(max_length=220)
     created_date = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):        
-        return reverse('supplier', kwargs={'slug': self.slug})
+        return reverse('supplier', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['name']
@@ -49,10 +50,10 @@ class ImpexSupplier(models.Model):
 class ImpexCategoryItem(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     
     def get_absolute_url(self):        
-        return reverse('categoryitem', kwargs={'slug': self.slug})
+        return reverse('categoryitem', kwargs={'name': self.name})
     
     class Meta:
         ordering = ['name']
@@ -74,12 +75,12 @@ class ImpexItem(models.Model):
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2)
     description = models.TextField(blank=True, null=True)
     available = models.BooleanField(default=True)
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
-        return reverse('item', kwargs={'slug': self.slug})
+        return reverse('item', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['category','name']
@@ -92,39 +93,58 @@ class ImpexItem(models.Model):
     
 '''Модель IMPEX ингредиентов для рецептов''' 
 
+# class ImpexRecipeIngredient(models.Model): 
+#     name=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
+#     code=models.IntegerField(null=True)
+#     name_ingr= models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
+#     code_ingr= models.IntegerField(null=True)
+#     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
+#     unit_cost = models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
+#     ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True) 
+#     # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
+#     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+#     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
+    
+#     def get_absolute_url(self):        
+#         return reverse('xrecipeingredient', kwargs={'name': self.name})
+    
+#     class Meta:
+#         ordering = ['name', 'name_ingr']
+#         verbose_name = 'X-Рецепт с ингредиентами'
+#         verbose_name_plural = 'X-Рецепты с ингредиентами'
+    
+#     @property
+#     def ingredient_cost(self):
+#         return format((float(self.unit_cost) * float(self.ratio)), '.2f')   
+    
+    
 class ImpexRecipeIngredient(models.Model): 
-    name=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
-    code=models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
-    name_ingr= models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
-    code_ingr= models.CharField(max_length=12, help_text="Не более 12 знаков", null=True)
+    name=models.CharField(max_length=200, help_text="Не более 200 знаков")
+    code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", verbose_name='Код продукта',decimal_places=0, null=True, )
+    name_ingr= models.CharField(max_length=200, help_text="Не более 200 знаков")
+    code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True, )
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
-    unit_cost = models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
-    ratio= models.CharField(max_length=10, help_text="Не более 10 знаков", null=True)
+    unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
+    ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True, ) 
     # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
-    updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
-    
-    def get_absolute_url(self):        
-        return reverse('xrecipeingredient', kwargs={'name': self.name})
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен') 
     
     class Meta:
         ordering = ['name', 'name_ingr']
-        verbose_name = 'X-Рецепт с ингредиентами'
-        verbose_name_plural = 'X-Рецепты с ингредиентами'
-    
-    @property
-    def ingredient_cost(self):
-        return format((float(self.unit_cost) * float(self.ratio)), '.2f')    
+        verbose_name = 'X-Рецепт с ингр'
+        verbose_name_plural = 'X-Рецепты с ингр'
+ 
 
 
 '''Модель IMPEX категорий готовых продуктов -РАБОТАЕТ'''
 class ImpexCategory(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
-    slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
 
     def get_absolute_url(self):        
-        return reverse('category', kwargs={'slug': self.slug})
+        return reverse('category', kwargs={'name': self.name})
     
     class Meta:
         ordering = ['name']
@@ -134,10 +154,10 @@ class ImpexCategory(models.Model):
     def __str__(self):
         return self.name   
     
-    def save(self, *args, **kwargs):  # new
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)     
+    # def save(self, *args, **kwargs):  # new
+    #     if not self.slug:
+    #         self.slug = slugify(self.name)
+    #     return super().save(*args, **kwargs)     
         
 '''Модель IMPEX готовых продуктов -РАБОТАЕТ'''
 
@@ -156,12 +176,12 @@ class ImpexProduct(models.Model):
     price = models.DecimalField(max_digits=10,help_text="Не более 10 знаков", null=True, decimal_places=2)
     description = models.TextField(blank=True, null=True)
     cooking= models.TextField(blank=True, null = True)
-    slug= models.SlugField(max_length=255, verbose_name='Url', null=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url', null=True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
     
     def get_absolute_url(self):        
-        return reverse('product', kwargs={'slug': self.slug})
+        return reverse('product', kwargs={'name': self.name})
     
     class Meta:
         ordering = ['category', 'name']
@@ -181,7 +201,7 @@ class ImpexBuyItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     # item =models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)#отражение в buy_items_list.html
     name = models.CharField(max_length=200, help_text="Не более 200 знаков")# для form buy_item.html
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost=models.PositiveIntegerField(verbose_name='Цена, руб', default=0,null=True)
     quantity= models.PositiveIntegerField(verbose_name='Кол.',default=0)
@@ -193,7 +213,7 @@ class ImpexBuyItem(models.Model):
     # updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
     def get_absolute_url(self):        
-        return reverse('buy', kwargs={'slug': self.slug})
+        return reverse('buy', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['name']
@@ -223,7 +243,7 @@ class ImpexTransferItem(models.Model):
     
     
     def get_absolute_url(self):        
-        return reverse('buy', kwargs={'slug': self.slug})
+        return reverse('buy', kwargs={'code': self.code})
 
     class Meta:
         ordering = ['item_name']
@@ -252,7 +272,7 @@ class ImpexWasteItem(models.Model):
     
     
     def get_absolute_url(self):        
-        return reverse('buy', kwargs={'slug': self.slug})
+        return reverse('buy', kwargs={'code': self.code})
 
     class Meta:
         ordering = ['item_name']
@@ -271,7 +291,7 @@ class ImpexSaleProduct(models.Model):
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
     product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     price=models.PositiveIntegerField(verbose_name='Цена, руб', default=1)
     sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')
@@ -279,7 +299,7 @@ class ImpexSaleProduct(models.Model):
     created_date = models.DateField(auto_now_add=True)      
 
     def get_absolute_url(self):        
-        return reverse('sale', kwargs={'slug': self.slug})
+        return reverse('sale', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['name']
@@ -302,7 +322,7 @@ class ImpexOrderItem(models.Model):
     supplier = models.CharField(max_length=200, help_text="Не более 200 знаков")
     item = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')   
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     order_quantity = models.PositiveIntegerField(null=True)
@@ -311,7 +331,7 @@ class ImpexOrderItem(models.Model):
 
 
     def get_absolute_url(self):        
-        return reverse('order', kwargs={'slug': self.slug})
+        return reverse('order', kwargs={'code': self.code})
 
     class Meta:
         ordering = ['order_number']
@@ -332,7 +352,7 @@ class ImpexDeliverItem(models.Model):
     supplier = models.CharField(max_length=200, help_text="Не более 200 знаков")
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     product = models.CharField(max_length=200, help_text="Не более 200 знаков")
-    slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
+    # slug= models.SlugField(max_length=255, verbose_name='Url',blank=True, null=True)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     order_quantity = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
@@ -340,7 +360,7 @@ class ImpexDeliverItem(models.Model):
     created_date = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):        
-        return reverse('deliver', kwargs={'slug': self.slug})
+        return reverse('deliver', kwargs={'code': self.code})
 
     class Meta:
         ordering = ['order_number']
