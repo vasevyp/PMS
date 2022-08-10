@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 
 
-from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem, ImpexRecipeIngredient
+from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem, ImpexRecipeIngredient, ImpexCategoryItem
 from register.models import Category, Product, Item, Supplier, CategoryItem, RecipeIngredient
 from control.models import StockItem,BuyItem, TransferItem, WasteItem
 
@@ -18,12 +18,12 @@ def do_slug(name):
 
 '''Импорт списка Категории Продуктов в Базу Данных'''
 def post_impex_category(request):    
-    print('Выполняется Функция add_impex_product2')
+    print('Выполняется Функция post_impex_category')
     category=Category.objects.all()
     for cat in category:
         name=cat.name
         code=cat.code 
-        slug=cat.slug
+        slug=do_slug(cat.name)
         print('Это объект = ', cat, '--', name)
         ImpexCategory.objects.get_or_create(name=name, code=code, slug=slug)
         
@@ -31,6 +31,22 @@ def post_impex_category(request):
     success='Импорт Category выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'category_success':success})
+
+'''Импорт списка Категории Товаров в Базу Данных'''
+def post_impex_category_item(request):    
+    print('Выполняется Функция post_impex_category_item')
+    category=CategoryItem.objects.all()
+    for cat in category:
+        name=cat.name
+        code=cat.code 
+        slug=do_slug(cat.name)
+        print('Это объект = ', cat, '--', name)
+        ImpexCategoryItem.objects.get_or_create(name=name, code=code, slug=slug)
+        
+        print('Конец выполнения функции End-OK.')
+    success='Импорт Category выполнен успешно!'
+    return render(request, 'impex/impex_post.html', context={'categoryitem_success':success})
+
 '''Импорт списка Продуктов в Базу Данных'''
 def post_impex_product(request):    
     print('Выполняется Функция add_impex_product')

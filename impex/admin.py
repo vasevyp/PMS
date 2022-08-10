@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ImpexCategory, ImpexCategoryItem, ImpexSupplier, ImpexItem, ImpexProduct, ImpexRecipeIngredient, ImpexBuyItem, ImpexSaleProduct, ImpexTransferItem, ImpexWasteItem, ImpexOrderItem, ImpexDeliverItem
+from .models import ImpexCategory, ImpexCategoryItem, ImpexSupplier, ImpexItem, ImpexProduct, ImpexRecipeIngredient, ImpexBuyItem, ImpexSaleProduct, ImpexTransferItem, ImpexWasteItem
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -81,21 +81,21 @@ class ImpexWasteItemAdmin(ImportExportModelAdmin):
 
 
 
-@admin.register(ImpexOrderItem)
-class ImpexOrderItemAdmin(ImportExportModelAdmin):
-    list_display = ['item', 'order_number', 'supplier','unit','order_quantity', 'unit_cost','created_date', 'status' ]
-    # prepopulated_fields= {'slug': ('item','order_number')}  
-    save_on_top = True
-    search_fields = ['item__name', 'order_number', 'supplier__name']
-    list_filter= ('item', 'order_number')
+# @admin.register(ImpexOrderItem)
+# class ImpexOrderItemAdmin(ImportExportModelAdmin):
+#     list_display = ['item', 'order_number', 'supplier','unit','order_quantity', 'unit_cost','created_date', 'status' ]
+#     # prepopulated_fields= {'slug': ('item','order_number')}  
+#     save_on_top = True
+#     search_fields = ['item__name', 'order_number', 'supplier__name']
+#     list_filter= ('item', 'order_number')
 
 
 
 
-@admin.register(ImpexDeliverItem)
-class ImpexDeliverItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'product', 'order_number', 'supplier','unit','order_quantity', 'created_date', 'status' ]
-    # prepopulated_fields= {'slug': ('product','order_number')}  
-    save_on_top = True
-    search_fields = ['product', 'order_number', 'supplier']
-    list_filter= ('product', 'order_number')
+# @admin.register(ImpexDeliverItem)
+# class ImpexDeliverItemAdmin(ImportExportModelAdmin):
+#     list_display = ['code', 'product', 'order_number', 'supplier','unit','order_quantity', 'created_date', 'status' ]
+#     # prepopulated_fields= {'slug': ('product','order_number')}  
+#     save_on_top = True
+#     search_fields = ['product', 'order_number', 'supplier']
+#     list_filter= ('product', 'order_number')

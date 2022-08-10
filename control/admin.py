@@ -1,5 +1,5 @@
 from django.contrib import admin
-from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, OrderItem, DeliverItem, MoveItem
+from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, MoveItem
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 class BuyItemAdmin(admin.ModelAdmin):
@@ -30,7 +30,7 @@ class SaleProductAdmin(admin.ModelAdmin):
 # admin.site.register(SaleProduct, SaleProductAdmin)
 
 
-class TransferItemAdmin(admin.ModelAdmin):
+class TransferItemAdmin(ImportExportModelAdmin):
     list_display = ['item','code', 'unit','unit_cost','quantity', 'partner', 'created_date' ]
     prepopulated_fields= {'slug': ('item',)}  
     save_on_top = True
@@ -39,7 +39,7 @@ class TransferItemAdmin(admin.ModelAdmin):
 admin.site.register(TransferItem, TransferItemAdmin)
 
 
-class WasteItemAdmin(admin.ModelAdmin):
+class WasteItemAdmin(ImportExportModelAdmin):
     list_display = ['item','code', 'unit','unit_cost','quantity', 'approve', 'created_date' ]
     prepopulated_fields= {'slug': ('item',)}  
     save_on_top = True
@@ -55,20 +55,20 @@ class MoveItemAdmin(admin.ModelAdmin):
 admin.site.register(MoveItem, MoveItemAdmin)
 
 
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['item', 'order_number', 'supplier','unit','order_quantity', 'unit_cost','created_date', 'status' ]
-    prepopulated_fields= {'slug': ('item','order_number')}  
-    save_on_top = True
-    search_fields = ['item__name', 'order_number', 'supplier__name']
-    list_filter= ('item', 'order_number')
-admin.site.register(OrderItem, OrderItemAdmin)
+# class OrderItemAdmin(admin.ModelAdmin):
+#     list_display = ['item', 'order_number', 'supplier','unit','order_quantity', 'unit_cost','created_date', 'status' ]
+#     prepopulated_fields= {'slug': ('item','order_number')}  
+#     save_on_top = True
+#     search_fields = ['item__name', 'order_number', 'supplier__name']
+#     list_filter= ('item', 'order_number')
+# admin.site.register(OrderItem, OrderItemAdmin)
 
 
 
-class DeliverItemAdmin(admin.ModelAdmin):
-    list_display = ['code', 'product', 'order_number', 'supplier','unit','order_quantity', 'created_date', 'status' ]
-    prepopulated_fields= {'slug': ('product','order_number')}  
-    save_on_top = True
-    search_fields = ['product', 'order_number', 'supplier']
-    list_filter= ('product', 'order_number')
-admin.site.register(DeliverItem, DeliverItemAdmin)
+# class DeliverItemAdmin(admin.ModelAdmin):
+#     list_display = ['code', 'product', 'order_number', 'supplier','unit','order_quantity', 'created_date', 'status' ]
+#     prepopulated_fields= {'slug': ('product','order_number')}  
+#     save_on_top = True
+#     search_fields = ['product', 'order_number', 'supplier']
+#     list_filter= ('product', 'order_number')
+# admin.site.register(DeliverItem, DeliverItemAdmin)

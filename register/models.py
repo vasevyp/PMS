@@ -30,11 +30,7 @@ class Supplier(models.Model):
     class Meta:
         ordering = ['name']
         verbose_name = 'Поставщик'
-        verbose_name_plural = 'Поставщики' 
-        # indexes = [
-        #     Index(Upper('name'), name='name_upper_index'),
-        #            ]
-             
+        verbose_name_plural = 'Поставщики'              
         
     def __str__(self):
         return self.name  
@@ -52,14 +48,10 @@ class CategoryItem(models.Model):
         ordering = ['name']
         verbose_name = 'Категория товара'
         verbose_name_plural = 'Категории товаров'
-        # indexes = [
-        #     Index(Upper('name'), name='name_upper_index'),
-        #            ]
 
     def __str__(self):
         return self.name
     
-      
         
 '''Модель закупаемых товаров'''
 class Item(models.Model):   
@@ -83,9 +75,6 @@ class Item(models.Model):
         ordering = ['category','name']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        # indexes = [
-        #     Index(Upper('name'), name='name_upper_index'),
-        #            ]
         
 
     def __str__(self):
@@ -102,12 +91,11 @@ class RecipeIngredient(models.Model):
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True)  
-    # slug= models.SlugField(max_length=255, verbose_name='Url', unique=True) 
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
     
     def get_absolute_url(self):        
-        return reverse('recipeingredient', kwargs={'slug': self.slug})
+        return reverse('recipeingredient', kwargs={'code': self.code})
     
     class Meta:
         ordering = ['product', 'ingredient']
@@ -132,17 +120,9 @@ class Category(models.Model):
         ordering = ['name']
         verbose_name = 'Категория продукта'
         verbose_name_plural = 'Категории продуктов'
-        # indexes = [
-        #     Index(Upper('name'), name='name_upper_index'),
-        #            ]
 
     def __str__(self):
-        return self.name   
-    
-    def save(self, *args, **kwargs):  # new
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)     
+        return self.name       
         
 '''Модель готовых продуктов'''
 
@@ -171,9 +151,6 @@ class Product(models.Model):
         ordering = ['category', 'name']
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
-        # indexes = [
-        #     Index(Upper('name'), name='name_upper_index'),
-        #            ]
 
     def __str__(self):
         return self.name         

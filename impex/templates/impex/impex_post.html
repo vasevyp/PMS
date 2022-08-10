@@ -232,6 +232,32 @@
             </div>
           </div>
           <!--/cell-->
+          <!--cell-->
+          <div class="col-6">
+            <h5>9 Импорт категорий товаров</h5>
+            <div class="p-3 border bg-light">
+              <p style="font-size:1rem">В таблице категорий для импорта ОБЯЗАТЕЛНЫ: наименование категории и код. </p>
+              {% if categoryitem_success %}
+              <div class="alert alert-success d-flex">
+                {{categoryitem_success}}
+              </div>
+              <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                  value="Завершить импорт CategoryItem из IMPEX" />
+              </form>
+              {% else %}
+
+              <form action="{% url 'xcategoryitem' %}" method="post" novalidate="novalidate">
+                {% csrf_token %}
+                <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                  value="Загрузить CategoryItem из IMPEX" />
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          <!--/cell-->
 
         </div>
       </div>

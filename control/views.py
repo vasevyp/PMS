@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
-from .models import BuyItem, StockItem, SaleProduct, OrderItem, DeliverItem, TransferItem, WasteItem
+from .models import BuyItem, StockItem, SaleProduct, TransferItem, WasteItem
 from .forms import BuyItemForm, SoldProductForm, TransferItemForm, WasteItemForm
 
 from register.models import Product, RecipeIngredient, Item
@@ -11,15 +11,15 @@ def control(request):
     buyitems = BuyItem.objects.all()
     stockitems = StockItem.objects.all()
     saleproducts=SaleProduct.objects.all()
-    orderitems=OrderItem.objects.all()
-    deliveritems=DeliverItem.objects.all()
+    # orderitems=OrderItem.objects.all()
+    # deliveritems=DeliverItem.objects.all()
     
     context = {
         'buyitems': buyitems,
         'stockitems': stockitems,
         'saleproducts': saleproducts,
-        'orderitems': orderitems,
-        'deliveritems': deliveritems,
+        # 'orderitems': orderitems,
+        # 'deliveritems': deliveritems,
         'title':'Control'
     }
     
