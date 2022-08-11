@@ -45,13 +45,13 @@
           <!--/cell-->
           <!--cell-->
           <div class="col-6">
-            <h5>2 Импорт продаж продуктов НЕ СДЕЛАН</h5>
+            <h5>2 Импорт продаж продуктов</h5>
             <div class="p-3 border bg-light">
               <p style="font-size:1rem">В таблице продаж для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта.
               </p>
-              {% if product_success %}
+              {% if sold_success %}
               <div class="alert alert-success d-flex">
-                {{product_success}}
+                {{sold_success}}
               </div>
               <form action="{% url 'impex' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
@@ -60,10 +60,10 @@
               </form>
               {% else %}
 
-              <form action="{% url 'xproduct' %}" method="post" novalidate="novalidate">
+              <form action="{% url 'xsold' %}" method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
-                  value="Загрузить soldProduct из IMPEX" />
+                  value="Загрузить SoldProduct из IMPEX" />
               </form>
               {% endif %}
               {{e_data}}

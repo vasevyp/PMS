@@ -6,7 +6,7 @@ from .models import Category, CategoryItem, Supplier, Item, Product, RecipeIngre
 
 
 class SupplierAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'contact' ]
+    list_display = ['code', 'name', 'contact', 'address', 'slug' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['name',]

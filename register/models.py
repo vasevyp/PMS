@@ -18,7 +18,7 @@ UNITS=(
 
 '''Модель поставщиков закупаемых товаров'''
 class Supplier(models.Model):
-    code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
+    code=models.CharField(max_length=4, null=True)
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     address = models.CharField(max_length=220)
@@ -110,7 +110,7 @@ class RecipeIngredient(models.Model):
 
 '''Модель категорий готовых продуктов'''
 class Category(models.Model):
-    code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
+    code= models.CharField(max_length=5, help_text="Не более 5 цифр",  unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
 
@@ -155,3 +155,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name         
+
+
+

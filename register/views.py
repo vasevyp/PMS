@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from django.views.generic import ListView
 
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
-from .forms import AddSupplierForm, AddCategoryForm, AddItemCategoryForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
+from .forms import AddSupplierForm, AddCategoryForm, AddCategoryItemForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
 from control.models import StockItem
 
+from impex.addimpex import do_slug
 
 
 def index(request):
@@ -33,17 +34,7 @@ def register(request):
     }
     
     return render(request, template_name='register/register.html', context=context)
-
-
-
  
-# def suppliers(request):
-#     suppliers = Supplier.objects.all()
-#     context={
-#         'suppliers': suppliers,
-#         'title': 'Suppliers'
-#     }
-#     return render(request, template_name='register/items/suppliers.html', context=context)    
 class SupplierListView(ListView):
     model = Supplier
     template_name = 'register/items/suppliers.html'
@@ -79,36 +70,75 @@ def add_supplier(request):
     if request.method == 'POST':
         form = AddSupplierForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('supplier-list')
+            name= form.cleaned_data.get("name")
+            form.save() 
+            item=Supplier.objects.get(name=name)
+            item.slug=do_slug(name)
+            item.save()           
+            return redirect('supplier-list')        
+        
     context = {
         'form': form
     }
     return render(request, 'forms/addSupplier.html', context)
-    
+
+
+
 def add_category(request):
     form = AddCategoryForm()
     if request.method == 'POST':
         form = AddCategoryForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('categories-list')
+            name= form.cleaned_data.get("name")
+            form.save() 
+            s=Category.objects.get(name=name)
+            s.slug=do_slug(name)
+            s.save()           
+            return redirect('categories-list')        
+        
     context = {
         'form': form
     }
-    return render(request, 'forms/addCategory.html', context) 
+    return render(request, 'forms/addCategory.html', context)
 
-def add_categoryItem(request):
-    form = AddItemCategoryForm()
+
+
+
+def add_category_item(request):
+    form = AddCategoryItemForm()
     if request.method == 'POST':
-        form = AddItemCategoryForm(request.POST)
+        form = AddCategoryItemForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('itemcategories-list')
+            name= form.cleaned_data.get("name")
+            form.save() 
+            s=CategoryItem.objects.get(name=name)
+            s.slug=do_slug(name)
+            s.save()           
+            return redirect('itemcategories-list')        
+        
     context = {
         'form': form
     }
-    return render(request, 'forms/addItemCategory.html', context) 
+    return render(request, 'forms/addItemCategory.html', context)
+
+
+# def add_item(request):
+#     form = AddItemForm()
+#     if request.method == 'POST':
+#         form = AddItemForm(request.POST)
+#         if form.is_valid():
+#             name= form.cleaned_data.get("name")
+#             form.save() 
+#             s=CategoryItem.objects.get(name=name)
+#             s.slug=do_slug(name)
+#             s.save()           
+#             return redirect('itemcategories-list')        
+        
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'forms/addItemCategory.html', context)
+
 
 def add_item(request):
     form = AddItemForm()
@@ -117,11 +147,13 @@ def add_item(request):
         if form.is_valid():
             code= form.cleaned_data.get("code")
             name= form.cleaned_data.get("name")
-            slug= form.cleaned_data.get("slug")
             unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
-            StockItem.objects.create(code=code, name=name, slug=slug, unit=unit, unit_cost=unit_cost)             
+            StockItem.objects.create(code=code, name=name, slug=do_slug(name), unit=unit, unit_cost=unit_cost)             
             form.save()
+            it=Item.objects.get(name=name)
+            it.slug=do_slug(name)
+            it.save()
             return redirect('add-item')
     context = {
         'form': form
@@ -133,7 +165,11 @@ def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST)
         if form.is_valid():
+            name= form.cleaned_data.get("name")
             form.save()
+            p=Product.objects.get(name=name)
+            p.slug=do_slug(name)
+            p.save()
             return redirect('products-list')
     context = {
         'form': form
@@ -150,4 +186,5 @@ def add_to_recipe(request):
     context = {
         'form': form
     }
-    return render(request, 'forms/addToProductRecipe.html', context)   
+    return render(request, 'forms/addToProductRecipe.html', context) 
+ 

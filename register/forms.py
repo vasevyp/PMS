@@ -5,41 +5,44 @@ from .models import Supplier, Category, CategoryItem, Item, Product, RecipeIngre
 class AddSupplierForm(ModelForm):
     class Meta:
         model = Supplier
-        fields=['code', 'name', 'slug','address', 'contact']
+        fields=['code', 'name','address', 'contact']
         widgets={
             'code':forms.TextInput(attrs={'class':'form-control'}),
             'name':forms.TextInput(attrs={'class':'form-control', 'id':'name'}),
             'slug':forms.TextInput(attrs={'class':'form-control'}),
-            'address':forms.Textarea(attrs={'class':'form-control'}),
-            'contact':forms.TextInput(attrs={'class':'form-control', 'rows':2}),            
+            'address':forms.TextInput(attrs={'class':'form-control', 'rows':3}),
+            'contact':forms.TextInput(attrs={'class':'form-control'}),            
         }
-        
+
+
+
 class AddCategoryForm(ModelForm):
     class Meta:
-        model = Category 
-        fields=['code', 'name', 'slug']
+        model = Category
+        fields=['code', 'name']
         widgets={
             'code':forms.TextInput(attrs={'class':'form-control'}),
-            'name':forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Название категории',}),
-            'slug':forms.TextInput(attrs={'class':'form-control'}),   
-
-        } 
+            'name':forms.TextInput(attrs={'class':'form-control', 'id':'name'})
+                    
+        }
+  
         
-class AddItemCategoryForm(ModelForm):
+
+class AddCategoryItemForm(ModelForm):
     class Meta:
-        model = CategoryItem 
-        fields=['code', 'name', 'slug']
+        model = CategoryItem
+        fields=['code', 'name']
         widgets={
             'code':forms.TextInput(attrs={'class':'form-control'}),
-            'name':forms.TextInput(attrs={'class':'form-control'}),
-            'slug':forms.TextInput(attrs={'class':'form-control'}),   
-
-        } 
+            'name':forms.TextInput(attrs={'class':'form-control', 'id':'name'})
+                    
+        }
+          
         
 class AddItemForm(ModelForm):
     class Meta:
         model = Item
-        fields=['name', 'code','category', 'supplier', 'unit','unit_cost', 'description', 'slug']
+        fields=['name', 'code','category', 'supplier', 'unit','unit_cost', 'description']
         widgets={
             'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
             'code':forms.TextInput(attrs={'class':'form-control'}),
@@ -48,7 +51,6 @@ class AddItemForm(ModelForm):
             'unit':forms.Select(attrs={'class':'form-control'},),
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control',  'rows':3}),
-            'slug':forms.TextInput(attrs={'class':'form-control'}),
               
         }           
         
@@ -56,7 +58,7 @@ class AddProductForm(ModelForm):
     # price= forms.DecimalField(max_digits=10, decimal_places=2)
     class Meta:
         model = Product
-        fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking','slug']
+        fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking']
         # field_classes={'price':DecimalField}
         widgets={
             'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
@@ -64,9 +66,8 @@ class AddProductForm(ModelForm):
             'category':forms.Select(attrs={'class':'form-control'}),
             'difficulty':forms.Select(attrs={'class':'form-control'}),
             'price':forms.NumberInput(attrs={'class':'form-control'},),
-            'description':forms.Textarea(attrs={'class':'form-control',  'rows':3}),
+            'description':forms.Textarea(attrs={'class':'form-control'}),
             'cooking':forms.TextInput(attrs={'class':'form-control'}),
-            'slug':forms.TextInput(attrs={'class':'form-control'}),
               
         }                          
         
@@ -89,3 +90,4 @@ class AddRecipeIngredientForm(ModelForm):
 #     class Meta:
 #         model = Product
 #         fields=['ingredient']        
+

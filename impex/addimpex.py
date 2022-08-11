@@ -27,7 +27,7 @@ def post_impex_category(request):
         print('Это объект = ', cat, '--', name)
         Category.objects.get_or_create(name=name, code=code, slug=slug)
         
-        print('Конец выполнения функции End-OK.')
+        print(cat.name,'-OK.')
     success='Импорт Category выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'category_success':success})
@@ -36,14 +36,10 @@ def post_impex_category(request):
 '''Импорт списка Поставщиков в Базу Данных'''
 def post_impex_supplier(request):    
     print('Выполняется Функция post_impex_supplier')
-    category=ImpexSupplier.objects.all()
-    for cat in category:
-        # name=cat.name
-        # code=cat.code
-        # contact=cat.contact 
-        # slug=do_slug(cat.name)
-        Supplier.objects.get_or_create(name=cat.name, code=cat.code, contact=cat.contact, slug=do_slug(cat.name))        
-        print(cat.name,' - Успешно')
+    supplier=ImpexSupplier.objects.all()
+    for s in supplier:
+        Supplier.objects.get_or_create(name=s.name, code=s.code, address=s.address, contact=s.contact, slug=do_slug(s.name))        
+        print(s.name,' -OK')
     success='Импорт Supplier выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'supplier_success':success})
@@ -60,7 +56,7 @@ def post_impex_category_item(request):
         print('Это объект = ', cat, '--', name)
         CategoryItem.objects.get_or_create(name=name, code=code, slug=slug)
         
-        print('Конец выполнения функции End-OK.')
+        print(cat.name,' -OK.')
     success='Импорт Category выполнен успешно!'
     return render(request, 'impex/impex_post.html', context={'categoryitem_success':success})
 
@@ -153,29 +149,31 @@ def post_impex_buyitem(request):
 def post_impex_sale_product(request):    
     print('Выполняется Функция post_impex_sale_product')
     req=ImpexSaleProduct.objects.all()
-    for i in req:   
-        quantity=i.quantity
-        slug=Item.objects.get(name=i.item_name).slug   
+    for i in req:    
         SaleProduct.objects.create(
-            item=i.item_name,
+            product=i.name,
             code=i.code, 
-            slug=slug,
+            slug='sold-'+do_slug(i.name),
             unit=i.unit, 
-            unit_cost=i.unit_cost, 
-            quantity=quantity,
-            partner=i.partner, 
-            invoice=i.invoice
-            ) 
+            price=i.price, 
+            sold=i.sold,
+            name_id=Product.objects.get(code=i.code).id
+            )
         
-        item=StockItem.objects.filter(name=i.item_name)
-        for t in item:
-            t.transfer=( t.transfer + quantity)
-            t.save()      
+        recipe_product=RecipeIngredient.objects.filter(code=i.code)  
+        n=recipe_product.count() #количество ингредиентов в продукте            
+        for j in range(n):
+                icode=recipe_product[j].code_ingr
+                irecipe=RecipeIngredient.objects.get(code=i.code, code_ingr=icode)
+                rate=irecipe.ratio
+                i_stock=StockItem.objects.get(code=icode)
+                i_stock.sales=i_stock.sales + i.sold*rate
+                i_stock.save()              
         
-        print(i.item_name,'-OK.')
+        print(i.name,'-OK.')
     success='Импорт SaleProduct выполнен успешно!'
 
-    return render(request, 'impex/impex_post.html', context={'transferitem_success':success})
+    return render(request, 'impex/impex_post.html', context={'sold_success':success})
 
 
 
@@ -231,7 +229,7 @@ def post_impex_waste_item(request):
             w.waste=( w.waste + quantity)
             w.save()      
         
-        print('Конец выполнения функции post_impex_waste_item = End-OK.')
+        print(i.item_name,'-OK.')
     success='Импорт WasteItems выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'wasteitem_success':success})

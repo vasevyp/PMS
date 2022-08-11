@@ -247,12 +247,10 @@ class ImpexWasteItem(models.Model):
 '''Модель IMPEX продаж продуктов''' 
 class ImpexSaleProduct(models.Model):    
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
-    product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
+    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')    
     price=models.PositiveIntegerField(verbose_name='Цена, руб', default=1)
-    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
-    unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')
-    revenue= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0, blank=True, null=True)
+    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)   
     created_date = models.DateField(auto_now_add=True)      
 
     def get_absolute_url(self):        
@@ -264,7 +262,7 @@ class ImpexSaleProduct(models.Model):
         verbose_name_plural = 'X-Продажи' 
         
     def __str__(self):
-        return str(self.code) 
+        return str(self.name) 
     
 
 
