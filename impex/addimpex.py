@@ -19,13 +19,13 @@ def do_slug(name):
 '''Импорт списка Категории Продуктов в Базу Данных'''
 def post_impex_category(request):    
     print('Выполняется Функция post_impex_category')
-    category=Category.objects.all()
+    category=ImpexCategory.objects.all()
     for cat in category:
         name=cat.name
         code=cat.code 
         slug=do_slug(cat.name)
         print('Это объект = ', cat, '--', name)
-        ImpexCategory.objects.get_or_create(name=name, code=code, slug=slug)
+        Category.objects.get_or_create(name=name, code=code, slug=slug)
         
         print('Конец выполнения функции End-OK.')
     success='Импорт Category выполнен успешно!'
@@ -35,13 +35,13 @@ def post_impex_category(request):
 '''Импорт списка Категории Товаров в Базу Данных'''
 def post_impex_category_item(request):    
     print('Выполняется Функция post_impex_category_item')
-    category=CategoryItem.objects.all()
+    category=ImpexCategoryItem.objects.all()
     for cat in category:
         name=cat.name
         code=cat.code 
         slug=do_slug(cat.name)
         print('Это объект = ', cat, '--', name)
-        ImpexCategoryItem.objects.get_or_create(name=name, code=code, slug=slug)
+        CategoryItem.objects.get_or_create(name=name, code=code, slug=slug)
         
         print('Конец выполнения функции End-OK.')
     success='Импорт Category выполнен успешно!'

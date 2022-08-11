@@ -6,7 +6,7 @@ from .models import Category, CategoryItem, Supplier, Item, Product, RecipeIngre
 
 
 class SupplierAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name' ]
+    list_display = ['code', 'name', 'contact' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['name',]
@@ -16,7 +16,7 @@ admin.site.register(Supplier, SupplierAdmin)
 
 
 class CategoryItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', ]
+    list_display = ['code', 'name', 'slug']
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ['name',]
@@ -28,7 +28,7 @@ class CategoryItemAdmin(ImportExportModelAdmin):
 admin.site.register(CategoryItem, CategoryItemAdmin)
 
 class CategoryAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', ]
+    list_display = ['code', 'name', 'slug']
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields=['name', 'code']

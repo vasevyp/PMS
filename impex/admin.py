@@ -6,7 +6,7 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(ImpexSupplier)
 class ImpexSupplierAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name' ]
+    list_display = ['code', 'name', 'contact']
     # prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['name',]
@@ -15,15 +15,20 @@ class ImpexSupplierAdmin(ImportExportModelAdmin):
 @admin.register(ImpexCategory)
 class ImpexCategoryAdmin(ImportExportModelAdmin):
     list_display = ['code', 'name', ]
-    # prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields=['name', 'code']
     list_filter= ('name',)
     
+@admin.register(ImpexCategoryItem)
+class ImpexCategoryItemAdmin(ImportExportModelAdmin):
+    list_display = ['code', 'name', ]
+    save_on_top = True
+    search_fields=['name', 'code']
+    list_filter= ('name',)    
+    
 @admin.register(ImpexItem)
 class ImpexItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost',] 
-    # prepopulated_fields= {'slug': ('name',)}  
+    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost',]  
     save_on_top = True
     search_fields = ('name',  'code')
     list_filter= ('name', 'code')
@@ -31,7 +36,6 @@ class ImpexItemAdmin(ImportExportModelAdmin):
 @admin.register(ImpexProduct)
 class ImpexProductAdmin(ImportExportModelAdmin):
     list_display = ['code','name', 'price','category', 'created_date' ]
-    # prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
     list_filter = ['category','code','name']
@@ -39,7 +43,6 @@ class ImpexProductAdmin(ImportExportModelAdmin):
 @admin.register(ImpexRecipeIngredient)
 class ImpexRecipeIngredientAdmin(ImportExportModelAdmin):
     list_display = ['name', 'code','name_ingr', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
-    # prepopulated_fields= {'slug': ('product',)}
     save_on_top = True
     list_filter= ('name', 'name_ingr')
 
@@ -47,16 +50,14 @@ class ImpexRecipeIngredientAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexBuyItem)
 class ImpexBuyItemAdmin(ImportExportModelAdmin):
-    list_display = ['name','code', 'unit','unit_cost','quantity', 'supplier', 'created_date' ]
-    # prepopulated_fields= {'slug': ('name',)}  
+    list_display = ['name','code', 'unit','unit_cost','quantity', 'supplier', 'created_date' ] 
     save_on_top = True
     search_fields = ['code','name__name',]
     list_filter= ('name',)
 
 @admin.register(ImpexSaleProduct)
 class ImpexSaleProductAdmin(ImportExportModelAdmin):
-    list_display = [ 'product', 'code','price','sold', 'unit','created_date' ]
-    # prepopulated_fields= {'slug': ('name',)}  
+    list_display = [ 'product', 'code','price','sold', 'unit','created_date' ] 
     save_on_top = True
     search_fields = ['code', 'product', 'created_date']
     list_filter= ('product', 'code', 'created_date')

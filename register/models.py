@@ -22,6 +22,7 @@ class Supplier(models.Model):
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     address = models.CharField(max_length=220)
+    contact=models.CharField(max_length=250, null=True)
     created_date = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):        

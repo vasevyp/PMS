@@ -5,13 +5,13 @@ from .models import Supplier, Category, CategoryItem, Item, Product, RecipeIngre
 class AddSupplierForm(ModelForm):
     class Meta:
         model = Supplier
-        fields=['code', 'name', 'slug','address']
+        fields=['code', 'name', 'slug','address', 'contact']
         widgets={
             'code':forms.TextInput(attrs={'class':'form-control'}),
             'name':forms.TextInput(attrs={'class':'form-control', 'id':'name'}),
             'slug':forms.TextInput(attrs={'class':'form-control'}),
-            'address':forms.Textarea(attrs={'class':'form-control', 'rows':2}),            
-            # 'created_date':forms.Select(attrs={'class':'form-control'})   
+            'address':forms.Textarea(attrs={'class':'form-control'}),
+            'contact':forms.TextInput(attrs={'class':'form-control', 'rows':2}),            
         }
         
 class AddCategoryForm(ModelForm):
