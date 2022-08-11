@@ -1,6 +1,7 @@
 {% extends 'base_simple.html' %}
+
 {% block title %}
-{{ block.super }}: {{ title}}
+{{ block.super }}: Inventory
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -38,8 +39,8 @@
         <td>{{stockitem.received}}</td>
         <td>{{stockitem.transfer}}</td>
         <td>{{stockitem.waste}}</td>
-        <td>{{stockitem.get_actual}}</td>
-        <td>{{stockitem.get_actual_cost}}</td>
+        <td>{{stockitem.get_actual |floatformat:2}}</td>
+        <td>{{stockitem.get_actual_cost|floatformat:2 }}</td>
 
       </tr>
       {% endfor %}
