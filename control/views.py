@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
-from .models import BuyItem, StockItem, SaleProduct, TransferItem, WasteItem
-from .forms import BuyItemForm, SoldProductForm, TransferItemForm, WasteItemForm
+from .models import BuyItem, StockItem, SaleProduct, TransferItem, WasteItem, MoveItem
+from .forms import BuyItemForm, SoldProductForm, TransferItemForm, WasteItemForm, MoveItemForm
 
 from register.models import Product, RecipeIngredient, Item
 
@@ -188,5 +188,26 @@ class WasteItemsListView(ListView):
     template_name = 'lists/waste_list.html'
     context_object_name = 'wastes'        
                 
-                
-    
+
+
+def move_item(request):
+    form = MoveItemForm()
+    if request.method == 'POST':
+        form = MoveItemForm(request.POST)
+        if form.is_valid():
+            name= form.cleaned_data.get("name")
+            place= form.cleaned_data.get("place")
+            form.save()
+            item=StockItem.objects.get(name=name)
+            item.place=place
+            item.save()
+            return redirect('move-item')
+    context = {
+        'form': form,
+        }
+    return render(request, 'forms/move_item.html', context)
+
+class PlaceItemsListView(ListView):
+    model=MoveItem
+    template_name = 'lists/place_list.html'
+    context_object_name = 'places' 

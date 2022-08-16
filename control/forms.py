@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import BuyItem, SaleProduct, WasteItem, TransferItem
+from .models import BuyItem, SaleProduct, WasteItem, TransferItem, MoveItem
 
 class BuyItemForm(ModelForm):
     class Meta:
@@ -50,4 +50,15 @@ class WasteItemForm(ModelForm):
             'quantity':forms.NumberInput(attrs={'class':'form-control'}),
             'approve':forms.TextInput(attrs={'class':'form-control'},),
             'document':forms.TextInput(attrs={'class':'form-control'})              
-        }                     
+        }     
+        
+
+class MoveItemForm(ModelForm):
+    class Meta:
+        model = MoveItem
+        fields=['name', 'place','document' ]
+        widgets={
+        'name':forms.Select(attrs={'class':'form-control'}),
+        'place':forms.TextInput(attrs={'class':'form-control'}),
+        'document':forms.TextInput(attrs={'class':'form-control'})
+        }                        

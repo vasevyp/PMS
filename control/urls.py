@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import control, add_buy_item, sold_product,  BuyItemsListView, SoldProductListView, InventoryListView,inventory_about, add_transfer_item, TransferItemsListView, add_waste_item, WasteItemsListView
+from .views import control, add_buy_item, sold_product,  BuyItemsListView, SoldProductListView, InventoryListView,inventory_about, add_transfer_item, TransferItemsListView, add_waste_item, WasteItemsListView, move_item, PlaceItemsListView
 
 urlpatterns = [
     path('', control, name='control'),
@@ -14,5 +14,7 @@ urlpatterns = [
     path('transfer_list/', TransferItemsListView.as_view(), name='transfer_list'),
     path('waste/', add_waste_item, name='waste'),
     path('waste_list/', WasteItemsListView.as_view(), name='waste_list'),
+    path('move_item/', move_item, name='move-item'),
+     path('place_list/', PlaceItemsListView.as_view(), name='place-list'),
     
 ]

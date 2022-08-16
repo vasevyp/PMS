@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} {{ block.super }}: Place Item
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Place Item</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Place</th>
+        <th scope="col">Name</th>
+        <th scope="col">ID</th>
+        <th scope="col">User</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in places %}
+
+      <tr>
+        <th scope="row">{{place.place}}</th>
+        <td>{{place.name}}</td>
+        <td>{{place.id}}</td>
+        <td>{{place.document}}</td>
+        <td>{{place.created_date}}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -185,12 +185,12 @@ class SaleProduct(models.Model):
         return self.price*self.sold
 
 
-'''Модель  для списания товаров (waste)''' 
+'''Модель Ввода метса товара (Move - Place)''' 
  
 class MoveItem(models.Model):
     name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)# для form buy_item.html
     place= models.CharField(max_length=250,verbose_name='Место',  null=True ,help_text='Стеллаж - Ряд - Место',default='  ') 
-    document= models.CharField(max_length=250,verbose_name='Заполнил',  null=True ,default='Кто(user) внес: ')   
+    document= models.CharField(max_length=250,verbose_name='Заполнил',  null=True ,default='User ')   
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата',)
     
     
@@ -198,12 +198,14 @@ class MoveItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['name','id']
         verbose_name = 'Место'
         verbose_name_plural = 'Место' 
         
     def __str__(self):
         return str(self.name)  
+    
+    
 
 
 '''Модель заказа товаров''' 
