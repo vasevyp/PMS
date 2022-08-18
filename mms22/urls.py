@@ -24,16 +24,17 @@ urlpatterns = [
     path('', include('register.urls')),
     path('control/', include('control.urls')),
     path('impex/', include('impex.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] 
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 if settings.DEBUG:
-    # urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#     # import debug_toolbar
-#     # urlpatterns += STATIC_URL()
-#     # urlpatterns=[
-#     #     path('__debug__/', include('debug_toolbar.urls')),
-#     #             ]+urlpatterns
+    urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    import debug_toolbar
+    # urlpatterns += STATIC_URL()
+    urlpatterns=[
+        path('__debug__/', include('debug_toolbar.urls')),
+                ]+urlpatterns
     urlpatterns+=static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
 #     

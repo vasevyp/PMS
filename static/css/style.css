@@ -10,6 +10,10 @@
   -o-border-radius: 10px;
 }
 
+body {
+  font-size: 0.85rem !important;
+}
+
 .navbutt {
   color: #ebeef1;
   background: #3a3837;
