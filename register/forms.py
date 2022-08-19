@@ -42,7 +42,7 @@ class AddCategoryItemForm(ModelForm):
 class AddItemForm(ModelForm):
     class Meta:
         model = Item
-        fields=['name', 'code','category', 'supplier', 'unit','unit_cost', 'description']
+        fields=['name', 'code','category', 'supplier', 'unit','unit_cost', 'description', 'delivery_time', 'supply_lot', 'lot_weight', 'lot_length', 'lot_width', 'lot_height', 'best_befor']
         widgets={
             'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
             'code':forms.TextInput(attrs={'class':'form-control'}),
@@ -51,6 +51,13 @@ class AddItemForm(ModelForm):
             'unit':forms.Select(attrs={'class':'form-control'},),
             'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control',  'rows':3}),
+            'delivery_time':forms.NumberInput(attrs={'class':'form-control'}), 
+            'supply_lot':forms.NumberInput(attrs={'class':'form-control'}), 
+            'lot_weight':forms.NumberInput(attrs={'class':'form-control'}), 
+            'lot_length':forms.NumberInput(attrs={'class':'form-control'}), 
+            'lot_width':forms.NumberInput(attrs={'class':'form-control'}), 
+            'lot_height':forms.NumberInput(attrs={'class':'form-control'}), 
+            'best_befor':forms.TextInput(attrs={'class':'form-control'})
               
         }           
         

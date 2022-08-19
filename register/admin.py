@@ -38,7 +38,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     #     ordering = ['code'] #Sort in desc order
 admin.site.register(Category, CategoryAdmin)
 class ItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost',] 
+    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'available'] 
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ('name',  'code')

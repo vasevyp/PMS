@@ -66,6 +66,13 @@ class Item(models.Model):
     description = models.TextField(blank=True, null=True)
     available = models.BooleanField(default=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    delivery_time = models.IntegerField(null=True)
+    supply_lot = models.IntegerField(null=True)
+    lot_weight= models.FloatField(blank=True, null=True)
+    lot_length=models.FloatField(blank=True, null=True)
+    lot_width = models.FloatField(blank=True, null=True)
+    lot_height = models.FloatField(blank=True, null=True)
+    best_befor = models.IntegerField(blank=True, null=True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
