@@ -12,7 +12,7 @@ admin.site.register(BuyItem, BuyItemAdmin)
 
 
 class StockItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'unit','unit_cost','place','open', 'sales', 'received', 'transfer', 'waste' ]
+    list_display = ['code', 'name', 'daily_requirement','unit','unit_cost','place','open', 'sales', 'received', 'transfer', 'waste' ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['name', 'code']
