@@ -98,10 +98,10 @@
               <th scope="col">ID</th>
               <th scope="col">ingredient</th>
               <th scope="col">ingr_code</th>
-              <th scope="col">unit</th>
-              <th scope="col">unit_cost</th>
+              <th scope="col">forecast</th>
               <th scope="col">Ratio</th>
-              <th scope="col">ingredient_cost</th>
+              <th scope="col">d_requirement</th>
+              <th scope="col">created_at</th>
             </tr>
           </thead>
           <tbody>
@@ -112,10 +112,10 @@
               <td>{{item.id}}</td>
               <td>{{item.ingredient}}</td>
               <td>{{item.code_ingr}}</td>
-              <td>{{item.unit}}</td>
-              <td>{{item.unit_cost}}</td>
+              <td>{{item.avrg_forecast}}</td>
               <td>{{item.ratio}}</td>
-              <td>{{item.ingredient_cost}}</td>
+              <td>{{item.daily_requirement}}</td>
+              <td>{{item.created_at}}</td>
             </tr>
             {% endfor %}
           </tbody>

@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from register.models import RecipeIngredient
+# from register.models import RecipeIngredient
+from .models import DailyRequirement
 
 
 def buffer(request):
     title='Buffer'
-    items=RecipeIngredient.objects.all()
+    # items=RecipeIngredient.objects.all()
+    items = DailyRequirement.objects.all()
     context={
         'title':title,
         'items':items

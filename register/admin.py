@@ -45,15 +45,13 @@ class ItemAdmin(ImportExportModelAdmin):
     list_filter= ('name', 'code')
 admin.site.register(Item, ItemAdmin)
 
+@admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
     list_display = ['code','name', 'price','category',  'weekday_forecast', 'weekend_forecast', 'avrg_forecast', 'holiday_forecast','promotion_forecast', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
     list_filter = ['category','code','name']
- 
-    
-admin.site.register(Product, ProductAdmin)
 class RecipeIngredientAdmin(ImportExportModelAdmin):
     list_display = ['product', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
     # prepopulated_fields= {'slug': ('product',)}

@@ -9,6 +9,7 @@
   Всего позиций: {{products.count}}
   <table class="table table-striped">
     <thead>
+
       <tr>
         <th scope="col">Code</th>
         <th scope="col">Name</th>
@@ -17,8 +18,11 @@
         <th scope="col">difficulty</th>
         <th scope="col">price</th>
         <th scope="col">cooking</th>
+        <th scope="col">weekday</th>
+        <th scope="col">weekend</th>
+        <th scope="col">avrg_forecast</th>
         <th scope="col">created_date</th>
-        <th scope="col">updated_date</th>
+
       </tr>
     </thead>
     <tbody>
@@ -31,8 +35,11 @@
         <td>{{product.difficulty}}</td>
         <td>{{product.price}}</td>
         <td>{{product.cooking}}</td>
-        <td>{{product.created_date}}</td>
-        <td>{{product.updated_date}}</td>
+        <td>{{product.weekday}}</td>
+        <td>{{product.weekend}}</td>
+        <td>{{product.avrg_forecast}}</td>
+        <td>{{product.created_date|date:'d-m-Y'}}</td>
+
       </tr>
       {% endfor %}
     </tbody>

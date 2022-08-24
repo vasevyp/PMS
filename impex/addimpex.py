@@ -14,8 +14,6 @@ def do_slug(name):
     return slug
 
 
-
-
 '''Импорт списка Категории Продуктов в Базу Данных'''
 def post_impex_category(request):    
     print('Выполняется Функция post_impex_category')

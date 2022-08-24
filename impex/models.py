@@ -261,14 +261,15 @@ class ImpexSaleProduct(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')    
     price=models.PositiveIntegerField(verbose_name='Цена, руб', default=1)
-    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)   
+    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1) 
+    date= models.DateField( verbose_name='Дата', help_text="'2022-08-18", null=True)  
     created_date = models.DateField(auto_now_add=True)      
 
     def get_absolute_url(self):        
         return reverse('sale', kwargs={'name': self.name})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-date']
         verbose_name = 'X-Продажа'
         verbose_name_plural = 'X-Продажи' 
         

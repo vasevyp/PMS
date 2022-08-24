@@ -57,7 +57,7 @@ class ImpexBuyItemAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexSaleProduct)
 class ImpexSaleProductAdmin(ImportExportModelAdmin):
-    list_display = [  'code', 'name', 'unit', 'price', 'sold', 'created_date' ] 
+    list_display = [  'code', 'name', 'unit', 'price', 'sold', 'date','created_date' ] 
     save_on_top = True
     search_fields = ['code', 'namet', 'created_date']
     list_filter= ('name', 'code', 'created_date')
