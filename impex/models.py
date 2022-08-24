@@ -74,7 +74,13 @@ class ImpexItem(models.Model):
     unit = models.CharField(max_length=50, help_text="Не более 50 знаков", choices=UNITS ) # pounds, lbs, oz ,grams, etc
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2)
     description = models.TextField(blank=True, null=True)
-    available = models.BooleanField(default=True)
+    delivery_time = models.IntegerField(verbose_name='Дней', null=True)
+    supply_lot = models.IntegerField(verbose_name='lot', null=True)
+    lot_weight= models.FloatField(verbose_name='weight', blank=True, null=True)
+    lot_length=models.FloatField(verbose_name='length', blank=True, null=True)
+    lot_width = models.FloatField(verbose_name='width', blank=True, null=True)
+    lot_height = models.FloatField(verbose_name='height', blank=True, null=True)
+    best_befor = models.IntegerField(blank=True, null=True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
@@ -110,7 +116,7 @@ class ImpexRecipeIngredient(models.Model):
  
 
 
-'''Модель IMPEX категорий готовых продуктов -РАБОТАЕТ'''
+'''Модель IMPEX категорий готовых продуктов'''
 class ImpexCategory(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
@@ -142,6 +148,11 @@ class ImpexProduct(models.Model):
     price = models.DecimalField(max_digits=10,help_text="Не более 10 знаков", null=True, decimal_places=2)
     description = models.TextField(blank=True, null=True)
     cooking= models.TextField(blank=True, null = True)
+    weekday_forecast=models.PositiveIntegerField(verbose_name='Будни', null = True)
+    weekend_forecast=models.PositiveIntegerField(verbose_name='Выходные', null = True)
+    avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные', null = True)
+    holiday_forecast=models.PositiveIntegerField(verbose_name='Праздники', null = True)
+    promotion_forecast=models.PositiveIntegerField(verbose_name='Промо', null = True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
     

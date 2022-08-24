@@ -98,7 +98,13 @@ def post_impex_item(request):
                             description=i.description,
                             category_id=c_id,
                             supplier_id=s_id, 
-                            available=i.available, 
+                            delivery_time=i.delivery_time,
+                            supply_lot=i.supply_lot,
+                            lot_weight=i.lot_weight,
+                            lot_length=i.lot_length,
+                            lot_width=i.lot_width,
+                            lot_height=i.lot_height,
+                            best_befor=i.best_befor, 
                             slug=do_slug(i.name)
                             )
         StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost) 

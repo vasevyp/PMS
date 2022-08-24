@@ -38,7 +38,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     #     ordering = ['code'] #Sort in desc order
 admin.site.register(Category, CategoryAdmin)
 class ItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'available'] 
+    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'supply_lot','lot_weight', 'lot_length','lot_width', 'lot_height', 'best_befor'] 
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ('name',  'code')
@@ -46,7 +46,7 @@ class ItemAdmin(ImportExportModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class ProductAdmin(ImportExportModelAdmin):
-    list_display = ['code','name', 'price','category', 'created_date' ]
+    list_display = ['code','name', 'price','category',  'weekday_forecast', 'weekend_forecast', 'avrg_forecast', 'holiday_forecast','promotion_forecast', 'created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ('name','code')
