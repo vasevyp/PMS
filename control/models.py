@@ -125,7 +125,7 @@ class TransferItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-created_date','name']
         verbose_name = 'Передача'
         verbose_name_plural = 'Передачи' 
         
@@ -184,7 +184,7 @@ class SaleProduct(models.Model):
         return reverse('sale', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-date']
         verbose_name = 'Продажа'
         verbose_name_plural = 'Продажи' 
         

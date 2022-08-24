@@ -26,6 +26,7 @@ def post_impex_category(request):
         Category.objects.get_or_create(name=name, code=code, slug=slug)
         
         print(cat.name,'-OK.')
+        cat.delete()
     success='Импорт Category выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'category_success':success})
@@ -38,6 +39,7 @@ def post_impex_supplier(request):
     for s in supplier:
         Supplier.objects.get_or_create(name=s.name, code=s.code, address=s.address, contact=s.contact, slug=do_slug(s.name))        
         print(s.name,' -OK')
+        s.delete()
     success='Импорт Supplier выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'supplier_success':success})
@@ -55,6 +57,7 @@ def post_impex_category_item(request):
         CategoryItem.objects.get_or_create(name=name, code=code, slug=slug)
         
         print(cat.name,' -OK.')
+        cat.delete()
     success='Импорт Category выполнен успешно!'
     return render(request, 'impex/impex_post.html', context={'categoryitem_success':success})
 
@@ -75,6 +78,7 @@ def post_impex_product(request):
             slug=do_slug(i.name))
         
         print(i.name,'-OK.')
+        i.delete()
     success='Импорт Product выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'product_success':success})
@@ -108,6 +112,7 @@ def post_impex_item(request):
         StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost) 
         
         print(i.name,'-OK')
+        i.delete()
     success='Импорт Items выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'item_success':success})
@@ -138,11 +143,15 @@ def post_impex_buyitem(request):
         buy_item=StockItem.objects.filter(name=i.name)
         for item in buy_item:
                 actual=item.open +item.received-item.sales-item.transfer-item.waste 
-                item.unit_cost=((actual*item.unit_cost + unit_cost*quantity)/(actual+quantity)) 
+                if actual>=0:
+                    item.unit_cost=((actual*item.unit_cost + unit_cost*quantity)/(actual+quantity))
+                else:
+                    item.unit_cost=unit_cost     
                 item.received=(item.received + quantity)
                 item.save()      
         
         print(i.name,'-OK.')
+        i.delete()
     success='Импорт BuyItems выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'buyitem_success':success})
@@ -161,6 +170,7 @@ def post_impex_sale_product(request):
             unit=i.unit, 
             price=i.price, 
             sold=i.sold,
+            date=i.date,
             name_id=Product.objects.get(code=i.code).id
             )
         
@@ -174,7 +184,8 @@ def post_impex_sale_product(request):
                 i_stock.sales=i_stock.sales + i.sold*rate
                 i_stock.save()              
         
-        print(i.name,'-OK.')
+        print(i.name,i.date,'-OK.')
+        i.delete()
     success='Импорт SaleProduct выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'sold_success':success})
@@ -205,6 +216,7 @@ def post_impex_transfer_item(request):
             t.save()      
         
         print(i.item_name,'-OK.')
+        i.delete()
     success='Импорт TransferItems выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'transferitem_success':success})
@@ -234,6 +246,7 @@ def post_impex_waste_item(request):
             w.save()      
         
         print(i.item_name,'-OK.')
+        i.delete()
     success='Импорт WasteItems выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'wasteitem_success':success})

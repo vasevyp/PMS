@@ -26,7 +26,7 @@
         <td>{{saleproduct.price}}</td>
         <td>{{saleproduct.sold}}</td>
         <td>{{saleproduct.get_revenue}}</td>
-        <td>{{saleproduct.created_date}}</td>
+        <td>{{saleproduct.date|date:"d-m-Y"}}</td>
       </tr>
       {% endfor %}
     </tbody>

@@ -32,7 +32,7 @@
         <td>{{transfer.get_cost}}</td>
         <td>{{transfer.partner}}</td>
         <td>{{transfer.invoice}}</td>
-        <td>{{transfer.created_date}}</td>
+        <td>{{transfer.created_date|date:"d-m-Y"}}</td>
       </tr>
 
       {% endfor %}
