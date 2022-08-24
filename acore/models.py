@@ -4,54 +4,62 @@ from django.urls import reverse
 from register.models import Product, Category
 
 '''
+-УБРАТЬ!!!
 Модель для фактических продаж по дням
+
+УЖЕ ЕСТЬ В CONTROL_SaleProduct
+
+-УБРАТЬ!!!
 '''    
-class Sales(models.Model):
-    name= models.CharField(max_length=250, verbose_name='Наименование', null=True, help_text="Не более 250 знаков")
-    quantity= models.PositiveIntegerField(verbose_name='Кол')
-    date= models.DateField( verbose_name='Дата', help_text="'2022-08-18")
-    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+# class Sales(models.Model):
+#     name= models.CharField(max_length=250, verbose_name='Наименование', null=True, help_text="Не более 250 знаков")
+#     quantity= models.PositiveIntegerField(verbose_name='Кол')
+#     date= models.DateField( verbose_name='Дата', help_text="'2022-08-18")
+#     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     
 
-    def get_absolute_url(self):        
-        return reverse('sellforecast', kwargs={'name': self.name})
+#     def get_absolute_url(self):        
+#         return reverse('sellforecast', kwargs={'name': self.name})
     
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Продаж'
-        verbose_name_plural = 'Продажи'
+#     class Meta:
+#         ordering = ['name']
+#         verbose_name = 'Продаж'
+#         verbose_name_plural = 'Продажи'
 
-    def __str__(self):
-        return str(self.name) 
+#     def __str__(self):
+#         return str(self.name) 
 
 '''
+-УБРАТЬ!!!
 Модель для прогноза продаж за день. Для получения суточной потребности в товарах/ингредиентах для обеспечения продаж.
+УЖЕ ПЕРЕНЕСЕНО В REGISTER_PRODUCT
+-УБРАТЬ!!!
 '''
-class SellForecast(models.Model):
-    name=models.ForeignKey(Product, verbose_name='Продукт',on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
-    weekday_forecast=models.PositiveIntegerField(verbose_name='Будни')
-    weekend_forecast=models.PositiveIntegerField(verbose_name='Выходные')
-    avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные')
-    holiday_forecast=models.PositiveIntegerField(verbose_name='Праздники')
-    promotion_forecast=models.PositiveIntegerField(verbose_name='Промо')
-    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
-    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
+# class SellForecast(models.Model):
+#     name=models.ForeignKey(Product, verbose_name='Продукт',on_delete=models.CASCADE)
+#     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
+#     weekday_forecast=models.PositiveIntegerField(verbose_name='Будни')
+#     weekend_forecast=models.PositiveIntegerField(verbose_name='Выходные')
+#     avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные')
+#     holiday_forecast=models.PositiveIntegerField(verbose_name='Праздники')
+#     promotion_forecast=models.PositiveIntegerField(verbose_name='Промо')
+#     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+#     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     
-    def save(self, *args, **kwargs):
-        avrg_forecast = (self.weekday_forecast*5 + self.weekend_forecast*2)/7
-        super(SellForecast, self).save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         avrg_forecast = (self.weekday_forecast*5 + self.weekend_forecast*2)/7
+#         super(SellForecast, self).save(*args, **kwargs)
     
-    def get_absolute_url(self):        
-        return reverse('sellforecast', kwargs={'name': self.name})
+#     def get_absolute_url(self):        
+#         return reverse('sellforecast', kwargs={'name': self.name})
     
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Прогноз продаж'
-        verbose_name_plural = 'Прогнозы продаж'
+#     class Meta:
+#         ordering = ['name']
+#         verbose_name = 'Прогноз продаж'
+#         verbose_name_plural = 'Прогнозы продаж'
 
-    def __str__(self):
-        return str(self.name) 
+#     def __str__(self):
+#         return str(self.name) 
     
 
 class DailyRequirement(models.Model):

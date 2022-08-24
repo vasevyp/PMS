@@ -18,11 +18,12 @@ class BuyItemForm(ModelForm):
 class SoldProductForm(ModelForm):
     class Meta:
         model=SaleProduct 
-        fields=['name','unit','sold', ]
+        fields=['name','unit','sold', 'date' ]
         widgets={
             'name':forms.Select(attrs={'class':'form-control'}),            
             'unit':forms.Select(attrs={'class':'form-control'},),
             'sold':forms.NumberInput(attrs={'class':'form-control'}),
+            'date': forms.DateInput(attrs={'type': 'date'})
                          
         }     
         

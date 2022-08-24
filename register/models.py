@@ -149,8 +149,18 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     cooking= models.TextField(blank=True, null = True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    weekday_forecast=models.PositiveIntegerField(verbose_name='Будни', null = True)
+    weekend_forecast=models.PositiveIntegerField(verbose_name='Выходные', null = True)
+    avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные', null = True)
+    holiday_forecast=models.PositiveIntegerField(verbose_name='Праздники', null = True)
+    promotion_forecast=models.PositiveIntegerField(verbose_name='Промо', null = True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
+    
+    def save(self, *args, **kwargs):
+        avrg_forecast = (self.weekday_forecast*5 + self.weekend_forecast*2)/7
+        super(Product, self).save(*args, **kwargs)
+    
     
     def get_absolute_url(self):        
         return reverse('product', kwargs={'slug': self.slug})

@@ -1,9 +1,10 @@
 {% extends 'base_simple.html' %}
 {% load static %}
-{% block title %} {{block.super }}: Items {% endblock %}
+{% block title %} {{block.super }}: Items {% endblock %} {{number}}
 {% block content %}
 <div class="container">
-  <h2 class="custom">Items</h2>
+  <h2 class="custom">Items </h2>
+  Всего позиций: {{items.count}}
   <table class="table table-striped">
     <thead>
       <tr>

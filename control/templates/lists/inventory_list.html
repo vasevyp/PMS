@@ -6,11 +6,13 @@
 {% block content %}
 <div class="container">
   <h2>Item Inventory list</h2>
+  Всего строк: {{stockitems.count}}
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Code</th>
         <th scope="col">Name</th>
+        <th scope="col">daily_requirement</th>
         <th scope="col">ID</th>
         <th scope="col">Unit</th>
         <th scope="col">Unit_cost</th>
@@ -30,6 +32,7 @@
       <tr>
         <th scope="row">{{stockitem.code}}</th>
         <td>{{stockitem.name}}</td>
+        <td>{{stockitem.daily_requirement |floatformat:2 }}</td>
         <td>{{stockitem.id}}</td>
         <td>{{stockitem.unit}}</td>
         <td>{{stockitem.unit_cost}}</td>

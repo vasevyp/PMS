@@ -49,7 +49,7 @@ class BuyItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-created_date']
         verbose_name = 'Закупка'
         verbose_name_plural = 'Закупки' 
         
@@ -76,6 +76,11 @@ class StockItem(models.Model):
     waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
     actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
     actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)	
+    
+    def save(self, *args, **kwargs):
+        actual = self.open-self.sales+self.received-self.transfer-self.waste
+        actual_cost= self.actual*self.actual_cost
+        super(StockItem, self).save(*args, **kwargs)
 
     def get_absolute_url(self):        
         return reverse('stock', kwargs={'slug': self.slug})
@@ -172,13 +177,14 @@ class SaleProduct(models.Model):
     sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')
     revenue= models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=2, default=0, blank=True, null=True)
+    date= models.DateField( verbose_name='Дата', help_text="'2022-08-18", null=True)
     created_date = models.DateField(auto_now_add=True)      
 
     def get_absolute_url(self):        
         return reverse('sale', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-created_date']
         verbose_name = 'Продажа'
         verbose_name_plural = 'Продажи' 
         
