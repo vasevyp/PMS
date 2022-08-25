@@ -1,5 +1,5 @@
 from django.contrib import admin
-from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, MoveItem
+from  .models import BuyItem, StockItem, SaleProduct,TransferItem, WasteItem, MoveItem, DailyRequirement
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 class BuyItemAdmin(admin.ModelAdmin):
@@ -53,6 +53,15 @@ class MoveItemAdmin(admin.ModelAdmin):
     search_fields = ['name','place', 'document']
     list_filter= ('name',)
 admin.site.register(MoveItem, MoveItemAdmin)
+
+
+
+@admin.register(DailyRequirement)
+class DailyRequirementAdmin(ImportExportModelAdmin):
+    list_display = [ 'product', 'code', 'avrg_forecast','ingredient', 'code_ingr', 'ratio', 'daily_requirement' ]
+    save_on_top = True
+    search_fields = ['product', 'code_ingr', 'ingredient']
+    list_filter= ('product', 'ingredient')  
 
 
 # class OrderItemAdmin(admin.ModelAdmin):
