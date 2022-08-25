@@ -157,9 +157,9 @@ class Product(models.Model):
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
     
-    def save(self, *args, **kwargs):
-        avrg_forecast = (self.weekday_forecast*5 + self.weekend_forecast*2)/7
-        super(Product, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     avrg_forecast = (int(self.weekday_forecast)*5 + int(self.weekend_forecast)*2)/7
+    #     super(Product, self).save(*args, **kwargs)
     
     
     def get_absolute_url(self):        

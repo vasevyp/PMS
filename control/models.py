@@ -218,8 +218,24 @@ class MoveItem(models.Model):
     def __str__(self):
         return str(self.name)  
     
-    
+'''
+Модель промежуточная, для временного хранения выборки продаж по будним дням
+'''    
+class WeekdaySale(models.Model):
+    product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
+    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
+    first_day= models.DateField()
+    last_day= models.DateField()
 
+
+'''
+Модель промежуточная, для временного хранения выборки продаж по выходным дням
+'''    
+class WeekendSale(models.Model):
+    product=models.CharField(max_length=200, help_text="Не более 200 знаков", null=True, db_index=True)#отражение в sold_product_list.html
+    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')    
+    sold= models.PositiveIntegerField(verbose_name='Sold, руб', default=1)
 
 '''Модель заказа товаров''' 
 # class OrderItem(models.Model):    
