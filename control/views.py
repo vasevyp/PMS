@@ -211,3 +211,5 @@ class PlaceItemsListView(ListView):
     model=MoveItem
     template_name = 'lists/place_list.html'
     context_object_name = 'places' 
+
+

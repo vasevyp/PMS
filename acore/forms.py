@@ -70,5 +70,20 @@ for i in sale:
     ...:     i.save()
 
 '''
-class RecalculationForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
+
+MODEL=(
+       ('1','Avg'),
+       ('2','Max'),
+       ('3','Avg/2+Max/2')
+       )
+    
+    
+class RecalculationForm(forms.Form):    
+    first_date=forms.DateField(label='Начало периода для перерасчета ', input_formats=['%d/%m/%Y'], 
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
+    last_date=forms.DateField(label='Конец периода для перерасчета ',input_formats=['%d/%m/%Y'], 
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
+    recalculation_model = forms.ChoiceField(label='Модель пересчета, Avg, Max, среднее', choices=MODEL, initial='Avg' )
+    
