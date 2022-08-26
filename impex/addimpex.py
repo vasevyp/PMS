@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 
 from .models import ImpexProduct,ImpexCategory, ImpexItem,ImpexBuyItem, ImpexTransferItem, ImpexWasteItem, ImpexRecipeIngredient, ImpexCategoryItem, ImpexSupplier, ImpexSaleProduct
 from register.models import Category, Product, Item, Supplier, CategoryItem, RecipeIngredient
-from control.models import StockItem,BuyItem, TransferItem, WasteItem, SaleProduct
+from control.models import StockItem,BuyItem, TransferItem, WasteItem, SaleProduct, DailyRequirement
 
 from django.template.defaultfilters import slugify
 
@@ -266,6 +266,17 @@ def post_impex_recipe(request):
             ratio=i.ratio,
             ingredient_id=Item.objects.get(code=i.code_ingr).id,
             product_id=Product.objects.get(code=i.code).id
+            )
+        DailyRequirement.objects.get_or_create(
+            product=Product.objects.get(code=i.code).name,
+            code=Product.objects.get(code=i.code).code,
+            ingredient=Item.objects.get(code=i.code_ingr).name,
+            code_ingr=Item.objects.get(code=i.code_ingr).code,
+            # unit=Item.objects.get(code=i.code_ingr).unit,
+            # unit_cost=Item.objects.get(code=i.code_ingr).unit_cost,
+            ratio=i.ratio,
+            # ingredient_id=Item.objects.get(code=i.code_ingr).id,
+            # product_id=Product.objects.get(code=i.code).id
             )
         
         print(i.name,i.name_ingr,'-OK.')

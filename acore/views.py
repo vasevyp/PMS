@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-# from register.models import RecipeIngredient
-# from .models import DailyRequirement
-from django.http import HttpResponse
+from django.db.models import Avg, Max, Sum
+from register.models import RecipeIngredient, Product
+from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm
-from register.models import Supplier
-
+import datetime
 
 
     
@@ -13,39 +12,99 @@ def recalculation(request):
         first_date = request.POST.get("first_date")
         last_date = request.POST.get("last_date")
         recalculation_model = request.POST.get("recalculation_model")
-        print('PRINT!!', first_date, last_date, recalculation_model)
-        s=Supplier.objects.all()
-        print(s)
+        print('START!!', first_date, last_date, recalculation_model)
+        WeekendSale.objects.all().delete()
+        WeekdaySale.objects.all().delete()
+        print('WeekendSale -DELETE;  WeekdaySale - DELETE')
+        sales=SaleProduct.objects.filter(date__range=(first_date, last_date))
+        for s in sales:
+            if s.date.isoweekday()>5:
+                WeekendSale.objects.create(product=s.product, code=s.code, sold=s.sold, date=s.date, first_day=first_date, last_day=last_date)
+            else:
+                WeekdaySale.objects.create(product=s.product, code=s.code, sold=s.sold, date=s.date, first_day=first_date, last_day=last_date)
+        if recalculation_model=='1':
+            products=Product.objects.all()
+            for i in products:
+                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                we=int(weekend['sold__avg'])
+                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                wd=int(weekday['sold__avg'])
+                i.weekend_forecast=we
+                i.weekday_forecast=wd
+                i.avrg_forecast=(we*2+wd*5)/7
+                rq=DailyRequirement.objects.filter(code=i.code)
+                for j in rq:
+                    j.avrg_forecast=(we*2+wd*5)/7
+                    j.daily_requirement=float((we*2+wd*5)/7) * float(j.ratio)
+                    stock=StockItem.objects.filter(code=j.code_ingr)
+                    for s in stock:
+                        code=j.code_ingr
+                        crs = DailyRequirement.objects.filter(code_ingr=code).aggregate(Sum('daily_requirement'))
+                        s.daily_requirement=(crs['daily_requirement__sum'])
+                        s.save()
+                    j.save()
+                i.save()  
+            
+            
+       
+        if recalculation_model=='2':
+            products=Product.objects.all()
+            for i in products:
+                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Max('sold'))
+                we=int(weekend['sold__max'])
+                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Max('sold'))
+                wd=int(weekday['sold__max'])
+                i.weekend_forecast=we
+                i.weekday_forecast=wd
+                i.avrg_forecast=(we*2+wd*5)/7
+                rq=DailyRequirement.objects.filter(code=i.code)
+                for j in rq:
+                    j.avrg_forecast=(we*2+wd*5)/7
+                    j.daily_requirement=float((we*2+wd*5)/7) * float(j.ratio)
+                    stock=StockItem.objects.filter(code=j.code_ingr)
+                    for s in stock:
+                        code=j.code_ingr
+                        crs = DailyRequirement.objects.filter(code_ingr=code).aggregate(Sum('daily_requirement'))
+                        s.daily_requirement=(crs['daily_requirement__sum'])
+                        s.save()
+                    j.save()
+                i.save()
+                
+        
+        if recalculation_model=='3':
+            products=Product.objects.all()
+            for i in products:
+                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                we=int(weekend['sold__avg'])*1.2
+                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                wd=int(weekday['sold__avg'])*1.2
+                i.weekend_forecast=we
+                i.weekday_forecast=wd
+                i.avrg_forecast=(we*2+wd*5)/7
+                rq=DailyRequirement.objects.filter(code=i.code)
+                for j in rq:
+                    j.avrg_forecast=(we*2+wd*5)/7
+                    j.daily_requirement=float((we*2+wd*5)/7) * float(j.ratio)
+                    stock=StockItem.objects.filter(code=j.code_ingr)
+                    for s in stock:
+                        code=j.code_ingr
+                        crs = DailyRequirement.objects.filter(code_ingr=code).aggregate(Sum('daily_requirement'))
+                        s.daily_requirement=(crs['daily_requirement__sum'])
+                        s.save()
+                    j.save()
+                i.save() 
+                                            
+        
+        print('SUCCESS!!', first_date, last_date, recalculation_model)
+        # WeekendSale.objects.all().delete()
+        # WeekdaySale.objects.all().delete()
         return redirect('memo')
     else:
         form = RecalculationForm()
         title='Recalc'
         return render(request, "forms/recalculation.html", {"form": form, 'title':title})
     
-        
-    # if request.method == 'POST':
-    #     form = RecalculationForm(request.POST)
-    #     if form.is_valid():
-    #         # first_date= form.cleaned_data
-    #         # field=first_date['field']
-    #         # last_date= request.POST.get("last_date")
-    #         # recalculation_model= form.cleaned_data.get("recalculation_model")
-    #         print('AAAAAAAA!!')
-    #         # print('AAAAAAAA!!',recalculation_model)
-    #         # print('ВНИМАНИЕ: ',first_date, last_date, recalculation_model)
-    #         form.save()
-        
-    # else:
-    #   form = RecalculationForm()
-    # #   form.merge_from_initial()
-    # context = {
-    #     'form': form,
-    #     # 'first_date':first_date,
-    #     # 'last_date':last_date,
-    #     # 'recalculation_model':recalculation_model
-    # }
-    # return render(request, 'forms/recalculation.html', context)      
-
+    
 
 def buffer(request):
     title='Buffer'
@@ -58,14 +117,3 @@ def buffer(request):
     
     return render(request, 'index.html', context)
 
-# def forecast(request):
-#     title='Forecast'
-#     items =  SellForecast.objects.all()
-#     context={
-#         'title':title,
-#         'items':items        
-#     }
-#     return render(request, 'sell_forecast.html', context)
-    
-
-# Create your views here.

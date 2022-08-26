@@ -244,12 +244,13 @@ class WeekendSale(models.Model):
 
    
 '''
-Модель для получения суточной потребности товаров на основе прогноза продаж
+Модель для получения суточной потребности товаров на основе прогноза продаж.
+Структура модели -  из загрузки  модели рецептов
 '''
 class DailyRequirement(models.Model):
-    product=models.CharField(max_length=200, verbose_name='Продукт')#related_name='product_name',
+    product=models.CharField(max_length=200, verbose_name='Продукт')
     code=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", verbose_name='Код продукта',decimal_places=0, null=True)
-    avrg_forecast= models.PositiveIntegerField(verbose_name='Суточный прогноз')
+    avrg_forecast= models.PositiveIntegerField(verbose_name='Суточный прогноз', null=True)# прогноз продаж продуктов из register_Product
     ingredient= models.CharField(max_length=200, verbose_name='Ингредиент')
     code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
     ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=4, default=1, null=True)  
@@ -257,15 +258,12 @@ class DailyRequirement(models.Model):
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен')
     
-    # def save(self, *args, **kwargs):
-    #     daily_requirement = (self.avrg_forecast* self.ratio)
-    #     super(DailyRequirement, self).save(*args, **kwargs)
     
     def get_absolute_url(self):        
         return reverse('dailyrequirement', kwargs={'product': self.product})
     
     class Meta:
-        ordering = ['product']
+        ordering = ['product', 'ingredient']
         verbose_name = 'Суточная потребность'
         verbose_name_plural = 'Суточная потребность'
 

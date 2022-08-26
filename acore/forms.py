@@ -74,7 +74,7 @@ for i in sale:
 MODEL=(
        ('1','Avg'),
        ('2','Max'),
-       ('3','Avg/2+Max/2')
+       ('3','Avg+20%')
        )
     
     

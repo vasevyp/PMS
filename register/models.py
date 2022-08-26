@@ -15,7 +15,6 @@ UNITS=(
         
     )
 
-
 '''Модель поставщиков закупаемых товаров'''
 class Supplier(models.Model):
     code=models.CharField(max_length=4, null=True)
