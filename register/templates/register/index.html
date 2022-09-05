@@ -21,76 +21,109 @@
       <div class="container-fluid">
 
         <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
-                  <i class="material-icons">content_copy</i>
+                  <p class="material-icons"> Заказать сегодня: </p>
                 </div>
-                <p class="card-category">Used Space</p>
-                <h3 class="card-title">49/50
-                  <small>GB</small>
-                </h3>
+                <h6 class="card-title">49
+                  <small>items</small>
+                </h6>
+                <smal class="card-category">На сумму</smal>
+                <h6 class="card-title">4950
+                  <small>Rub</small>
+                </h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a>
+                  <!-- <i class="material-icons text-danger">warning</i> -->
+                  <a href="#pablo">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
           </div>
-          {% if conda %}
-          <div class="col-lg-3 col-md-6 col-sm-6">
+
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <p class="material-icons"> Заказать через 3 дня: </p>
+                </div>
+                <h6 class="card-title">29
+                  <small>items</small>
+                </h6>
+                <small class="card-category">На сумму</small>
+                <h6 class="card-title">2590
+                  <small>Rub</small>
+                </h6>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons text-danger">warning</i> -->
+                  <a href="#pablo">Номенклатура к Заказу</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
-                  <i class="material-icons">store</i>
+                  <p class="card-category">Среднесуточные продажи</p>
+                  <small class="material-icons">за 7 дней</small>
                 </div>
-                <p class="card-category">Revenue</p>
-                <h3 class="card-title">$34,245</h3>
+                <h6 class="card-title">3245 руб</h6>
+                <small class="material-icons">за 30 дней</small>
+                <h6 class="card-title">2984 руб</h6>
+
               </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-              </div>
+
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
-                  <i class="material-icons">info_outline</i>
+                  <p class="material-icons">Запас на складе</p>
+                  <h6 class="card-title">75 ед. - 3 940 093 руб</h6>
                 </div>
-                <p class="card-category">Fixed Issues</p>
-                <h3 class="card-title">75</h3>
+                <small class="card-category">Пути</small>
+                <h6 class="card-title">15 ед. - 94 124 руб</h6>
+
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <i class="material-icons">local_offer</i> Tracked from Github
+                  <a href="#pablo">Склад</a><br>
+                  <a href="#pablo">Пути</a>
+
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
               <div class="card-header card-header-info card-header-icon">
                 <div class="card-icon">
                   <i class="fa fa-twitter"></i>
                 </div>
-                <p class="card-category">Followers</p>
-                <h3 class="card-title">+245</h3>
+                <p class="card-category">Потребность товаров в деньгах</p>
+                <small class="card-category">на 30 дней продаж</small>
+                <h6 class="card-title">293 104 руб</h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <i class="material-icons">update</i> Just Updated
+                  <a href="#pablo">Посмотреть список</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+        {% if 1 %}
         <div class="row">
           <div class="col-md-4">
             <div class="card card-chart">

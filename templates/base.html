@@ -37,7 +37,7 @@
             <a class="nav-link active navbutt" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active navbutt" href="{% url 'control' %}">Control</a>
+            <a class="nav-link active navbutt" href="{% url 'stock_in_days' %}">Stock in days</a>
           </li>
 
           <li class="navbar-nav nav-item dropdown">
@@ -46,8 +46,8 @@
               Operation
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'buy_item' %}">Buy Item Form</a></li>
-              <li><a class="dropdown-item" href="{% url 'sold_product' %}">Sold Product Form</a></li>
+              <li> <a class="dropdown-item" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a></li>
+              <li><a class="dropdown-item" href="{% url 'stock_item_days' %}">Stock item in days</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>

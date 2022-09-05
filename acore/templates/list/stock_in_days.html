@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+<h3>Table Product - stock_day</h3>
+<!--AAA-->
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <!-- <th scope="col">ID</th> -->
+      <th scope="col">unit</th>
+      <!-- <th scope="col">unit_cost</th> -->
+      <th scope="col">actual</th>
+      <!-- <th scope="col">actual_cost</th> -->
+      <th scope="col">d_requirement</th>
+      <th scope="col">stock_days</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stockday in stockdays|dictsort:"stock_days" %}
+    <tr>
+      <th scope="row">{{stockday.code}}</th>
+      <td>{{stockday.name}}</td>
+      <!-- <td>{{stockday.id}}</td> -->
+      <td>{{stockday.unit}}</td>
+      <!-- <td>{{stockday.unit_cost}}</td> -->
+      <td>{{stockday.actual}}</td>
+      <!-- <td>{{stockday.actual_cost}}</td> -->
+      <td>{{stockday.daily_requirement}}</td>
+      <td>{{stockday.stock_days}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!--/AAA-->
+
+{% endblock %}

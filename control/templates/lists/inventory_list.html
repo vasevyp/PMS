@@ -28,7 +28,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for stockitem in stockitems%}
+      {% for stockitem in stockitems|dictsort:"code" %}
       <tr>
         <th scope="row">{{stockitem.code}}</th>
         <td>{{stockitem.name}}</td>

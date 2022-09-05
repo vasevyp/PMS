@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+
+<div class="ms-3">
+
+  <div class="container">
+    <h3 style="color:rgb(5, 146, 5)">Вы успешно выполнили перерасчет остатков!<h3>
+
+
+
+        <!--cell-->
+        <div class="col-12">
+          <h5> Сформируйте запас товаров в днях продаж.</h5>
+          <div class="p-3 border bg-light">
+            <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
+            </p> -->
+            {% if stock_success %}
+            <div class="alert alert-success d-flex">
+              {{stock_success}}
+            </div>
+            <form action="{% url 'stock_item_days' %}" method="post" novalidate="novalidate">
+              {% csrf_token %}
+              <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+                value="Завершить рассчет" />
+            </form>
+            {% else %}
+
+            <form action="{% url 'stock_forecast_days' %}" method="post" novalidate="novalidate">
+              {% csrf_token %}
+              <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
+                value="Сформировать отстаки в днях" />
+            </form>
+            {% endif %}
+
+          </div>
+        </div>
+        <!--/cell-->
+
+
+
+
+
+
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
