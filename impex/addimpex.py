@@ -109,7 +109,7 @@ def post_impex_item(request):
                             best_befor=i.best_befor, 
                             slug=do_slug(i.name)
                             )
-        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost, delivery_time=i.delivery_time) 
+        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, first_cost=i.unit_cost, unit_cost=i.unit_cost, delivery_time=i.delivery_time) 
         
         print(i.name,'-OK')
         i.delete()
@@ -148,6 +148,7 @@ def post_impex_buyitem(request):
                 else:
                     item.unit_cost=unit_cost     
                 item.received=(item.received + quantity)
+                item.last_cost=unit_cost
                 item.save()      
         
         print(i.name,'-OK.')
