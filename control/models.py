@@ -63,8 +63,10 @@ class StockItem(models.Model):
     code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True)
     slug= models.SlugField(max_length=255, verbose_name='Url')
-    daily_requirement= models.DecimalField(verbose_name='Суточная потребность', null=True, max_digits=10, decimal_places=4)
+    daily_requirement= models.DecimalField(verbose_name='Суточная потребность', null=True, max_digits=10, decimal_places=4, default=0)
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='kg')
+    first_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
+    last_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     place = models.CharField(max_length=100,verbose_name='Место', null=True ,default='store')
     open=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, null=True, default=0)
@@ -74,12 +76,12 @@ class StockItem(models.Model):
     waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
     actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
     actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)
-    stock_days=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0,null=True,verbose_name='Запас, дней')
+    stock_days=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0,null=True, default=3000,  verbose_name='Остаток, дней')
     delivery=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0,null=True,verbose_name='Пути') # from DeliverItem (сделать через aggregate)
     delivery_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0,null=True,verbose_name='Пути, руб')
     fullstock=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0,null=True,verbose_name='Запас, ед.')
-    fullstock_days=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, null=True,verbose_name='Запас, дней')    
-    delivery_time = models.IntegerField(verbose_name='Буфер, дней', null=True) #from Item -- Это буфер для товарной позиции
+    fullstock_days=models.IntegerField( null=True,verbose_name='Запас, дней', default=0)    
+    delivery_time = models.IntegerField(verbose_name='Буфер, дней', null=True, default=5) #from Item -- Это буфер для товарной позиции
     
     def save(self, *args, **kwargs):
         actual = self.open-self.sales+self.received-self.transfer-self.waste

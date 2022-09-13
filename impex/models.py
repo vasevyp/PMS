@@ -21,8 +21,6 @@ STATUS_CHOICE = (
         ('pending', 'ожидание '),
         ('decline', 'отклонить' ),
         ('approved', 'одобрено'),
-        ('processing', 'обработка'),
-        ('complete', 'готов')
     )
 
 
@@ -74,13 +72,13 @@ class ImpexItem(models.Model):
     unit = models.CharField(max_length=50, help_text="Не более 50 знаков", choices=UNITS ) # pounds, lbs, oz ,grams, etc
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2)
     description = models.TextField(blank=True, null=True)
-    delivery_time = models.IntegerField(verbose_name='Дней', null=True)
-    supply_lot = models.IntegerField(verbose_name='lot', null=True)
-    lot_weight= models.FloatField(verbose_name='weight', blank=True, null=True)
-    lot_length=models.FloatField(verbose_name='length', blank=True, null=True)
-    lot_width = models.FloatField(verbose_name='width', blank=True, null=True)
-    lot_height = models.FloatField(verbose_name='height', blank=True, null=True)
-    best_befor = models.IntegerField(blank=True, null=True)
+    delivery_time = models.IntegerField(verbose_name='Поставка, дней', null=True)
+    supply_pack = models.IntegerField(verbose_name='Упаковка, ед.', null=True)
+    pack_weight= models.FloatField(verbose_name='вес упаковки', blank=True, null=True)
+    pack_length=models.FloatField(verbose_name='длина упаковки', blank=True, null=True)
+    pack_width = models.FloatField(verbose_name='ширина упаковки', blank=True, null=True)
+    pack_height = models.FloatField(verbose_name='высота упаковки', blank=True, null=True)
+    best_befor = models.DateField(blank=True, null=True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
     updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True)
     

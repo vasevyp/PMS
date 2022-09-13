@@ -13,8 +13,11 @@ def index(request):
         'title': 'Main'
     }
     return render(request, template_name='register/index.html', context=context)
+
+
 def memo(request):
     return render(request, template_name='memo/memo.html', context={'title':'Заметки'})
+
 
 def register(request):
     suppliers = Supplier.objects.all()
@@ -64,7 +67,9 @@ class ResiperListView(ListView):
     template_name = 'register/products/recipes.html'
     context_object_name = 'recipes'
 
-
+'''
+Добавление поставщика в базу данных Supplier
+'''
 def add_supplier(request):
     form = AddSupplierForm()
     if request.method == 'POST':
@@ -82,7 +87,9 @@ def add_supplier(request):
     }
     return render(request, 'forms/addSupplier.html', context)
 
-
+'''
+Добавление категории для продуктов в базу данных Category.
+'''
 
 def add_category(request):
     form = AddCategoryForm()
@@ -102,8 +109,9 @@ def add_category(request):
     return render(request, 'forms/addCategory.html', context)
 
 
-
-
+'''
+Добавление  категории для товара/ингредиента в базу данных CategoryItem
+'''
 def add_category_item(request):
     form = AddCategoryItemForm()
     if request.method == 'POST':
@@ -122,24 +130,10 @@ def add_category_item(request):
     return render(request, 'forms/addItemCategory.html', context)
 
 
-# def add_item(request):
-#     form = AddItemForm()
-#     if request.method == 'POST':
-#         form = AddItemForm(request.POST)
-#         if form.is_valid():
-#             name= form.cleaned_data.get("name")
-#             form.save() 
-#             s=CategoryItem.objects.get(name=name)
-#             s.slug=do_slug(name)
-#             s.save()           
-#             return redirect('itemcategories-list')        
-        
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'forms/addItemCategory.html', context)
 
-
+'''
+Добавление товара/ингредиента в базу данных StockItem
+'''
 def add_item(request):
     form = AddItemForm()
     if request.method == 'POST':
@@ -149,10 +143,12 @@ def add_item(request):
             name= form.cleaned_data.get("name")
             unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
-            StockItem.objects.create(code=code, name=name, slug=do_slug(name), unit=unit, unit_cost=unit_cost)             
+            delivery_time= form.cleaned_data.get("delivery_time")
+            StockItem.objects.create(code=code, name=name, slug=do_slug(name), unit=unit, unit_cost=unit_cost, first_cost=unit_cost, delivery_time=delivery_time)             
             form.save()
             it=Item.objects.get(name=name)
             it.slug=do_slug(name)
+            it.delivery_time=delivery_time
             it.save()
             return redirect('add-item')
     context = {
@@ -160,6 +156,9 @@ def add_item(request):
     }
     return render(request, 'forms/addItem.html', context)
 
+'''
+Добавление продукта в базу данных Product.
+'''
 def add_product(request):
     form = AddProductForm()
     if request.method == 'POST':

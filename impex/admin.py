@@ -28,7 +28,7 @@ class ImpexCategoryItemAdmin(ImportExportModelAdmin):
     
 @admin.register(ImpexItem)
 class ImpexItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'supply_lot','lot_weight', 'lot_length','lot_width', 'lot_height', 'best_befor' ]  
+    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'supply_pack','pack_weight', 'pack_length','pack_width', 'pack_height', 'best_befor' ]  
     save_on_top = True
     search_fields = ('name',  'code')
     list_filter= ('name', 'code')

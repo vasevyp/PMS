@@ -43,6 +43,7 @@ def add_buy_item(request):
                 actual=i.open +i.received-i.sales-i.transfer-i.waste 
                 i.unit_cost=((actual*i.unit_cost + unit_cost*quantity)/(actual+quantity)) 
                 i.received=(i.received + quantity)
+                i.last_cost=unit_cost
                 i.save()               
                        
            # запись в BuyItem и в buy_items_list

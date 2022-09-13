@@ -3,11 +3,12 @@
 {% block title %}
 {{ block.super }}: Inventory
 {% endblock %}
-{% block content %}
 <div class="container">
+  {% block content %}
+
   <h2>Item Inventory list</h2>
   Всего строк: {{stockitems.count}}
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Code</th>
@@ -15,6 +16,8 @@
         <th scope="col">daily_requirement</th>
         <th scope="col">ID</th>
         <th scope="col">Unit</th>
+        <th scope="col">first_cost</th>
+        <th scope="col">last_cost</th>
         <th scope="col">Unit_cost</th>
         <th scope="col">place</th>
         <th scope="col">Open</th>
@@ -24,6 +27,12 @@
         <th scope="col">waste</th>
         <th scope="col">Actual</th>
         <th scope="col">Actual_cost</th>
+        <th scope="col">stock_days</th>
+        <th scope="col">delivery</th>
+        <th scope="col">delivery_cost</th>
+        <th scope="col">fullstock</th>
+        <th scope="col">fullstock_days</th>
+        <th scope="col">delivery_time</th>
 
       </tr>
     </thead>
@@ -35,6 +44,8 @@
         <td>{{stockitem.daily_requirement |floatformat:2 }}</td>
         <td>{{stockitem.id}}</td>
         <td>{{stockitem.unit}}</td>
+        <td>{{stockitem.first_cost}}</td>
+        <td>{{stockitem.last_cost}}</td>
         <td>{{stockitem.unit_cost}}</td>
         <td>{{stockitem.place}}</td>
         <td>{{stockitem.open}}</td>
@@ -44,10 +55,17 @@
         <td>{{stockitem.waste}}</td>
         <td>{{stockitem.get_actual |floatformat:2}}</td>
         <td>{{stockitem.get_actual_cost|floatformat:2 }}</td>
+        <td>{{stockitem.stock_days}}</td>
+        <td>{{stockitem.delivery}}</td>
+        <td>{{stockitem.delivery_cost}}</td>
+        <td>{{stockitem.fullstock}}</td>
+        <td>{{stockitem.fullstock_days}}</td>
+        <td>{{stockitem.delivery_time}}</td>
 
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
+  {% endblock %}
 </div>
-{% endblock %}

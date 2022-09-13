@@ -4,8 +4,8 @@ from django.db.models import Avg, Max, Sum
 from register.models import RecipeIngredient, Product
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm
-from .models import StockForecastDays
-import datetime
+from .models import StockForecastDays, ToOrder
+import datetime, math
 
 '''Рассчет среднесуточной потребности в товарах/ингредиентах. 
 1. Задается период фактических продаж продуктов для перерасчета прогноза продаж продуктов. Разделяем фактические продажи на две базы - weekday (рабочие дни) и weekend (выходные).
@@ -134,7 +134,10 @@ def stock_forecast_days(request):
     print('Выполняется формирование запасов в днях продаж')
     stock=StockItem.objects.all()
     for i in stock:
-        if i.daily_requirement>0:
+        if  i.daily_requirement > 0:
+            i.stock_days=i.actual/i.daily_requirement
+            i.save()
+            
             StockForecastDays.objects.create(
                 code=StockItem.objects.get(code=i.code).code,
                 name=StockItem.objects.get(code=i.code).name,
@@ -146,8 +149,22 @@ def stock_forecast_days(request):
                 stock_days=i.actual/i.daily_requirement
                                
          )
+        else:
+            i.stock_days=9999
+            i.save()
+            StockForecastDays.objects.create(
+                code=StockItem.objects.get(code=i.code).code,
+                name=StockItem.objects.get(code=i.code).name,
+                unit=StockItem.objects.get(code=i.code).unit,
+                unit_cost=StockItem.objects.get(code=i.code).unit_cost,
+                actual=StockItem.objects.get(code=i.code).actual,
+                actual_cost=StockItem.objects.get(code=i.code).actual_cost,
+                daily_requirement=StockItem.objects.get(code=i.code).daily_requirement,
+                stock_days=9999
+                               
+         )
         
-        print(i.name,i.code, i.actual/i.daily_requirement,'-OK.')
+        print(i.name,i.code, i.stock_days,'-OK.')
         
     success='Расчет остатков в днях выполнен успешно!'
     return render(request, 'stock_item_days.html', context={'stock_success':success})
@@ -158,6 +175,22 @@ class StockForecastDaysView(ListView):
     template_name = 'list/stock_in_days.html'
     context_object_name = 'stockdays' 
     
+
+def order_required(request):
+    title='Required to Order'
+    stock=StockItem.objects.all()
+    for i in stock:
+        if i.fullstock_days<=i.delivery_time:
+            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time-i.fullstockdays)*i.daily_requirement)*i.supply_pack, to_orders=1, status='pending')
+    to_order=ToOrder.objects.all()
+            
+    
+    context={
+        'title':title,
+        'to_order': to_order,
+    }
+    return render(request,  'order_required.html', context)
+
 
 def buffer(request):
     title='Buffer'

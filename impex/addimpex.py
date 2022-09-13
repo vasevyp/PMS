@@ -101,15 +101,15 @@ def post_impex_item(request):
                             category_id=c_id,
                             supplier_id=s_id, 
                             delivery_time=i.delivery_time,
-                            supply_lot=i.supply_lot,
-                            lot_weight=i.lot_weight,
-                            lot_length=i.lot_length,
-                            lot_width=i.lot_width,
-                            lot_height=i.lot_height,
+                            supply_pack=i.supply_pack,
+                            pack_weight=i.pack_weight,
+                            pack_length=i.pack_length,
+                            pack_width=i.pack_width,
+                            pack_height=i.pack_height,
                             best_befor=i.best_befor, 
                             slug=do_slug(i.name)
                             )
-        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost) 
+        StockItem.objects.get_or_create(code=i.code, name=i.name, slug=do_slug(i.name), unit=i.unit, unit_cost=i.unit_cost, delivery_time=i.delivery_time) 
         
         print(i.name,'-OK')
         i.delete()
