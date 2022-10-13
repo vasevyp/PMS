@@ -149,6 +149,7 @@ def post_impex_buyitem(request):
                     item.unit_cost=unit_cost     
                 item.received=(item.received + quantity)
                 item.last_cost=unit_cost
+                item.actual=actual
                 item.save()      
         
         print(i.name,'-OK.')

@@ -63,7 +63,7 @@ class ToOrder(models.Model):
         return float(self.unit_cost)*float(self.to_order)
     
     def get_absolute_url(self):        
-        return reverse('stock', kwargs={'slug': self.slug})
+        return reverse('to_order', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['name']

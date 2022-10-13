@@ -1,4 +1,5 @@
 {% extends 'base_simple.html' %}
+{% load static %}
 
 {% block title %}
 {{ block.super }}: Inventory
@@ -9,30 +10,32 @@
   <h2>Item Inventory list</h2>
   Всего строк: {{stockitems.count}}
   <table class="table table-striped">
-    <thead>
+    <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
       <tr>
-        <th scope="col">Code</th>
-        <th scope="col">Name</th>
-        <th scope="col">daily_requirement</th>
-        <th scope="col">ID</th>
-        <th scope="col">Unit</th>
-        <th scope="col">first_cost</th>
-        <th scope="col">last_cost</th>
-        <th scope="col">Unit_cost</th>
-        <th scope="col">place</th>
-        <th scope="col">Open</th>
-        <th scope="col">Sales</th>
-        <th scope="col">Received</th>
-        <th scope="col">transfer</th>
-        <th scope="col">waste</th>
-        <th scope="col">Actual</th>
-        <th scope="col">Actual_cost</th>
-        <th scope="col">stock_days</th>
-        <th scope="col">delivery</th>
-        <th scope="col">delivery_cost</th>
-        <th scope="col">fullstock</th>
-        <th scope="col">fullstock_days</th>
-        <th scope="col">delivery_time</th>
+        <th class="header" scope="col">Code</th>
+        <th class="header" scope="col">Name</th>
+        <th class="header" scope="col">daily_requirement</th>
+        <th class="header" scope="col">ID</th>
+        <th class="header" scope="col">Unit</th>
+        <th class="header" scope="col">first_cost</th>
+        <th class="header" scope="col">last_cost</th>
+        <th class="header" scope="col">Unit_cost</th>
+        <th class="header" scope="col">place</th>
+        <th class="header" scope="col">Open</th>
+        <th class="header" scope="col">Sales</th>
+        <th class="header" scope="col">Received</th>
+        <th class="header" scope="col">transfer</th>
+        <th class="header" scope="col">waste</th>
+        <th class="header" scope="col">Actual</th>
+        <th class="header" scope="col">Actual_cost</th>
+        <th class="header" scope="col">stock_days</th>
+        <th class="header" scope="col">delivery</th>
+        <th class="header" scope="col">delivery_cost</th>
+        <th class="header" scope="col">fullstock</th>
+        <th class="header" scope="col">fullstock_days</th>
+        <th class="header" scope="col">delivery_time</th>
 
       </tr>
     </thead>
@@ -53,7 +56,7 @@
         <td>{{stockitem.received}}</td>
         <td>{{stockitem.transfer}}</td>
         <td>{{stockitem.waste}}</td>
-        <td>{{stockitem.get_actual |floatformat:2}}</td>
+        <td>{{stockitem.actual |floatformat:2}}</td>
         <td>{{stockitem.get_actual_cost|floatformat:2 }}</td>
         <td>{{stockitem.stock_days}}</td>
         <td>{{stockitem.delivery}}</td>

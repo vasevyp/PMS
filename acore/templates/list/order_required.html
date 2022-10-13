@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+<h3>Заказ</h3>
+<!--AAA-->
+<!--cell-->
+<div class="col-12">
+  <h5> Сформируйте Заказ.</h5>
+  <div class="p-3 border bg-light">
+    <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
+            </p> -->
+
+    <form action="{% url 'order_required' %}" method="post" novalidate="novalidate">
+      {% csrf_token %}
+      <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+        value="Подготовить заказ" />
+    </form>
+
+
+  </div>
+</div>
+<!--/cell-->
+
+<table class="table table-striped">
+  <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <!-- <th scope="col">ID</th> -->
+      <th scope="col">delivery_time</th>
+      <!-- <th scope="col">unit_cost</th> -->
+      <th scope="col">daily_requirement</th>
+      <!-- <th scope="col">actual_cost</th> -->
+      <th scope="col">to_order</th>
+      <th scope="col">to_orders</th>
+      <th scope="col">status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for toorder in toorders|dictsort:"stock_days" %}
+    <tr>
+      <th scope="row">{{toorder.code}}</th>
+      <td>{{toorder.name}}</td>
+      <!-- <td>{{toorder.id}}</td> -->
+      <td>{{toorder.delivery_time}}</td>
+      <!-- <td>{{toorder.unit_cost}}</td> -->
+      <td>{{toorder.daily_requirement}}</td>
+      <!-- <td>{{toorder.actual_cost}}</td> -->
+      <td>{{toorder.to_order}}</td>
+      <td>{{toorder.to_orders}}</td>
+      <td>{{toorder.status}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!--/AAA-->
+
+{% endblock %}

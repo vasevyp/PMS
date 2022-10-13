@@ -256,7 +256,7 @@ class ImpexWasteItem(models.Model):
 '''Модель IMPEX продаж продуктов''' 
 class ImpexSaleProduct(models.Model):    
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", null=True)
-    code=models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0,null=True,verbose_name='Код')
+    code=models.PositiveIntegerField( help_text="Не более 12 знаков",default=0,null=True,verbose_name='Код')
     unit = models.CharField(max_length=10,verbose_name='Ед.изм.',  choices=UNITS, null=True ,default='шт.')    
     price=models.PositiveIntegerField(verbose_name='Цена, руб', default=1)
     sold= models.PositiveIntegerField(verbose_name='Sold', default=1) 

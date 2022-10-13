@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.db.models import Avg, Max, Sum
-from register.models import RecipeIngredient, Product
+from register.models import RecipeIngredient, Product, Item
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm
 from .models import StockForecastDays, ToOrder
@@ -135,6 +135,8 @@ def stock_forecast_days(request):
     stock=StockItem.objects.all()
     for i in stock:
         if  i.daily_requirement > 0:
+            i.actual=i.open +i.received-i.sales-i.transfer-i.waste
+            print(i.actual)
             i.stock_days=i.actual/i.daily_requirement
             i.save()
             
@@ -181,15 +183,16 @@ def order_required(request):
     stock=StockItem.objects.all()
     for i in stock:
         if i.fullstock_days<=i.delivery_time:
-            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time-i.fullstockdays)*i.daily_requirement)*i.supply_pack, to_orders=1, status='pending')
+            i.supply_pack=Item.objects.get(name=i.name).supply_pack
+            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time-i.fullstock_days)*i.daily_requirement)*i.supply_pack, to_orders=1, status='pending')
     to_order=ToOrder.objects.all()
             
     
     context={
         'title':title,
-        'to_order': to_order,
+        'toorders': to_order,
     }
-    return render(request,  'order_required.html', context)
+    return render(request,  'list/order_required.html', context)
 
 
 def buffer(request):
