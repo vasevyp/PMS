@@ -181,16 +181,22 @@ class StockForecastDaysView(ListView):
 def order_required(request):
     title='Required to Order'
     stock=StockItem.objects.all()
+    ToOrder.objects.all().delete()
+    d=2 
     for i in stock:
-        if i.fullstock_days<=i.delivery_time:
+        if i.fullstock_days<i.delivery_time:
             i.supply_pack=Item.objects.get(name=i.name).supply_pack
-            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time-i.fullstock_days)*i.daily_requirement)*i.supply_pack, to_orders=1, status='pending')
-    to_order=ToOrder.objects.all()
+            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, status=i.last_cost)
+            
+    toorder=ToOrder.objects.all()
+    summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
+    summa=summ_toorder
             
     
     context={
         'title':title,
-        'toorders': to_order,
+        'toorders': toorder,
+        'summa':summa
     }
     return render(request,  'list/order_required.html', context)
 

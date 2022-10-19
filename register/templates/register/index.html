@@ -8,7 +8,7 @@
 
   <div class="container">
 
-    <header id="header" class="header">
+    <header id="header" class="tab-header">
       <div class="top-left">
         <div class="navbar-header text-center" style="background: black">
           <h1 class="navbar-brand " style="color: white">Inventory Management System</h1>
@@ -27,11 +27,11 @@
                 <div class="card-icon">
                   <p class="material-icons"> Заказать сегодня: </p>
                 </div>
-                <h6 class="card-title">49
+                <h6 class="card-title">{{order_count}}
                   <small>items</small>
                 </h6>
                 <smal class="card-category">На сумму</smal>
-                <h6 class="card-title">4950
+                <h6 class="card-title">{{summa}}
                   <small>Rub</small>
                 </h6>
               </div>
@@ -90,7 +90,7 @@
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons">Запас на складе</p>
-                  <h6 class="card-title">75 ед. - 3 940 093 руб</h6>
+                  <h6 class="card-title">{{stock_count}} ед. {{stock_sum|floatformat:"0"}} руб !!!</h6>
                 </div>
                 <small class="card-category">Пути</small>
                 <h6 class="card-title">15 ед. - 94 124 руб</h6>

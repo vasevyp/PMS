@@ -56,6 +56,7 @@ class ToOrder(models.Model):
     to_order= models.IntegerField(verbose_name='Заказать, ед.')
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     to_orders= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",verbose_name='Заказать, руб.', decimal_places=2, null=True)
+    order_sum=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
     status = models.CharField(max_length=10, help_text="Не более 10 знаков", choices=STATUS_CHOICE)
     
     @property
