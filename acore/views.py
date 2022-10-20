@@ -184,6 +184,8 @@ def order_required(request):
     ToOrder.objects.all().delete()
     d=2 
     for i in stock:
+        i.actual_cost=i.actual*i.unit_cost
+        i.save()
         if i.fullstock_days<i.delivery_time:
             i.supply_pack=Item.objects.get(name=i.name).supply_pack
             ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, status=i.last_cost)

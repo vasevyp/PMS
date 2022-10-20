@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %} {{block.super}}: {{title}}{% endblock %}
 
 {% block content %}
@@ -54,7 +55,7 @@
                   <small>items</small>
                 </h6>
                 <small class="card-category">На сумму</small>
-                <h6 class="card-title">2590
+                <h6 class="card-title">2 590
                   <small>Rub</small>
                 </h6>
               </div>
@@ -74,9 +75,9 @@
                   <p class="card-category">Среднесуточные продажи</p>
                   <small class="material-icons">за 7 дней</small>
                 </div>
-                <h6 class="card-title">3245 руб</h6>
+                <h6 class="card-title">3 245 руб</h6>
                 <small class="material-icons">за 30 дней</small>
-                <h6 class="card-title">2984 руб</h6>
+                <h6 class="card-title">2 984 руб</h6>
 
               </div>
 
@@ -90,7 +91,7 @@
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons">Запас на складе</p>
-                  <h6 class="card-title">{{stock_count}} ед. {{stock_sum|floatformat:"0"}} руб !!!</h6>
+                  <h6 class="card-title">{{stock_count}} ед. на {{stock_sum|floatformat:0}} руб</h6>
                 </div>
                 <small class="card-category">Пути</small>
                 <h6 class="card-title">15 ед. - 94 124 руб</h6>

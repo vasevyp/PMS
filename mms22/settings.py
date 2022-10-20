@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.humanize',
     'bootstrap5',
     'import_export',
     'debug_toolbar',
@@ -149,3 +148,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS=['127.0.0.1']
+
+# отображать числа с использованием разделителя в тысячу
+USE_THOUSAND_SEPARATOR = True
