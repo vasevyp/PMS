@@ -3,7 +3,7 @@
 {% block title %} {{block.super}}: {{title}}{% endblock %}
 
 {% block content %}
-<h3>Заказать сегодня</h3>
+<h3>Заказать через 3 дня</h3>
 
 <!--AAA-->
 <!--cell-->
@@ -12,15 +12,13 @@
   <div class="p-3 border bg-light">
     <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
             </p> -->
-
-    <form action="{% url 'order_required_3' %}" method="post" novalidate="novalidate">
+    <form action="{% url 'memo' %}" method="post" novalidate="novalidate">
       {% csrf_token %}
       <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-        value="Рассчитать Заказ через 3 дня " />
+        value="Подготовить Заказ для отправки " />
     </form>
 
-
-    <h5> Позиций {{toorders.count}}. Сумма заказа {{summa}} руб.</h5>
+    <h5>Позиций {{toorders_3.count}}. Сумма {{summa_3}} руб. </h5>
 
 
   </div>
@@ -46,7 +44,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for toorder in toorders %}
+    {% for toorder in toorders_3 %}
     <tr>
       <th scope="row">{{toorder.code}}</th>
       <td>{{toorder.name}}</td>

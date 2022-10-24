@@ -5,7 +5,7 @@ from django.db.models import Avg, Max, Sum
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
 from .forms import AddSupplierForm, AddCategoryForm, AddCategoryItemForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
 from control.models import StockItem
-from acore.models import ToOrder
+from acore.models import ToOrder, ToOrder_3
 
 from impex.addimpex import do_slug
 
@@ -13,14 +13,19 @@ from impex.addimpex import do_slug
 def index(request):
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
     summa=summ_toorder
-    count_toorder= ToOrder.objects.all().count
-    count_stock=StockItem.objects.all().count
+    summ_toorder_3 = ToOrder_3.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
+    summa_3=summ_toorder_3
+    count_toorder= ToOrder.objects.all()
+    count_toorder_3= ToOrder_3.objects.all()
+    count_stock=StockItem.objects.all()
     stock_actual_cost = StockItem.objects.aggregate(sum_order=Sum('actual_cost')).get('sum_order')
     summa_stock=stock_actual_cost
     context={
         'title': 'Main',
         'summa':summa,
+        'summa_3':summa_3,
         'order_count':count_toorder,
+        'order_count_3':count_toorder_3,
         'stock_count':count_stock,
         'stock_sum':summa_stock
     }

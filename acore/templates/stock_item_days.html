@@ -21,10 +21,10 @@
             <div class="alert alert-success d-flex">
               {{stock_success}}
             </div>
-            <form action="{% url 'stock_item_days' %}" method="post" novalidate="novalidate">
+            <form action="{% url 'order_required' %}" method="post" novalidate="novalidate">
               {% csrf_token %}
               <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-                value="Завершить рассчет" />
+                value="Рассчитать Заказ на сегодня" />
             </form>
             {% else %}
 

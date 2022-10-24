@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.db.models import Avg, Max, Sum
-from register.models import RecipeIngredient, Product, Item
+from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm
-from .models import StockForecastDays, ToOrder
+from .models import StockForecastDays, ToOrder, ToOrder_3
 import datetime, math
 
 '''Рассчет среднесуточной потребности в товарах/ингредиентах. 
@@ -182,13 +182,15 @@ def order_required(request):
     title='Required to Order'
     stock=StockItem.objects.all()
     ToOrder.objects.all().delete()
-    d=2 
+    d=3 
     for i in stock:
         i.actual_cost=i.actual*i.unit_cost
         i.save()
-        if i.fullstock_days<i.delivery_time:
+        if i.fullstock_days<i.delivery_time+1:
             i.supply_pack=Item.objects.get(name=i.name).supply_pack
-            ToOrder.objects.create(code=i.code, name=i.name, delivery_time=i.delivery_time, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, status=i.last_cost)
+            i.supplier_id=Item.objects.get(name=i.name).supplier_id
+            i.supplier=Supplier.objects.get(id=i.supplier_id).name
+            ToOrder.objects.create(code=i.code, name=i.name, supplier=i.supplier, delivery_time=i.delivery_time, supply_pack=i.supply_pack, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack,  status=i.last_cost)
             
     toorder=ToOrder.objects.all()
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
@@ -201,6 +203,38 @@ def order_required(request):
         'summa':summa
     }
     return render(request,  'list/order_required.html', context)
+
+class StockForecastDaysView(ListView):
+    model=StockForecastDays
+    template_name = 'list/stock_in_days.html'
+    context_object_name = 'stockdays' 
+    
+
+def order_required_3(request):
+    title='Required to Order_3'
+    stock=StockItem.objects.all()
+    ToOrder_3.objects.all().delete()
+    d=6
+    for i in stock:
+        i.actual_cost=i.actual*i.unit_cost
+        i.save()
+        if i.fullstock_days<i.delivery_time+4:
+            i.supply_pack=Item.objects.get(name=i.name).supply_pack
+            i.supplier_id=Item.objects.get(name=i.name).supplier_id
+            i.supplier=Supplier.objects.get(id=i.supplier_id).name
+            ToOrder_3.objects.create(code=i.code, name=i.name, supplier=i.supplier, delivery_time=i.delivery_time, supply_pack=i.supply_pack, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack,  status=i.last_cost)
+            
+    toorder=ToOrder_3.objects.all()
+    summ_toorder = ToOrder_3.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
+    summa=summ_toorder
+            
+    
+    context={
+        'title':title,
+        'toorders_3': toorder,
+        'summa_3':summa
+    }
+    return render(request,  'list/order_required_3.html', context)
 
 
 def buffer(request):

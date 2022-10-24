@@ -28,8 +28,8 @@
                 <div class="card-icon">
                   <p class="material-icons"> Заказать сегодня: </p>
                 </div>
-                <h6 class="card-title">{{order_count}}
-                  <small>items</small>
+                <h6 class="card-title">{{order_count.count}}
+                  <small>наименований</small>
                 </h6>
                 <smal class="card-category">На сумму</smal>
                 <h6 class="card-title">{{summa}}
@@ -39,7 +39,7 @@
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="#pablo">Номенклатура к Заказу</a>
+                  <a href="{% url 'order_required' %}">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -51,18 +51,18 @@
                 <div class="card-icon">
                   <p class="material-icons"> Заказать через 3 дня: </p>
                 </div>
-                <h6 class="card-title">29
-                  <small>items</small>
+                <h6 class="card-title">{{order_count_3.count}}
+                  <small>наименований</small>
                 </h6>
                 <small class="card-category">На сумму</small>
-                <h6 class="card-title">2 590
+                <h6 class="card-title">{{summa_3}}
                   <small>Rub</small>
                 </h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="#pablo">Номенклатура к Заказу</a>
+                  <a href="{% url 'order_required_3' %}">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -82,6 +82,12 @@
               </div>
 
             </div>
+            <div class="card-footer">
+              <div class="stats">
+                <!-- <i class="material-icons text-danger">warning</i> -->
+                <a href="{% url 'sold_product_list' %}">Номенклатура </a>
+              </div>
+            </div>
           </div>
         </div>
         <hr>
@@ -91,7 +97,7 @@
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons">Запас на складе</p>
-                  <h6 class="card-title">{{stock_count}} ед. на {{stock_sum|floatformat:0}} руб</h6>
+                  <h6 class="card-title">{{stock_count.count}} ед. на {{stock_sum|floatformat:0}} руб</h6>
                 </div>
                 <small class="card-category">Пути</small>
                 <h6 class="card-title">15 ед. - 94 124 руб</h6>
