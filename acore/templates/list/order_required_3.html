@@ -12,7 +12,7 @@
   <div class="p-3 border bg-light">
     <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
             </p> -->
-    <form action="{% url 'memo' %}" method="post" novalidate="novalidate">
+    <form action="{% url 'order' %}" method="post" novalidate="novalidate">
       {% csrf_token %}
       <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
         value="Подготовить Заказ для отправки " />

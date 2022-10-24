@@ -4,8 +4,9 @@ from django.db.models import Avg, Max, Sum
 from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm
-from .models import StockForecastDays, ToOrder, ToOrder_3
-import datetime, math
+from .models import StockForecastDays, ToOrder, ToOrder_3, Order
+import math
+from datetime import datetime, timedelta
 
 '''Рассчет среднесуточной потребности в товарах/ингредиентах. 
 1. Задается период фактических продаж продуктов для перерасчета прогноза продаж продуктов. Разделяем фактические продажи на две базы - weekday (рабочие дни) и weekend (выходные).
@@ -237,14 +238,22 @@ def order_required_3(request):
     return render(request,  'list/order_required_3.html', context)
 
 
-def buffer(request):
-    title='Buffer'
-    # items=RecipeIngredient.objects.all()
-    # items = DailyRequirement.objects.all()
+
+def order(request):
+    title='Order'
+    Order.objects.all().delete()
+    order_td=ToOrder.objects.all()
+    
+    for i in order_td:
+        Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
+    order=Order.objects.all()    
+    
+    summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    order_costs=summ_order
+    
     context={
         'title':title,
-        # 'items':items
+        'order': order,
+        'order_costs':order_costs
     }
-    
-    return render(request, 'index.html', context)
-
+    return render(request,  'list/order.html', context)

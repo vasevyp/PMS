@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+<h3>Заказ</h3>
+
+<!--AAA-->
+<!--cell-->
+<div class="col-12">
+
+  <div class="p-3 border bg-light">
+    <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
+            </p> -->
+    <form action="{% url 'memo' %}" method="post" novalidate="novalidate">
+      {% csrf_token %}
+      <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+        value="Распечатать Заказ для отправки " />
+    </form>
+
+    <h5>Позиций {{order.count}}. Сумма всего: {{order_costs}} руб. </h5>
+
+
+  </div>
+</div>
+<!--/cell-->
+
+<table class="table table-striped">
+  <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+    <tr>
+      <th scope="col">Номер</th>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <th scope="col">Количество</th>
+      <th scope="col">Сумма</th>
+      <th scope="col">Поставщик</th>
+      <th scope="col">Дата поставки</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in order %}
+    <tr>
+      <th scope="row">{{item.order_number}}</th>
+      <td>{{item.code}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.order}}</td>
+      <td>{{item.order_cost}}</td>
+      <td>{{item.supplier}}</td>
+      <td>{{item.delivery_date}}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!--/AAA-->
+
+{% endblock %}
