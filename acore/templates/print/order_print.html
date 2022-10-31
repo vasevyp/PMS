@@ -1,0 +1,82 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="{% static 'im-icon.png' %}" />
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <title>{{title}}: {{order_number}}</title>
+</head>
+
+<body>
+
+
+
+  <!--AAA-->
+  <!--cell-->
+  <div class="col-12 row justify-content-center" style="font-size:0.5rem">
+    <div class="col-11 ">
+
+      <img width="70px" src="{% static 'im-icon.png' %}" alt="My image"><a style="font-size:1.5rem">
+        <b> Company
+          ACV</b>
+      </a>
+      <!-- <img width="2rem" src="{% static url 'im-icon.png' %}" alt=""> -->
+      <h4><a href="{% url 'order' %}">Заказ {{order_number}}</a></h4>
+
+      <div class="p-3 border bg-light">
+
+
+        <h6>Позиций {{order.count}}. Сумма всего: {{order_costs}} руб. </h6>
+
+
+      </div>
+
+      <!--/cell-->
+
+      <table class="table table-striped">
+        <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+          <tr>
+            <!-- <th scope="col">Номер</th> -->
+            <th scope="col">Код</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Кол.</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Поставщик</th>
+            <th scope="col">Дата поставки</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order %}
+          <tr>
+            <!-- <th scope="row">{{item.order_number}}</th> -->
+            <td>{{item.code}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.order}}</td>
+            <td>{{item.order_cost}}</td>
+            <td>{{item.supplier}}</td>
+            <td>{{item.delivery_date}}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--/AAA-->
+
+
+
+</body>
+
+</html>

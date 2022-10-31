@@ -257,3 +257,26 @@ def order(request):
         'order_costs':order_costs
     }
     return render(request,  'list/order.html', context)
+
+def order_print(request):
+    title='Order'
+    Order.objects.all().delete()
+    order_td=ToOrder.objects.all()
+    
+    for i in order_td:
+        Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
+    order=Order.objects.all()    
+    
+    summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    order_costs=summ_order
+    
+    context={
+        'title':'Заказ',
+        'order': order,
+        'order_costs':order_costs,
+        'order_number': datetime.today().strftime("%y%m-%d")
+    }
+    return render(request,  'print/order_print.html', context)
+
+def pdfprint(request):
+    pass
