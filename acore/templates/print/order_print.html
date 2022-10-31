@@ -1,5 +1,5 @@
 {% load static %}
-{% load bootstrap5 %}
+<!-- {% load bootstrap5 %} -->
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -20,15 +20,16 @@
 
   <!--AAA-->
   <!--cell-->
-  <div class="col-12 row justify-content-center" style="font-size:0.5rem">
+  <div class="col-12 row justify-content-center" style="font-size:1rem">
     <div class="col-11 ">
 
-      <img width="70px" src="{% static 'im-icon.png' %}" alt="My image"><a style="font-size:1.5rem">
+      <!-- <img width="50px" src="{% static 'im-icon.png' %}"> -->
+      <img width="25px" src="/home/yury/MyPro/my_mms/mms22/static/im-icon.png"><a style="font-size:1.25rem">
         <b> Company
           ACV</b>
       </a>
       <!-- <img width="2rem" src="{% static url 'im-icon.png' %}" alt=""> -->
-      <h4><a href="{% url 'order' %}">Заказ {{order_number}}</a></h4>
+      <h4><a href="{% url 'my-pdf' %}">Заказ № {{order_number}} </a></h4>
 
       <div class="p-3 border bg-light">
 
@@ -39,6 +40,7 @@
       </div>
 
       <!--/cell-->
+      <!--data-->
 
       <table class="table table-striped">
         <thead style="position: sticky;
@@ -70,7 +72,16 @@
           {% endfor %}
         </tbody>
       </table>
+      <!--/data-->
     </div>
+    <div class="col-11  mt-5 ">
+      <h5 class=" mx-auto">Начальник отдела закупок
+        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+        Петров
+        И.И
+      </h5>
+    </div>
+
   </div>
 
   <!--/AAA-->

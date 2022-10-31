@@ -259,9 +259,9 @@ def order(request):
     return render(request,  'list/order.html', context)
 
 def order_print(request):
-    title='Order'
     Order.objects.all().delete()
-    order_td=ToOrder.objects.all()
+    # order_td=ToOrder.objects.all()
+    order_td=ToOrder.objects.filter(supplier='Фермерское хозяйство')
     
     for i in order_td:
         Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
@@ -278,5 +278,35 @@ def order_print(request):
     }
     return render(request,  'print/order_print.html', context)
 
+'''Вывод в PDF файл Заказа'''
+
+
+from django.template.loader import get_template
+import pdfkit
+from django.http import HttpResponse
+
 def pdfprint(request):
-    pass
+    summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    data = dict()
+    data["code"] = Order.objects.all()
+    data["name"] = Order.objects.all()
+    data["order"] = Order.objects.all()
+    data["supplier"] = Order.objects.all()
+    data["delivary_date"] = Order.objects.all()
+    data['order_number']= datetime.today().strftime("%y%m-%d")
+    data['order_costs']=summ_order
+   
+
+    template = get_template('print/order_print.html')
+    html = template.render(data)
+    pdf = pdfkit.from_string(html, False)
+
+    filename = "Order_print.pdf"
+    # filename=str(datetime.today().strftime("%y%m-%d")+'.pdf')
+    # filename=str(datetime.today().strftime("%y%m-%d")+'.pdf')
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    # response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+    response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+    
+    return response

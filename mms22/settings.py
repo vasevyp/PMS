@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'control.apps.ControlConfig',
     'impex.apps.ImpexConfig',
     'acore.apps.AcoreConfig',
+    # 'wkhtmltopdf',
     
     
 ]

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from django_pandas.managers import DataFrameManager
+# from django_pandas.managers import DataFrameManager
 
 # from django.db.models.functions import Upper
 # from django.db.models.indexes import Index
@@ -108,7 +108,7 @@ class StockItem(models.Model):
     def get_actual_cost(self):
         return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
     
-    objects = DataFrameManager()
+    # objects = DataFrameManager()
 
 
 '''Модель передачи товаров (transfer)''' 
@@ -201,7 +201,7 @@ class SaleProduct(models.Model):
     def get_revenue(self):
         return self.price*self.sold
     
-    objects = DataFrameManager()
+    # objects = DataFrameManager()
 
 
 '''Модель Ввода метса товара (Move - Place)''' 

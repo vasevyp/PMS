@@ -1,5 +1,8 @@
-from django.urls import path
-from .views import  recalculation, stock_item_days,  stock_forecast_days, StockForecastDaysView, order_required,order_required_3, order, order_print
+from django.urls import path, re_path
+# from wkhtmltopdf.views import PDFTemplateView, TemplateView, PDFTemplateResponse
+# from django_pdfkit import PDFView
+
+from .views import  recalculation, stock_item_days,  stock_forecast_days, StockForecastDaysView, order_required,order_required_3, order, order_print,  pdfprint
 
 
 
@@ -12,7 +15,8 @@ urlpatterns = [
     path('order_required_3', order_required_3, name='order_required_3'),
     path('order', order, name='order'),
     path('order-print', order_print, name='print'),
+    path('print', pdfprint, name='my-pdf')
+    
     
     
 ]
-   
