@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView, DeleteView
 from django.db.models import Avg, Max, Sum
 from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
@@ -238,33 +238,66 @@ def order_required_3(request):
     return render(request,  'list/order_required_3.html', context)
 
 
-
-def order(request):
-    title='Order'
+    
+    
+def order_calc(request):
+    # title='Order'
     Order.objects.all().delete()
     order_td=ToOrder.objects.all()
     
     for i in order_td:
         Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
-    order=Order.objects.all()    
+    # order=Order.objects.all()    
     
+    # summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    # order_costs=summ_order
+    
+    # context={
+    #     'title':title,
+    #     'order': order,
+    #     'order_costs':order_costs
+    # }
+    return redirect('order')
+    # return render(request,  'list/order.html', context)
+
+
+def order(request):
+    order=Order.objects.all()
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order
-    
     context={
-        'title':title,
+        'title':'Order for',
         'order': order,
         'order_costs':order_costs
     }
-    return render(request,  'list/order.html', context)
-
-def order_print(request):
-    Order.objects.all().delete()
-    # order_td=ToOrder.objects.all()
-    order_td=ToOrder.objects.filter(supplier='Фермерское хозяйство')
+    return render(request,'list/order.html', context)
+'''Редактирование заказа при необходимости'''
+# from django.urls import reverse_lazy
+from .forms import OrderEditForm
+def order_item_edit_form(request, id):
+    item= Order.objects.get(id=id)
+    form=  OrderEditForm(initial={'code': id, 'order':item.order, 'delivery_date':item.delivery_date})  
     
-    for i in order_td:
-        Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
+    context={
+        'item':item,
+        'form': form, 
+        
+    }
+    return render(request,  'forms/order_edit_form.html', context)
+
+def order_delete(request, id):
+    try:
+        item=Order.objects.get(id=id)
+        item.delete()
+        print(f'Позиция {{item.name}} УДАЛЕНА')
+        return redirect('order') 
+    except:
+        print(f'Позиция {{item.name}} не удалена')    
+    
+    return render(request,  'list/order.html',{'item':item})       
+
+'''Создание формы для вывода на печать в PDF'''
+def order_print(request):    
     order=Order.objects.all()    
     
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
@@ -276,9 +309,11 @@ def order_print(request):
         'order_costs':order_costs,
         'order_number': datetime.today().strftime("%y%m-%d")
     }
+    
     return render(request,  'print/order_print.html', context)
 
-'''Вывод в PDF файл Заказа'''
+
+'''Вывод Заказа в PDF файл Order_print.pdf '''
 
 
 from django.template.loader import get_template
@@ -294,19 +329,20 @@ def pdfprint(request):
     data["supplier"] = Order.objects.all()
     data["delivary_date"] = Order.objects.all()
     data['order_number']= datetime.today().strftime("%y%m-%d")
+    # data['order_number']= Order.objects.all()
     data['order_costs']=summ_order
-   
 
     template = get_template('print/order_print.html')
     html = template.render(data)
     pdf = pdfkit.from_string(html, False)
+    
+    n=datetime.today().strftime("%y%m-%d")
+    print(n)
+    filename=str('Order '+n+'.pdf')
 
-    filename = "Order_print.pdf"
-    # filename=str(datetime.today().strftime("%y%m-%d")+'.pdf')
-    # filename=str(datetime.today().strftime("%y%m-%d")+'.pdf')
 
     response = HttpResponse(pdf, content_type='application/pdf')
     # response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
-    response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+    response['Content-Disposition'] = ' filename="'+filename+'"'
     
     return response

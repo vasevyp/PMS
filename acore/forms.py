@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+from .models import Order
 
 ''' 
 Форма для пересчета суточной потребности в товарах (ингредиентах) 
@@ -86,4 +88,18 @@ class RecalculationForm(forms.Form):
         widget=forms.DateInput(attrs={'type': 'date'})
     )
     recalculation_model = forms.ChoiceField(label='Модель пересчета, Avg, Max, среднее', choices=MODEL, initial='Avg' )
-    
+
+
+'''Форма для редактирования Заказа'''
+class OrderEditForm(ModelForm):
+    class Meta:
+        model=Order 
+        fields=['code','name','order','supplier', 'delivery_date' ]
+        widgets={
+            'code':forms.NumberInput(attrs={'class':'form-control'}),
+            'name':forms.Select(attrs={'class':'form-control'}),            
+            'supplier':forms.Select(attrs={'class':'form-control'},),
+            'order':forms.NumberInput(attrs={'class':'form-control'}),
+            'delivery_date': forms.DateInput(attrs={'type': 'date'})
+                         
+        } 

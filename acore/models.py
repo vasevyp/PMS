@@ -129,7 +129,7 @@ class Order(models.Model):
     created_date = models.DateField(auto_now_add=True)
     
     def get_absolute_url(self):        
-        return reverse('to_order', kwargs={'name': self.name})
+        return reverse('order', kwargs={'name': self.name})
 
     class Meta:
         ordering = ['-supplier','name']

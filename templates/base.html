@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 
-<html lang="ru">
+<html lang="en">
 
 <head>
 
@@ -34,7 +34,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a>
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'order_calc' %}">Order Calc</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active navbutt" href="{% url 'stock_in_days' %}">Stock in days</a>
@@ -50,6 +50,7 @@
               <li><a class="dropdown-item" href="{% url 'stock_item_days' %}">Stock item in days</a></li>
               <li>
               <li><a class="dropdown-item" href="{% url 'order_required' %}">Order_required</a></li>
+              <li><a class="dropdown-item" href="{% url 'order_calc' %}">Order_calc</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -64,7 +65,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'memo' %}">Заметки</a></li>
-              <li><a class="dropdown-item" href="{% url 'impex' %}">IMPEX</a></li>
+              <li><a class="dropdown-item" href="#"> ######</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -72,14 +73,24 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled navbutt">Disabled</a>
+            <a class="nav-link  navbutt" href="{% url 'order' %}">Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На главный</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link  navbutt" href="{% url 'dashbord' %}">reserve</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled navbutt" href="{% url 'dashbord' %}">reserve</a>
           </li>
         </ul>
-
+        <!-- 
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
       </div>
     </div>
   </nav>
@@ -241,11 +252,11 @@
               aria-expanded="false">
               Users
             </a>
-            <ul class="dropdown-menu">
+            <!-- <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'supplier-list' %}">Add</a></li>
               <li><a class="dropdown-item" href="{% url 'supplier-list' %}">View</a></li>
 
-            </ul>
+            </ul> -->
           </li>
 
 

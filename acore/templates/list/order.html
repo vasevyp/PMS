@@ -3,20 +3,39 @@
 {% block title %} {{block.super}}: {{title}}{% endblock %}
 
 {% block content %}
-<h3>Заказ</h3>
+
+<h3>Заказ для редактирования</h3>
+
 
 <!--AAA-->
 <!--cell-->
 <div class="col-12">
 
   <div class="p-3 border bg-light">
-    <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
-            </p> -->
-    <form action="{% url 'print' %}" method="post" novalidate="novalidate">
-      {% csrf_token %}
-      <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-        value="Распечатать Заказ для отправки " />
-    </form>
+    <div class="row col-11">
+      <div class="col-6">
+        <form action="{% url 'print' %}" method="post" novalidate="novalidate">
+          {% csrf_token %}
+          <input id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block" name="export"
+            value="Распечатать Заказ для отправки " />
+        </form>
+      </div>
+      <div class="col-5">
+        <form action="{% url 'order_calc' %}" method="post" novalidate="novalidate">
+          {% csrf_token %}
+          <input id="payment-button" type="submit" class="btn btn-sm btn-outline-secondary btn-block" name="export"
+            value="Обновить Заказ до рассчетного (первоначального) " />
+        </form>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
 
     <h5>Позиций {{order.count}}. Сумма всего: {{order_costs}} руб. </h5>
 
@@ -31,12 +50,14 @@
   z-index: 2;background: #9d9e9e;">
     <tr>
       <th scope="col">Номер</th>
-      <th scope="col">Code</th>
-      <th scope="col">Name</th>
-      <th scope="col">Количество</th>
+      <th scope="col">Код</th>
+      <th scope="col">Наименование</th>
+      <th scope="col">Кол.</th>
       <th scope="col">Сумма</th>
       <th scope="col">Поставщик</th>
       <th scope="col">Дата поставки</th>
+      <th scope="col">Ред.</th>
+      <th scope="col">Удалить</th>
 
     </tr>
   </thead>
@@ -50,6 +71,13 @@
       <td>{{item.order_cost}}</td>
       <td>{{item.supplier}}</td>
       <td>{{item.delivery_date}}</td>
+      <td><a href='{% url "order_edit_form" item.id %}'><img width="20px" src="{% static 'images/edit.png' %}"
+            alt="Edit"></a>
+
+      </td>
+      <td><a href='{% url "order_delete" item.id %}'><img width="20px" src="{% static 'images/trash.png' %}"
+            alt="Del"></a>
+      </td>
 
     </tr>
     {% endfor %}
