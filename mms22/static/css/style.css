@@ -27,6 +27,10 @@ body {
   font-weight: 600;
 }
 
+.font125 {
+  font-size: 1.25rem;
+}
+
 .bgc-green {
   background-color: green;
 }

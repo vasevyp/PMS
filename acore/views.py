@@ -271,19 +271,35 @@ def order(request):
         'order_costs':order_costs
     }
     return render(request,'list/order.html', context)
+
+
 '''Редактирование заказа при необходимости'''
-# from django.urls import reverse_lazy
+from django.contrib import messages 
 from .forms import OrderEditForm
 def order_item_edit_form(request, id):
     item= Order.objects.get(id=id)
-    form=  OrderEditForm(initial={'code': id, 'order':item.order, 'delivery_date':item.delivery_date})  
-    
+    form=  OrderEditForm( initial={'order':Order.objects.get(id=id).order}) 
+    # form= OrderEditForm()
+    print(id)
+    if request.method == 'POST':
+        form = OrderEditForm(request.POST)             
+        if form.is_valid():           
+            order= form.cleaned_data.get("order")            
+            item=Order.objects.get(id=id)
+            item.order=order
+            item.save()
+            return redirect('order')
+        else:
+            messages.error(request, "Error Valid Form") 
+            print('Error Valid Form')   
+            return redirect('order_edit_form')
     context={
         'item':item,
         'form': form, 
         
     }
     return render(request,  'forms/order_edit_form.html', context)
+    
 
 def order_delete(request, id):
     try:

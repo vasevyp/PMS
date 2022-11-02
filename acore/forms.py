@@ -94,12 +94,7 @@ class RecalculationForm(forms.Form):
 class OrderEditForm(ModelForm):
     class Meta:
         model=Order 
-        fields=['code','name','order','supplier', 'delivery_date' ]
+        fields=['order' ]
         widgets={
-            'code':forms.NumberInput(attrs={'class':'form-control'}),
-            'name':forms.Select(attrs={'class':'form-control'}),            
-            'supplier':forms.Select(attrs={'class':'form-control'},),
             'order':forms.NumberInput(attrs={'class':'form-control'}),
-            'delivery_date': forms.DateInput(attrs={'type': 'date'})
-                         
         } 

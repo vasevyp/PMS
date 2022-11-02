@@ -8,52 +8,28 @@
     <div class="card">
       <div class="card-header">
         <h4 class="card-title">Форма редактирование позиции Заказа</h4>
+        <div class="col-7 ms-2  font1-b">
+          {{item.name}}
+        </div>
         <div class="card-body">
           <!-- Credit Card -->
           <div id="pay-invoice">
-            <div class="card-body">
+            <div class="card-body ">
+
               <form action="#" method="post" novalidate="novalidate">
                 {% csrf_token %}
-
-                <div class="form-group">
-                  <label for="name" class="control-label mb-1">Наименование: </label>
-                  <b>{{item.name}}</b>
-
-                </div>
-                <div class="form-group">
-                  <label for="name" class="control-label mb-1">Поставщик : </label>
-                  <b>
-                    {{ item.supplier }}
-                  </b>
-
-                </div>
-                <div class="form-group">
-
-                  <label for="name" class="control-label mb-1">Изменить количество</label>
+                <div class="form-group ">
+                  <label for="name">Изменить количество</label>
                   {{ form.order }}
                 </div>
 
-
-                <div class="form-group">
-                  <label for="name" class="control-label mb-1">Дата поставки:</label>
-                  <b>{{ item.delivery_date }}</b><br>
-                  <label for="name" class="control-label mb-1">Дата поставки НОВАЯ</label>
-                  {{ form.delivery_date }}
-                </div>
-                <div class="form-group">
-                  <label for="name" class="control-label mb-1">ID - не менять!</label>
-                  {{form.code}}
-
-                </div>
-
                 <div>
-                  <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
+                  <button id="payment-button" type="submit" class="btn btn-lg btn-success nt-5 btn-block">
                     <span id="payment-button-amount">Save</span>
                   </button>
                 </div>
-
-
               </form>
+
             </div>
           </div>
 

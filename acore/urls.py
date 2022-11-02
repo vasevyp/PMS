@@ -16,7 +16,6 @@ urlpatterns = [
     path('order', order, name='order'),
     path('order_edit/<int:id>', order_item_edit_form, name='order_edit_form'),
     path('order_delete/<int:id>', order_delete, name='order_delete'),
-    # path('order_delete/<int:pk>', OrderDelete.as_view(), name='order_delete'),
     path('order-print', order_print, name='print'),
     path('print', pdfprint, name='my-pdf'),
     path('order-calc',order_calc, name='order_calc')

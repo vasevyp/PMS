@@ -53,10 +53,10 @@
       <th scope="col">Код</th>
       <th scope="col">Наименование</th>
       <th scope="col">Кол.</th>
+      <th scope="col">Ред.</th>
       <th scope="col">Сумма</th>
       <th scope="col">Поставщик</th>
       <th scope="col">Дата поставки</th>
-      <th scope="col">Ред.</th>
       <th scope="col">Удалить</th>
 
     </tr>
@@ -68,17 +68,15 @@
       <td>{{item.code}}</td>
       <td>{{item.name}}</td>
       <td>{{item.order}}</td>
+      <td><a href='{% url "order_edit_form" item.id %}'><img width="20px" src="{% static 'images/edit.png' %}"
+            alt="Edit"></a>
+      </td>
       <td>{{item.order_cost}}</td>
       <td>{{item.supplier}}</td>
       <td>{{item.delivery_date}}</td>
-      <td><a href='{% url "order_edit_form" item.id %}'><img width="20px" src="{% static 'images/edit.png' %}"
-            alt="Edit"></a>
-
-      </td>
       <td><a href='{% url "order_delete" item.id %}'><img width="20px" src="{% static 'images/trash.png' %}"
             alt="Del"></a>
       </td>
-
     </tr>
     {% endfor %}
   </tbody>
