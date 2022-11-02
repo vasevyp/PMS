@@ -31,6 +31,11 @@ body {
   font-size: 1.25rem;
 }
 
+.font125-b {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 .bgc-green {
   background-color: green;
 }

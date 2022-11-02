@@ -11,6 +11,7 @@
         <div class="col-7 ms-2  font1-b">
           {{item.name}}
         </div>
+
         <div class="card-body">
           <!-- Credit Card -->
           <div id="pay-invoice">
@@ -21,6 +22,16 @@
                 <div class="form-group ">
                   <label for="name">Изменить количество</label>
                   {{ form.order }}
+                </div>
+                <div class="row">
+                  <div class="col-2">Дата поставки:</div>
+                  <div class="col-2"><strong>{{item.delivery_date}}</strong></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Изменить Дату поставки <span class="text-danger font125-b"><b>(Дату указать
+                        обязательно!)</b></span>:</label><br>
+                  {{ form.delivery_date }}
                 </div>
 
                 <div>

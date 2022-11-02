@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView
 from django.db.models import Avg, Max, Sum
+from django.contrib import messages 
 from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
-from .forms import  RecalculationForm
+from .forms import  RecalculationForm, OrderEditForm
 from .models import StockForecastDays, ToOrder, ToOrder_3, Order
 import math
 from datetime import datetime, timedelta
+
+
 
 '''Рассчет среднесуточной потребности в товарах/ингредиентах. 
 1. Задается период фактических продаж продуктов для перерасчета прогноза продаж продуктов. Разделяем фактические продажи на две базы - weekday (рабочие дни) и weekend (выходные).
@@ -244,9 +247,9 @@ def order_calc(request):
     # title='Order'
     Order.objects.all().delete()
     order_td=ToOrder.objects.all()
-    
+        
     for i in order_td:
-        Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_order, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
+        Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_orders, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
     # order=Order.objects.all()    
     
     # summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
@@ -262,7 +265,12 @@ def order_calc(request):
 
 
 def order(request):
+    # stock=StockItem.objects.all()
     order=Order.objects.all()
+    for i in order:
+        price=StockItem.objects.get(code=i.code).last_cost
+        i.order_cost=i.order*price
+        i.save()
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order
     context={
@@ -274,19 +282,21 @@ def order(request):
 
 
 '''Редактирование заказа при необходимости'''
-from django.contrib import messages 
-from .forms import OrderEditForm
+
+
 def order_item_edit_form(request, id):
     item= Order.objects.get(id=id)
-    form=  OrderEditForm( initial={'order':Order.objects.get(id=id).order}) 
+    form=  OrderEditForm( initial={'order':Order.objects.get(id=id).order,'delivery_date':item.delivery_date}) 
     # form= OrderEditForm()
     print(id)
     if request.method == 'POST':
         form = OrderEditForm(request.POST)             
         if form.is_valid():           
-            order= form.cleaned_data.get("order")            
+            order= form.cleaned_data.get("order")
+            d= form.cleaned_data.get("delivery_date")             
             item=Order.objects.get(id=id)
             item.order=order
+            item.delivery_date=d
             item.save()
             return redirect('order')
         else:

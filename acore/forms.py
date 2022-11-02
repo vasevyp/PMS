@@ -94,7 +94,8 @@ class RecalculationForm(forms.Form):
 class OrderEditForm(ModelForm):
     class Meta:
         model=Order 
-        fields=['order' ]
+        fields=['order','delivery_date' ]
         widgets={
             'order':forms.NumberInput(attrs={'class':'form-control'}),
+            'delivery_date':forms.DateInput(attrs={'type': 'date'})
         } 
