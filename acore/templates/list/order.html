@@ -14,7 +14,7 @@
   <div class="p-3 border bg-light">
     <div class="row col-11">
       <div class="col-6">
-        <form action="{% url 'order_print' %}" method="post" novalidate="novalidate">
+        <form action="{% url 'order_print' %}" target="_blank" method="post" novalidate="novalidate">
           {% csrf_token %}
           <input id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block" name="export"
             value="Распечатать Заказ для отправки " />

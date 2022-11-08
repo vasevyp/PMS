@@ -23,14 +23,33 @@
   <div class="col-12 row justify-content-center" style="font-size:1rem">
     <div class="col-11 ">
 
-      <!-- <img width="50px" src="{% static 'im-icon.png' %}"> -->
+
+      {% if title %}
+      <img width="50px" src="{% static 'im-icon.png' %}">
+      <a style="font-size:1.25rem">
+        <b> Company
+          ACV</b>
+      </a>
+      <div class="row">
+        <h4 class="col-8">Заказ № {{order_number}}</h4>
+        <button type="button" class="btn btn-info btn-sm active col-3 mb-3 font100-b"><a href="{% url 'my-pdf' %}">
+            Сохранить в
+            PDF
+          </a>
+        </button>
+
+      </div>
+
+      {% else %}
       <img width=" 25px" src="/home/yury/MyPro/my_mms/mms22/static/im-icon.png">
       <a style="font-size:1.25rem">
         <b> Company
           ACV</b>
       </a>
-      <!-- <img width="2rem" src="{% static url 'im-icon.png' %}" alt=""> -->
-      <h4><a href="{% url 'my-pdf' %}">Заказ № {{order_number}} </a></h4>
+      <h4>Заказ № {{order_number}} </h4>
+      {% endif %}
+
+
 
       <div class="p-3 border bg-light">
 

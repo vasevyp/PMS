@@ -34,10 +34,21 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'order_calc' %}">Order Calc</a>
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На главный</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active navbutt" href="{% url 'stock_in_days' %}">Stock in days</a>
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbutt active" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Manual
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'memo' %} target =" _blank"">Заметки</a></li>
+              <li><a class="dropdown-item" href="#">Руководство</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Memo</a></li>
+            </ul>
           </li>
 
           <li class="navbar-nav nav-item dropdown">
@@ -49,35 +60,37 @@
               <li> <a class="dropdown-item" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a></li>
               <li><a class="dropdown-item" href="{% url 'stock_item_days' %}">Stock item in days</a></li>
               <li>
-              <li><a class="dropdown-item" href="{% url 'order_required' %}">Order_required</a></li>
-              <li><a class="dropdown-item" href="{% url 'order_calc' %}">Order_calc</a></li>
-              <li>
-                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="{% url 'stock_in_days' %}">Stock in days</a>
               </li>
-              <li><a class="dropdown-item" href="{% url 'impex' %}">IMPEX</a></li>
+
+
+              <hr class="dropdown-divider">
+
+              <li><a class="dropdown-item" href="{% url 'impex' %}" target="_blank">IMPEX</a></li>
             </ul>
           </li>
 
           <li class="navbar-nav nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbutt active" href="#" role="button" data-bs-toggle="dropdown"
+            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Memo
+              Order
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'memo' %}">Заметки</a></li>
-              <li><a class="dropdown-item" href="#"> ######</a></li>
+              <li><a class="dropdown-item" href="{% url 'order_calc' %}">Order_calc</a></li>
+              <li><a class="dropdown-item" href="{% url 'order' %}" target="_blank">Order</a></li>
+
+
+              <li><a class="dropdown-item" href="{% url 'last_order' %}">Last Order</a></li>
+              <li>
+              <li><a class="dropdown-item" href="{% url 'orders_list' %}">Order List</a></li>
+
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Не рабочий</a></li>
+              <li><a class="dropdown-item" href="{% url 'order' %}">Goods in transit</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link  navbutt" href="{% url 'order' %}">Order</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На главный</a>
-          </li>
+
 
           <li class="nav-item">
             <a class="nav-link active navbutt" href="{% url 'impex' %}">IMPEX</a>
