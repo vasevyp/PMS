@@ -339,15 +339,34 @@ def order_print(request):
             OrderList.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
             LastOrder.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
             print('OK', i.name)
+            item=StockItem.objects.get(name=i.name)
+            item.delivery=item.delivery+i.order
+            item.delivery_cost=item.delivery*item.last_cost
+            item.fullstock=item.actual+item.delivery
+            item.fullstock_days=item.fullstock/item.daily_requirement
+            item.save()
+             
+            
+            
     else:
         LastOrder.objects.all().delete()
         for i in order:
             OrderList.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
             LastOrder.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
+            item=StockItem.objects.get(name=i.name)
+            item.delivery=item.delivery+i.order
+            item.delivery_cost=item.delivery*item.last_cost
+            item.fullstock=item.actual+item.delivery
+            item.fullstock_days=item.fullstock/item.daily_requirement
+            item.save()
         print('new OK', i.name)        
 
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order
+    
+    
+   
+    
     
     context={
         'title':'Заказ',
