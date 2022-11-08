@@ -5,7 +5,7 @@ from django.contrib import messages
 from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm, OrderEditForm
-from .models import StockForecastDays, ToOrder, ToOrder_3, Order
+from .models import StockForecastDays, ToOrder, ToOrder_3, Order, LastOrder, OrderList
 import math
 from datetime import datetime, timedelta
 
@@ -181,7 +181,9 @@ class StockForecastDaysView(ListView):
     template_name = 'list/stock_in_days.html'
     context_object_name = 'stockdays' 
     
-
+'''
+Рассчет заказа на Сегодня
+'''
 def order_required(request):
     title='Required to Order'
     stock=StockItem.objects.all()
@@ -199,7 +201,11 @@ def order_required(request):
     toorder=ToOrder.objects.all()
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
     summa=summ_toorder
-            
+    
+    # if summa:
+    #     messages.success(request, 'Рассчет заказа на Сегодня Выполнен!')
+    # else:
+    #     messages.success(request, 'Рассчет  НЕ Выполнен! Проверьте данные.')
     
     context={
         'title':title,
@@ -213,7 +219,9 @@ class StockForecastDaysView(ListView):
     template_name = 'list/stock_in_days.html'
     context_object_name = 'stockdays' 
     
-
+'''
+Рассчет заказа на Сегодня + 3 дня
+'''
 def order_required_3(request):
     title='Required to Order_3'
     stock=StockItem.objects.all()
@@ -241,29 +249,26 @@ def order_required_3(request):
     return render(request,  'list/order_required_3.html', context)
 
 
-    
+'''
+Рассчитываем заказа на Сегодня и заказ через 3 дня
+'''    
     
 def order_calc(request):
-    # title='Order'
+    order_required(request) #Рассчет заказа на Сегодня
+    order_required_3(request) #Рассчет заказа на Сегодня + 3 дня
+    
     Order.objects.all().delete()
     order_td=ToOrder.objects.all()
         
     for i in order_td:
         Order.objects.create(code=i.code, name=i.name, supplier=i.supplier, order_number=datetime.today().strftime("%y%m-%d"), order=i.to_orders, order_cost=i.order_sum, supply_pack=i.supply_pack, delivery_date=datetime.today() + timedelta(days=4) )
-    # order=Order.objects.all()    
     
-    # summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
-    # order_costs=summ_order
-    
-    # context={
-    #     'title':title,
-    #     'order': order,
-    #     'order_costs':order_costs
-    # }
     return redirect('order')
-    # return render(request,  'list/order.html', context)
+  
 
-
+'''
+Отображение заказа на Сегодня
+'''
 def order(request):
     # stock=StockItem.objects.all()
     order=Order.objects.all()
@@ -274,15 +279,14 @@ def order(request):
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order
     context={
-        'title':'Order for',
+        'title':'Order form',
         'order': order,
         'order_costs':order_costs
     }
     return render(request,'list/order.html', context)
 
 
-'''Редактирование заказа при необходимости'''
-
+'''Редактирование позиции заказа: количество и дата поставки'''
 
 def order_item_edit_form(request, id):
     item= Order.objects.get(id=id)
@@ -310,22 +314,38 @@ def order_item_edit_form(request, id):
     }
     return render(request,  'forms/order_edit_form.html', context)
     
-
+'''
+Удаление позиции заказа. 
+'''
 def order_delete(request, id):
     try:
         item=Order.objects.get(id=id)
         item.delete()
-        print(f'Позиция {{item.name}} УДАЛЕНА')
+        print('Позиция -'+ item.name+ '- УДАЛЕНА')
         return redirect('order') 
     except:
-        print(f'Позиция {{item.name}} не удалена')    
+        print('Позиция -'+ item.name+ '- не удалена')    
     
     return render(request,  'list/order.html',{'item':item})       
 
 '''Создание формы для вывода на печать в PDF'''
-def order_print(request):    
-    order=Order.objects.all()    
-    
+def order_print(request): 
+    order_number=datetime.today().strftime("%y%m-%d")
+    last=LastOrder.objects.last().order_number
+    print(last,'*****', order_number)  
+    order=Order.objects.all() 
+    if last==order_number:
+        for i in order:
+            OrderList.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
+            LastOrder.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
+            print('OK', i.name)
+    else:
+        LastOrder.objects.all().delete()
+        for i in order:
+            OrderList.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
+            LastOrder.objects.create(code=i.code, name=i.name,order_number=i.order_number, order=i.order, order_cost=i.order_cost, supplier=i.supplier, delivery_date=i.delivery_date)
+        print('new OK', i.name)        
+
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order
     
@@ -339,7 +359,7 @@ def order_print(request):
     return render(request,  'print/order_print.html', context)
 
 
-'''Вывод Заказа в PDF файл Order_print.pdf '''
+'''Вывод Заказа в PDF файл, имя файла в формате заказа, например 2211-07 .pdf '''
 
 
 from django.template.loader import get_template
@@ -368,7 +388,29 @@ def pdfprint(request):
 
 
     response = HttpResponse(pdf, content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
-    response['Content-Disposition'] = ' filename="'+filename+'"'
+    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+    # response['Content-Disposition'] = ' filename="'+filename+'"'
     
     return response
+
+class OrderListView(ListView):
+    model=OrderList
+    template_name = 'list/orders_list.html'
+    context_object_name = 'items'
+
+
+def last_order(request):
+    title='LastOrder'
+    items=LastOrder.objects.all()
+    
+    summ_order = LastOrder.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    order_costs=summ_order
+    
+    context={
+        'title':title,
+        'items':items,
+        'order_costs':order_costs,
+        
+    }    
+    
+    return render(request, 'list/last_order.html', context)

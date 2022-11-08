@@ -3,20 +3,13 @@
 {% block title %} {{block.super}}: {{title}}{% endblock %}
 
 {% block content %}
-<h3>Заказать через 3 дня</h3>
+<h3>Расчетный Заказ через 3 дня</h3>
 
 <!--AAA-->
 <!--cell-->
 <div class="col-12">
 
   <div class="p-3 border bg-light">
-    <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
-            </p> -->
-    <form action="{% url 'order_calc' %}" method="post" novalidate="novalidate">
-      {% csrf_token %}
-      <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-        value="Подготовить Заказ для отправки " />
-    </form>
 
     <h5>Позиций {{toorders_3.count}}. Сумма {{summa_3}} руб. </h5>
 
@@ -33,14 +26,8 @@
       <th scope="col">Code</th>
       <th scope="col">Name</th>
       <th scope="col">Supplier</th>
-      <!-- <th scope="col">delivery_time</th> -->
-      <!-- <th scope="col">unit_cost</th> -->
-      <!-- <th scope="col">daily_requirement</th> -->
-      <!-- <th scope="col">actual_cost</th> -->
-      <th scope="col">to_order</th>
       <th scope="col">Оrder</th>
       <th scope="col">Оrder_Sum</th>
-      <th scope="col">status</th>
     </tr>
   </thead>
   <tbody>
@@ -49,14 +36,8 @@
       <th scope="row">{{toorder.code}}</th>
       <td>{{toorder.name}}</td>
       <td>{{toorder.supplier}}</td>
-      <!-- <td>{{toorder.delivery_time}}</td> -->
-      <!-- <td>{{toorder.unit_cost}}</td> -->
-      <!-- <td>{{toorder.daily_requirement}}</td> -->
-      <!-- <td>{{toorder.actual_cost}}</td> -->
-      <td>{{toorder.to_order}}</td>
-      <td>{{toorder.to_orders}}</td>
-      <td>{{toorder.order_sum}}</td>
-      <td>{{toorder.status}}</td>
+      <td>{{toorder.to_orders|floatformat:0}}</td>
+      <td>{{toorder.order_sum|floatformat:0}}</td>
     </tr>
     {% endfor %}
   </tbody>

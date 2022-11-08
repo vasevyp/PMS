@@ -21,14 +21,14 @@
     <div class="content">
       <div class="container-fluid">
 
-        <div class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="row ">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
             <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons"> Заказать сегодня: </p>
                 </div>
-                <h6 class="card-title">{{order_count.count}}
+                <h6 class="card-title">{{order_count}}
                   <small>наименований</small>
                 </h6>
                 <smal class="card-category">На сумму</smal>
@@ -45,18 +45,18 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
             <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons"> Заказать через 3 дня: </p>
                 </div>
-                <h6 class="card-title">{{order_count_3.count}}
-                  <small>наименований</small>
+                <h6 class="card-title">{{order_count_3}}
+                  <small>наименований</small> +({{dif_count}})
                 </h6>
                 <small class="card-category">На сумму</small>
                 <h6 class="card-title">{{summa_3}}
-                  <small>Rub</small>
+                  <small>Rub</small> +({{dif_summa}})
                 </h6>
               </div>
               <div class="card-footer">
@@ -68,31 +68,29 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
             <div class="card card-stats">
-              <div class="card-header card-header-success card-header-icon">
+              <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
-                  <p class="card-category">Среднесуточные продажи</p>
-                  <small class="material-icons">за 7 дней</small>
+                  <p class="material-icons"> Заказано сегодня: </p>
                 </div>
-                <h6 class="card-title">3 245 руб</h6>
-                <small class="material-icons">за 30 дней</small>
-                <h6 class="card-title">2 984 руб</h6>
-
+                <h6 class="card-title">{{last_order.count}}
+                  <small>наименований</small>
+                </h6>
+                <smal class="card-category">На сумму</smal>
+                <h6 class="card-title">{{summ_lastorder}}
+                  <small>Rub</small>
+                </h6>
               </div>
-
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <!-- <i class="material-icons text-danger">warning</i> -->
-                <a href="{% url 'sold_product_list' %}">Номенклатура </a>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons text-danger">warning</i> -->
+                  <a href="{% url 'last_order' %}">Номенклатура к Заказу</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
             <div class="card card-stats">
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
@@ -103,16 +101,39 @@
                 <h6 class="card-title">15 ед. - 94 124 руб</h6>
 
               </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <a href="#pablo">Склад</a><br>
+              <div class="card-footer fs-6">
+                <small class="stats ms-3">
+                  <a href="{% url 'inventory' %}">Склад</a>
+                </small>
+                <small class="stats ms-5">
                   <a href="#pablo">Пути</a>
-
-                </div>
+                </small>
               </div>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
+            <div class="card card-stats">
+              <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                  <p class="card-category">Среднесуточные продажи</p>
+                  <small class="material-icons">за 7 дней</small>
+                  <small class="card-title font100-b">3 245 руб</small><br>
+                  <small class="material-icons">за 30 дней</small>
+                  <small class="card-title font100-b">2 984 руб</small>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <!-- <i class="material-icons text-danger">warning</i> -->
+                <a href="{% url 'sold_product_list' %}">Номенклатура </a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-1">
             <div class="card card-stats">
               <div class="card-header card-header-info card-header-icon">
                 <div class="card-icon">
@@ -130,647 +151,7 @@
             </div>
           </div>
         </div>
-        {% if 0 %}
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card card-chart">
-              <div class="card-header card-header-success">
-                <div class="ct-chart" id="dailySalesChart"><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct"
-                    width="100%" height="100%" class="ct-chart-line" style="width: 100%; height: 100%;">
-                    <g class="ct-grids">
-                      <line x1="40" x2="40" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="116.57142857142857" x2="116.57142857142857" y1="0" y2="120"
-                        class="ct-grid ct-horizontal"></line>
-                      <line x1="193.14285714285714" x2="193.14285714285714" y1="0" y2="120"
-                        class="ct-grid ct-horizontal"></line>
-                      <line x1="269.7142857142857" x2="269.7142857142857" y1="0" y2="120" class="ct-grid ct-horizontal">
-                      </line>
-                      <line x1="346.2857142857143" x2="346.2857142857143" y1="0" y2="120" class="ct-grid ct-horizontal">
-                      </line>
-                      <line x1="422.85714285714283" x2="422.85714285714283" y1="0" y2="120"
-                        class="ct-grid ct-horizontal"></line>
-                      <line x1="499.42857142857144" x2="499.42857142857144" y1="0" y2="120"
-                        class="ct-grid ct-horizontal"></line>
-                      <line y1="120" y2="120" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="96" y2="96" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="72" y2="72" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="48" y2="48" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="24" y2="24" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="0" y2="0" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                    </g>
-                    <g>
-                      <g class="ct-series ct-series-a">
-                        <path
-                          d="M40,91.2C116.571,79.2,116.571,79.2,116.571,79.2C193.143,103.2,193.143,103.2,193.143,103.2C269.714,79.2,269.714,79.2,269.714,79.2C346.286,64.8,346.286,64.8,346.286,64.8C422.857,76.8,422.857,76.8,422.857,76.8C499.429,28.8,499.429,28.8,499.429,28.8"
-                          class="ct-line"></path>
-                        <line x1="40" y1="91.2" x2="40.01" y2="91.2" class="ct-point" ct:value="12" opacity="1">
-                        </line>
-                        <line x1="116.57142857142857" y1="79.2" x2="116.58142857142857" y2="79.2" class="ct-point"
-                          ct:value="17" opacity="1"></line>
-                        <line x1="193.14285714285714" y1="103.2" x2="193.15285714285713" y2="103.2" class="ct-point"
-                          ct:value="7" opacity="1"></line>
-                        <line x1="269.7142857142857" y1="79.2" x2="269.7242857142857" y2="79.2" class="ct-point"
-                          ct:value="17" opacity="1"></line>
-                        <line x1="346.2857142857143" y1="64.8" x2="346.29571428571427" y2="64.8" class="ct-point"
-                          ct:value="23" opacity="1"></line>
-                        <line x1="422.85714285714283" y1="76.8" x2="422.8671428571428" y2="76.8" class="ct-point"
-                          ct:value="18" opacity="1"></line>
-                        <line x1="499.42857142857144" y1="28.799999999999997" x2="499.43857142857144"
-                          y2="28.799999999999997" class="ct-point" ct:value="38" opacity="1"></line>
-                      </g>
-                    </g>
-                    <g class="ct-labels">
-                      <foreignObject style="overflow: visible;" x="40" y="125" width="76.57142857142857" height="20">
-                        <span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">M</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="116.57142857142857" y="125" width="76.57142857142857"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">T</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="193.14285714285714" y="125" width="76.57142857142858"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">W</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="269.7142857142857" y="125" width="76.57142857142856"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">T</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="346.2857142857143" y="125" width="76.57142857142856"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">F</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="422.85714285714283" y="125" width="76.57142857142861"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">S</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" x="499.42857142857144" y="125" width="76.57142857142856"
-                        height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 77px; height: 20px;">S</span>
-                      </foreignObject>
-                      <foreignObject style="overflow: visible;" y="96" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">0</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="72" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">10</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="48" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">20</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="24" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">30</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="0" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">40</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="-30" x="0" height="30" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 30px; width: 30px;">50</span></foreignObject>
-                    </g>
-                  </svg></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">Daily Sales</h4>
-                <p class="card-category">
-                  <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today
-                  sales.</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card card-chart">
-              <div class="card-header card-header-warning">
-                <div class="ct-chart" id="websiteViewsChart"><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct"
-                    width="100%" height="100%" class="ct-chart-bar" style="width: 100%; height: 100%;">
-                    <g class="ct-grids">
-                      <line y1="120" y2="120" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                      <line y1="96" y2="96" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                      <line y1="72" y2="72" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                      <line y1="48" y2="48" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                      <line y1="24" y2="24" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                      <line y1="0" y2="0" x1="40" x2="571" class="ct-grid ct-vertical"></line>
-                    </g>
-                    <g>
-                      <g class="ct-series ct-series-a">
-                        <line x1="62.125" x2="62.125" y1="120" y2="54.959999999999994" class="ct-bar" ct:value="542"
-                          opacity="1"></line>
-                        <line x1="106.375" x2="106.375" y1="120" y2="66.84" class="ct-bar" ct:value="443" opacity="1">
-                        </line>
-                        <line x1="150.625" x2="150.625" y1="120" y2="81.6" class="ct-bar" ct:value="320" opacity="1">
-                        </line>
-                        <line x1="194.875" x2="194.875" y1="120" y2="26.400000000000006" class="ct-bar" ct:value="780"
-                          opacity="1"></line>
-                        <line x1="239.125" x2="239.125" y1="120" y2="53.64" class="ct-bar" ct:value="553" opacity="1">
-                        </line>
-                        <line x1="283.375" x2="283.375" y1="120" y2="65.64" class="ct-bar" ct:value="453" opacity="1">
-                        </line>
-                        <line x1="327.625" x2="327.625" y1="120" y2="80.88" class="ct-bar" ct:value="326" opacity="1">
-                        </line>
-                        <line x1="371.875" x2="371.875" y1="120" y2="67.92" class="ct-bar" ct:value="434" opacity="1">
-                        </line>
-                        <line x1="416.125" x2="416.125" y1="120" y2="51.84" class="ct-bar" ct:value="568" opacity="1">
-                        </line>
-                        <line x1="460.375" x2="460.375" y1="120" y2="46.8" class="ct-bar" ct:value="610" opacity="1">
-                        </line>
-                        <line x1="504.625" x2="504.625" y1="120" y2="29.28" class="ct-bar" ct:value="756" opacity="1">
-                        </line>
-                        <line x1="548.875" x2="548.875" y1="120" y2="12.599999999999994" class="ct-bar" ct:value="895"
-                          opacity="1"></line>
-                      </g>
-                    </g>
-                    <g class="ct-labels">
-                      <foreignObject style="overflow: visible;" x="40" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">J</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="84.25" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">F</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="128.5" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">M</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="172.75" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">A</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="217" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">M</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="261.25" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">J</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="305.5" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">J</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="349.75" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">A</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="394" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">S</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="438.25" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">O</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="482.5" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">N</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="526.75" y="125" width="44.25" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 44px; height: 20px;">D</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="96" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">0</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="72" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">200</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="48" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">400</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="24" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">600</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="0" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">800</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="-30" x="0" height="30" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 30px; width: 30px;">1000</span></foreignObject>
-                    </g>
-                  </svg></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">Email Subscriptions</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card card-chart">
-              <div class="card-header card-header-danger">
-                <div class="ct-chart" id="completedTasksChart"><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct"
-                    width="100%" height="100%" class="ct-chart-line" style="width: 100%; height: 100%;">
-                    <g class="ct-grids">
-                      <line x1="40" x2="40" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="107" x2="107" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="174" x2="174" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="241" x2="241" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="308" x2="308" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="375" x2="375" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="442" x2="442" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line x1="509" x2="509" y1="0" y2="120" class="ct-grid ct-horizontal"></line>
-                      <line y1="120" y2="120" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="96" y2="96" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="72" y2="72" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="48" y2="48" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="24" y2="24" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                      <line y1="0" y2="0" x1="40" x2="576" class="ct-grid ct-vertical"></line>
-                    </g>
-                    <g>
-                      <g class="ct-series ct-series-a">
-                        <path
-                          d="M40,92.4C107,30,107,30,107,30C174,66,174,66,174,66C241,84,241,84,241,84C308,86.4,308,86.4,308,86.4C375,91.2,375,91.2,375,91.2C442,96,442,96,442,96C509,97.2,509,97.2,509,97.2"
-                          class="ct-line"></path>
-                        <line x1="40" y1="92.4" x2="40.01" y2="92.4" class="ct-point" ct:value="230" opacity="1">
-                        </line>
-                        <line x1="107" y1="30" x2="107.01" y2="30" class="ct-point" ct:value="750" opacity="1">
-                        </line>
-                        <line x1="174" y1="66" x2="174.01" y2="66" class="ct-point" ct:value="450" opacity="1">
-                        </line>
-                        <line x1="241" y1="84" x2="241.01" y2="84" class="ct-point" ct:value="300" opacity="1">
-                        </line>
-                        <line x1="308" y1="86.4" x2="308.01" y2="86.4" class="ct-point" ct:value="280" opacity="1">
-                        </line>
-                        <line x1="375" y1="91.2" x2="375.01" y2="91.2" class="ct-point" ct:value="240" opacity="1">
-                        </line>
-                        <line x1="442" y1="96" x2="442.01" y2="96" class="ct-point" ct:value="200" opacity="1">
-                        </line>
-                        <line x1="509" y1="97.2" x2="509.01" y2="97.2" class="ct-point" ct:value="190" opacity="1">
-                        </line>
-                      </g>
-                    </g>
-                    <g class="ct-labels">
-                      <foreignObject style="overflow: visible;" x="40" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">12p</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="107" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">3p</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="174" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">6p</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="241" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">9p</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="308" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">12p</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="375" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">3a</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="442" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">6a</span></foreignObject>
-                      <foreignObject style="overflow: visible;" x="509" y="125" width="67" height="20"><span
-                          class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="width: 67px; height: 20px;">9a</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="96" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">0</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="72" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">200</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="48" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">400</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="24" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">600</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="0" x="0" height="24" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 24px; width: 30px;">800</span></foreignObject>
-                      <foreignObject style="overflow: visible;" y="-30" x="0" height="30" width="30"><span
-                          class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                          style="height: 30px; width: 30px;">1000</span></foreignObject>
-                    </g>
-                  </svg></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">Completed Tasks</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-tabs card-header-primary">
-                <div class="nav-tabs-navigation">
-                  <div class="nav-tabs-wrapper">
-                    <span class="nav-tabs-title">Tasks:</span>
-                    <ul class="nav nav-tabs" data-tabs="tabs">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#profile" data-toggle="tab">
-                          <i class="material-icons">bug_report</i> Bugs
-                          <div class="ripple-container"></div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#messages" data-toggle="tab">
-                          <i class="material-icons">code</i> Website
-                          <div class="ripple-container"></div>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#settings" data-toggle="tab">
-                          <i class="material-icons">cloud</i> Server
-                          <div class="ripple-container"></div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane active" id="profile">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging
-                            rain swept through metro Detroit
-                          </td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="tab-pane" id="messages">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging
-                            rain swept through metro Detroit
-                          </td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="tab-pane" id="settings">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging
-                            rain swept through metro Detroit
-                          </td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked="">
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-link btn-sm"
-                              data-original-title="Edit Task">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm"
-                              data-original-title="Remove">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title">Employees Stats</h4>
-                <p class="card-category">New employees on 15th September, 2016</p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Salary</th>
-                      <th>Country</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Dakota Rice</td>
-                      <td>$36,738</td>
-                      <td>Niger</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Minerva Hooper</td>
-                      <td>$23,789</td>
-                      <td>Curaçao</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Sage Rodriguez</td>
-                      <td>$56,142</td>
-                      <td>Netherlands</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Philip Chaney</td>
-                      <td>$38,735</td>
-                      <td>Korea, South</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {% endif %}
+        <hr>
 
       </div>
     </div>

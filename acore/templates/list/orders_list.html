@@ -1,0 +1,51 @@
+{% extends 'base_simple.html' %}
+{% load static %}
+{% block title %} {{block.super}}: {{title}}{% endblock %}
+
+{% block content %}
+<!--AAA-->
+<!--cell-->
+<div class="col-11 mx-auto">
+  <h3>Заказы отправленные</h3>
+  <h5>Позиций {{items.count}}</h5>
+
+  <!--/cell-->
+
+  <table class="table table-striped">
+    <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+      <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Код</th>
+        <th scope="col">Наименование</th>
+
+        <th scope="col">Кол.</th>
+
+        <th scope="col">Сумма</th>
+        <th scope="col">Поставщик</th>
+        <th scope="col">Дата поставки</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <th scope="row">{{item.order_number}}</th>
+        <td>{{item.code}}</td>
+        <td>{{item.name}}</td>
+
+        <td>{{item.order}}</td>
+
+        <td>{{item.order_cost}}</td>
+        <td>{{item.supplier}}</td>
+        <td>{{item.delivery_date}}</td>
+
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <!--/AAA-->
+</div>
+{% endblock %}

@@ -5,29 +5,35 @@ from django.db.models import Avg, Max, Sum
 from .models import Supplier, Item, Product, RecipeIngredient, Category, CategoryItem
 from .forms import AddSupplierForm, AddCategoryForm, AddCategoryItemForm, AddItemForm, AddProductForm, AddRecipeIngredientForm
 from control.models import StockItem
-from acore.models import ToOrder, ToOrder_3
+from acore.models import ToOrder, ToOrder_3, LastOrder
 
 from impex.addimpex import do_slug
 
 
 def index(request):
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
-    summa=summ_toorder
     summ_toorder_3 = ToOrder_3.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
-    summa_3=summ_toorder_3
-    count_toorder= ToOrder.objects.all()
-    count_toorder_3= ToOrder_3.objects.all()
+    dif_summa=summ_toorder_3-summ_toorder
+    count_toorder= ToOrder.objects.all().count()
+    count_toorder_3= ToOrder_3.objects.all().count()
+    dif_count=count_toorder_3-count_toorder
     count_stock=StockItem.objects.all()
     stock_actual_cost = StockItem.objects.aggregate(sum_order=Sum('actual_cost')).get('sum_order')
     summa_stock=stock_actual_cost
+    last_order=LastOrder.objects.all()
+    summ_lastorder = LastOrder.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     context={
         'title': 'Main',
-        'summa':summa,
-        'summa_3':summa_3,
+        'summa':summ_toorder,
+        'summa_3':summ_toorder_3,
         'order_count':count_toorder,
         'order_count_3':count_toorder_3,
         'stock_count':count_stock,
-        'stock_sum':summa_stock
+        'stock_sum':summa_stock,
+        'dif_count':dif_count,
+        'dif_summa':dif_summa,
+        'last_order': last_order,
+        'summ_lastorder':summ_lastorder,
     }
     return render(request, template_name='register/index.html', context=context)
 
