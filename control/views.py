@@ -41,9 +41,14 @@ def add_buy_item(request):
             buy_item=StockItem.objects.filter(name=name)
             for i in buy_item:
                 actual=i.open +i.received-i.sales-i.transfer-i.waste 
+                i.actual=i.actual+quantity
                 i.unit_cost=((actual*i.unit_cost + unit_cost*quantity)/(actual+quantity)) 
                 i.received=(i.received + quantity)
                 i.last_cost=unit_cost
+                i.delivery=i.delivery-quantity
+                i.delivery_cost=i.delivery*i.last_cost
+                i.fullstock=i.actual+i.delivery
+                i.fullstock_days=i.fullstock/i.daily_requirement
                 i.save()               
                        
            # запись в BuyItem и в buy_items_list

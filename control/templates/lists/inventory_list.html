@@ -7,9 +7,12 @@
 {% endblock %}
 <div class="col-12 mx-1">
   {% block content %}
+  <div class="ms-3">
+    <h3>Item Inventory list</h3>
+    Всего строк: {{stockitems.count}}
+  </div>
 
-  <h2>Item Inventory list</h2>
-  Всего строк: {{stockitems.count}}
+
   <table class="table table-striped">
     <thead style="position: sticky;
   top: -1px;
