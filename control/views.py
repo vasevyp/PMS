@@ -41,11 +41,15 @@ def add_buy_item(request):
             buy_item=StockItem.objects.filter(name=name)
             for i in buy_item:
                 actual=i.open +i.received-i.sales-i.transfer-i.waste 
-                i.actual=i.actual+quantity
                 i.unit_cost=((actual*i.unit_cost + unit_cost*quantity)/(actual+quantity)) 
                 i.received=(i.received + quantity)
                 i.last_cost=unit_cost
-                i.delivery=i.delivery-quantity
+                i.actual=actual+quantity
+                if quantity>=i.delivery:
+                    i.delivery=0
+                else:
+                    i.delivery=i.delivery-quantity
+                i.actual_cost=i.actual*i.unit_cost
                 i.delivery_cost=i.delivery*i.last_cost
                 i.fullstock=i.actual+i.delivery
                 i.fullstock_days=i.fullstock/i.daily_requirement
@@ -143,6 +147,9 @@ def add_transfer_item(request):
             item=StockItem.objects.filter(name=name)
             for i in item:
                 i.transfer=( i.transfer + quantity)
+                i.actual=i.open +i.received-i.sales-i.transfer-i.waste
+                i.actual_cost=i.actual*i.unit_cost
+                i.fullstock=i.actual+i.delivery
                 i.save()               
                        
            # запись в TransferItem и в transfer_list
@@ -170,17 +177,20 @@ def add_waste_item(request):
             unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
             quantity= form.cleaned_data.get("quantity")
-            partner= form.cleaned_data.get("partner")
-            invoice= form.cleaned_data.get("invoice")
+            approve= form.cleaned_data.get("approve")
+            document= form.cleaned_data.get("document")
             #Запись списания в StockItem 
             code=Item.objects.get(name=name).code
             buy_item=StockItem.objects.filter(name=name)
             for i in buy_item:
                 i.waste=(i.waste + quantity)
+                i.actual=i.open +i.received-i.sales-i.transfer-i.waste
+                i.actual_cost=i.actual*i.unit_cost
+                i.fullstock=i.actual+i.delivery
                 i.save()               
                        
            # запись в BuyItem и в buy_items_list
-            WasteItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, partner=partner, invoice=invoice)       
+            WasteItem.objects.create(item=name, code=code, unit=unit, unit_cost=unit_cost, quantity=quantity, approve=approve, document=document)       
             
             return redirect('waste')
     

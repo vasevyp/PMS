@@ -44,11 +44,21 @@
           <td>Ед.Изм товара</td>
           <td>При создании товара Add Items</td>
         </tr>
+        <tr>
+          <td>first_cost</td>
+          <td>Цена товара по item.cost</td>
+          <td>При создании Item</td>
+        </tr>
+        <tr>
+          <td>last_cost</td>
+          <td>Цена товара последнего получения</td>
+          <td>При заполнении формы Add Buy Item</td>
+        </tr>
 
         <tr>
           <td>Unit_cost</td>
-          <td>Стоимость товара</td>
-          <td>При заполнении формы Add Buy Item</td>
+          <td>Стоимость товара средневзвешенная</td>
+          <td>Рассчетно при заполнении формы Add Buy Item</td>
         </tr>
         <tr>
           <td>place</td>
@@ -90,6 +100,36 @@
           <td>Actual_cost</td>
           <td>стоимость товара в остатках</td>
           <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>stock_days</td>
+          <td>Запас товара в днях продаж</td>
+          <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>delivery</td>
+          <td>товары в пути</td>
+          <td>Заказ (+); Приход (-)</td>
+        </tr>
+        <tr>
+          <td>delivery_cost</td>
+          <td>стоимость товара в на путях в ценах last_cost</td>
+          <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>fullstock</td>
+          <td>Количество товара в остатках + пути</td>
+          <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>fullstock_days</td>
+          <td>Запас товара + товар в пути в днях продаж</td>
+          <td>Расчетно</td>
+        </tr>
+        <tr>
+          <td>delivery_time</td>
+          <td>Время, необходимое для поставки товара поставщиком</td>
+          <td>При создании Item</td>
         </tr>
       </tbody>
 

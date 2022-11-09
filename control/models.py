@@ -100,13 +100,13 @@ class StockItem(models.Model):
     def __str__(self):
         return str(self.name)  
     
-    @property
-    def get_actual(self):
-        return self.open-self.sales+self.received-self.transfer-self.waste 
+    # @property
+    # def get_actual(self):
+    #     return self.open-self.sales+self.received-self.transfer-self.waste 
     
-    @property
-    def get_actual_cost(self):
-        return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
+    # @property
+    # def get_actual_cost(self):
+    #     return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
     
     # objects = DataFrameManager()
 
@@ -131,7 +131,7 @@ class TransferItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['-created_date','name']
+        ordering = ['-id']
         verbose_name = 'Передача'
         verbose_name_plural = 'Передачи' 
         
@@ -162,7 +162,7 @@ class WasteItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['-id','name']
         verbose_name = 'Списание'
         verbose_name_plural = 'Списания' 
         

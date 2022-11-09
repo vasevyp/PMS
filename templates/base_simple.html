@@ -37,9 +37,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На главный</a>
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %} " target="_blank">На
+              главный</a>
           </li>
-          <li class="navbar-nav nav-item dropdown">
+          <li class=" navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt active" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               Manual
@@ -95,8 +96,47 @@
           </li>
 
 
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              IMPEX
+            </a>
+
+            <ul class="dropdown-menu">
+              <li> <a class="dropdown-item" target="blank" href="{% url 'impex' %}">IMPEX</a></li>
+
+              <hr class="dropdown-divider">
+
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://127.0.0.1:8000/admin/impex/impexbuyitem/">Impex_buyitem</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://127.0.0.1:8000/admin/impex/impexcategory/">Impex_category</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://127.0.0.1:8000/admin/impex/impexcategoryitem/">Impex_categoryitem</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://localhost:8000/admin/impex/impexsaleproduct/">Impex_saleproduct</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://localhost:8000/admin/impex/impexproduct/">Impex_product</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://localhost:8000/admin/impex/impexitem/">Impex_item</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="http://localhost:8000/admin/impex/impexrecipeingredient/">Impex_recipe</a>
+
+              </li>
+              <hr class="dropdown-divider">
+              <p class="dropdown-item">admin:3333</p>
+
+            </ul>
+
+          </li>
           <li class="nav-item">
-            <a class="nav-link active navbutt" href="{% url 'impex' %}">IMPEX</a>
+            <a class="nav-link active navbutt" href="{% url 'admin:index' %}">Admin</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled navbutt" href="{% url 'dashbord' %}">reserve</a>

@@ -149,7 +149,15 @@ def post_impex_buyitem(request):
                     item.unit_cost=unit_cost     
                 item.received=(item.received + quantity)
                 item.last_cost=unit_cost
-                item.actual=actual
+                item.actual=actual+quantity
+                if quantity>=item.delivery:
+                    item.delivery=0
+                else:
+                    item.delivery=item.delivery-quantity
+                item.actual_cost=item.actual*item.unit_cost                        
+                item.delivery_cost=item.delivery*item.last_cost
+                item.fullstock=item.actual+item.delivery
+                item.fullstock_days=item.fullstock/item.daily_requirement
                 item.save()      
         
         print(i.name,'-OK.')
