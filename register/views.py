@@ -13,15 +13,24 @@ from impex.addimpex import do_slug
 def index(request):
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
     summ_toorder_3 = ToOrder_3.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
-    dif_summa=summ_toorder_3-summ_toorder
-    count_toorder= ToOrder.objects.all().count()
-    count_toorder_3= ToOrder_3.objects.all().count()
-    dif_count=count_toorder_3-count_toorder
+    if summ_toorder:
+        dif_summa=summ_toorder_3 - summ_toorder
+        count_toorder= ToOrder.objects.all().count()
+        count_toorder_3= ToOrder_3.objects.all().count()
+        dif_count=count_toorder_3-count_toorder
+    else:
+        dif_summa=0
+        summ_toorder=0
+        count_toorder= ToOrder.objects.all().count()
+        count_toorder_3= ToOrder_3.objects.all().count()
+        dif_count=count_toorder_3-count_toorder    
     count_stock=StockItem.objects.all()
     stock_actual_cost = StockItem.objects.aggregate(sum_order=Sum('actual_cost')).get('sum_order')
     summa_stock=stock_actual_cost
     last_order=LastOrder.objects.all()
     summ_lastorder = LastOrder.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    delivery=StockItem.objects.exclude(delivery = 0)
+    summ_delivery=StockItem.objects.exclude(delivery = 0).aggregate(sum_order=Sum('delivery_cost')).get('sum_order')
     context={
         'title': 'Main',
         'summa':summ_toorder,
@@ -34,6 +43,9 @@ def index(request):
         'dif_summa':dif_summa,
         'last_order': last_order,
         'summ_lastorder':summ_lastorder,
+        'delivery':delivery,
+        'summ_delivery':summ_delivery,
+        
     }
     return render(request, template_name='register/index.html', context=context)
 

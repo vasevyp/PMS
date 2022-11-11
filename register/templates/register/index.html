@@ -8,6 +8,7 @@
 <div class="ms-3">
 
   <div class="container">
+    <h2>{{err}}</h2>
 
     <header id="header" class="tab-header">
       <div class="top-left">
@@ -39,7 +40,7 @@
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="{% url 'order_required' %}">Номенклатура к Заказу</a>
+                  <a href="{% url 'order_required' %}" target="blank">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -62,7 +63,7 @@
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="{% url 'order_required_3' %}">Номенклатура к Заказу</a>
+                  <a href="{% url 'order_required_3' %}" target="blank">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -85,7 +86,7 @@
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="{% url 'last_order' %}">Номенклатура к Заказу</a>
+                  <a href="{% url 'last_order' %}" target="blank">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -97,13 +98,13 @@
                   <p class="material-icons">Запас на складе</p>
                   <h6 class="card-title">{{stock_count.count}} ед. на {{stock_sum|floatformat:0}} руб</h6>
                 </div>
-                <small class="card-category">Пути - НЕ СДЕЛАНО</small>
-                <h6 class="card-title">15 ед. - 94 124 руб</h6>
+                <small class="card-category">Товары в Пути</small>
+                <h6 class="card-title">{{delivery.count}} ед. - {{summ_delivery}} руб</h6>
 
               </div>
               <div class="card-footer fs-6">
                 <small class="stats ms-3">
-                  <a href="{% url 'inventory' %}">Склад</a>
+                  <a href="{% url 'inventory' %}" target="blank">Склад</a>
                 </small>
                 <small class="stats ms-5">
                   <a href="#pablo">Пути</a>
@@ -127,7 +128,7 @@
             <div class="card-footer">
               <div class="stats">
                 <!-- <i class="material-icons text-danger">warning</i> -->
-                <a href="{% url 'sold_product_list' %}">Номенклатура проданная</a>
+                <a href="{% url 'sold_product_list' %}" target="blank">Номенклатура проданная</a>
               </div>
             </div>
           </div>
@@ -145,7 +146,7 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <a href="#">Посмотреть список - НЕ СДЕЛАНО</a>
+                  <a href="#" target="blank">Посмотреть список - НЕ СДЕЛАНО</a>
                 </div>
               </div>
             </div>

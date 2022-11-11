@@ -100,6 +100,10 @@ def sold_product(request):
                 rate=irecipe.ratio
                 i_stock=StockItem.objects.get(code=icode)
                 i_stock.sales=i_stock.sales + sold*rate
+                i_stock.actual=i_stock.actual-i_stock.sales
+                i_stock.actual_cost=i_stock.actual*i_stock.unit_cost
+                i_stock.fullstock=i_stock.actual+i_stock.delivery
+                i_stock.fullstock_days=i_stock.fullstock/i_stock.daily_requirement
                 i_stock.save()
             # запись в SaleProduct и в SaleProduct_list
             SaleProduct.objects.create(product=name,code=code, price=price, sold=sold)  
@@ -150,6 +154,7 @@ def add_transfer_item(request):
                 i.actual=i.open +i.received-i.sales-i.transfer-i.waste
                 i.actual_cost=i.actual*i.unit_cost
                 i.fullstock=i.actual+i.delivery
+                i.fullstock_days=i.fullstock/i.daily_requirement
                 i.save()               
                        
            # запись в TransferItem и в transfer_list
@@ -187,6 +192,7 @@ def add_waste_item(request):
                 i.actual=i.open +i.received-i.sales-i.transfer-i.waste
                 i.actual_cost=i.actual*i.unit_cost
                 i.fullstock=i.actual+i.delivery
+                i.fullstock_days=i.fullstock/i.daily_requirement
                 i.save()               
                        
            # запись в BuyItem и в buy_items_list

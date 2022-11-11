@@ -132,7 +132,7 @@ def stock_item_days(request):
 
 
 
-'''Формируем запас товаров/итгредиентов в днях продаж.'''
+'''Формируем запас товаров/ингредиентов в днях продаж.'''
 def stock_forecast_days(request):
     StockForecastDays.objects.all().delete()    
     print('Выполняется формирование запасов в днях продаж')
@@ -331,7 +331,10 @@ def order_delete(request, id):
 '''Создание формы для вывода на печать в PDF'''
 def order_print(request): 
     order_number=datetime.today().strftime("%y%m-%d")
-    last=LastOrder.objects.last().order_number
+    if LastOrder.objects.all():
+        last=LastOrder.objects.last().order_number # Проблема при отсутствии заказов, нет last order_number
+    else:
+        last=0
     print(last,'*****', order_number)  
     order=Order.objects.all() 
     if last==order_number:
@@ -359,7 +362,7 @@ def order_print(request):
             item.fullstock=item.actual+item.delivery
             item.fullstock_days=item.fullstock/item.daily_requirement
             item.save()
-        print('new OK', i.name)        
+        print('new OK')        
 
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     order_costs=summ_order

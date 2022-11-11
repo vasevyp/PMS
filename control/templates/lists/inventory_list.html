@@ -9,7 +9,7 @@
   {% block content %}
   <div class="ms-3">
     <h3>Item Inventory list</h3>
-    Всего строк: {{stockitems.count}}
+    Всего позиций: {{stockitems.count}}
   </div>
 
 
@@ -28,8 +28,8 @@
         <th class="header" scope="col">Unit_cost</th>
         <th class="header" scope="col">place</th>
         <th class="header" scope="col">Open</th>
-        <th class="header" scope="col">Sales</th>
         <th class="header" scope="col">Received</th>
+        <th class="header" scope="col">Sales</th>
         <th class="header" scope="col">transfer</th>
         <th class="header" scope="col">waste</th>
         <th class="header" scope="col">Actual</th>
@@ -56,8 +56,8 @@
         <td>{{stockitem.unit_cost}}</td>
         <td>{{stockitem.place}}</td>
         <td>{{stockitem.open}}</td>
-        <td>{{stockitem.sales}}</td>
         <td>{{stockitem.received}}</td>
+        <td>{{stockitem.sales}}</td>
         <td>{{stockitem.transfer}}</td>
         <td>{{stockitem.waste}}</td>
         <td>{{stockitem.actual |floatformat:2}}</td>
