@@ -274,6 +274,8 @@ class ImpexSaleProduct(models.Model):
     def __str__(self):
         return str(self.name) 
     
+    objects = models.Manager()
+    
 
 
 '''Модель IMPEX заказа товаров''' 

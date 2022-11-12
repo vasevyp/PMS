@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView
 from django.db.models import Avg, Max, Sum
 from django.contrib import messages 
+
+from django.template.loader import get_template # for PDF Вывод Заказа в PDF файл, имя файла в формате заказа
+import pdfkit # for PDF Вывод Заказа в PDF файл, имя файла в формате заказа
+from django.http import HttpResponse # for PDF Вывод Заказа в PDF файл, имя файла в формате заказа
+
 from register.models import RecipeIngredient, Product, Item, Supplier
 from control.models import DailyRequirement, SaleProduct, WeekendSale, WeekdaySale, StockItem
 from .forms import  RecalculationForm, OrderEditForm
@@ -382,12 +387,6 @@ def order_print(request):
 
 
 '''Вывод Заказа в PDF файл, имя файла в формате заказа, например 2211-07 .pdf '''
-
-
-from django.template.loader import get_template
-import pdfkit
-from django.http import HttpResponse
-
 def pdfprint(request):
     summ_order = Order.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
     data = dict()

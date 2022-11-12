@@ -172,11 +172,12 @@ def post_impex_buyitem(request):
 def post_impex_sale_product(request):    
     print('Выполняется Функция post_impex_sale_product')
     req=ImpexSaleProduct.objects.all()
-    for i in req:    
+    for i in req:  
+        product=Product.objects.get(code=i.code) 
         SaleProduct.objects.create(
-            product=i.name,
+            product=product.name,
             code=i.code, 
-            slug='sold-'+do_slug(i.name),
+            slug='sold-'+do_slug(product.name),
             unit=i.unit, 
             price=i.price, 
             sold=i.sold,
@@ -194,7 +195,7 @@ def post_impex_sale_product(request):
                 i_stock.sales=i_stock.sales + i.sold*rate
                 i_stock.save()              
         
-        print(i.name,i.date,'-OK.')
+        print(i.code,i.date,'-OK.')
         i.delete()
     success='Импорт SaleProduct выполнен успешно!'
 
