@@ -118,21 +118,6 @@ class SoldProductListView(ListView):
     model=SaleProduct
     template_name = 'lists/sold_product_list.html'
     context_object_name = 'sold_products'
-    
-# def sold_product_list(request):
-#     product=Product.objects.all()
-#     sold=SaleProduct.all()
-    
-#     context = {
-#         'buyitems': buyitems,
-#         'stockitems': stockitems,
-#         'saleproducts': saleproducts,
-#         'orderitems': orderitems,
-#         'deliveritems': deliveritems,
-#         'title':'Control'
-#     }
-    
-#     return render(request, template_name='control/control.html', context=context)
 
 
 def add_transfer_item(request):

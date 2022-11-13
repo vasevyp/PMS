@@ -178,7 +178,7 @@ def post_impex_sale_product(request):
             product=product.name,
             code=i.code, 
             slug='sold-'+do_slug(product.name),
-            unit=i.unit, 
+            unit='шт.',
             price=i.price, 
             sold=i.sold,
             date=i.date,
@@ -193,10 +193,21 @@ def post_impex_sale_product(request):
                 rate=irecipe.ratio
                 i_stock=StockItem.objects.get(code=icode)
                 i_stock.sales=i_stock.sales + i.sold*rate
+                # добавить перерасчет Inventory
                 i_stock.save()              
         
         print(i.code,i.date,'-OK.')
-        i.delete()
+        # i.delete()
+    ImpexSaleProduct.objects.all().delete()
+    stocks=StockItem.objects.all()
+    for i in stocks:
+        i.actual=i.open+i.received-i.sales-i.transfer-i.waste
+        i.actual_cost=i.actual*i.unit_cost
+        i.delivery_cost=i.delivery*i.last_cost
+        i.fullstock=i.actual+i.delivery
+        i.fullstock_days=i.fullstock/i.daily_requirement
+        i.save()
+            
     success='Импорт SaleProduct выполнен успешно!'
 
     return render(request, 'impex/impex_post.html', context={'sold_success':success})

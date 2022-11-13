@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-# from django_pandas.managers import DataFrameManager
+from django_pandas.managers import DataFrameManager
 
 # from django.db.models.functions import Upper
 # from django.db.models.indexes import Index
@@ -47,7 +47,7 @@ class BuyItem(models.Model):
         return reverse('buy', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-id']
         verbose_name = 'Закупка'
         verbose_name_plural = 'Закупки' 
         
@@ -74,19 +74,19 @@ class StockItem(models.Model):
     received = models.DecimalField(max_digits=10, help_text="Не более 10 знаков", null=True, decimal_places=0, default=0)
     transfer =models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
     waste=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",null=True, decimal_places=0, default=0)
-    actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0)
+    actual=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, default=0)
     actual_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0)
-    stock_days=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0,null=True, default=3000,  verbose_name='Остаток, дней')
+    stock_days=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0,null=True, default=3000,  verbose_name='Остаток в днях')
     delivery=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0,null=True,verbose_name='Пути') # from DeliverItem (сделать через aggregate)
     delivery_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0,null=True,verbose_name='Пути, руб')
     fullstock=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0,null=True,verbose_name='Запас, ед.')
     fullstock_days=models.IntegerField( null=True,verbose_name='Запас, дней', default=0)    
     delivery_time = models.IntegerField(verbose_name='Буфер, дней', null=True, default=5) #from Item -- Это буфер для товарной позиции
     
-    def save(self, *args, **kwargs):
-        actual = self.open-self.sales+self.received-self.transfer-self.waste
-        actual_cost= self.actual*self.actual_cost
-        super(StockItem, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     actual = self.open-self.sales+self.received-self.transfer-self.waste
+    #     actual_cost= self.actual*self.actual_cost
+    #     super(StockItem, self).save(*args, **kwargs)
 
     def get_absolute_url(self):        
         return reverse('stock', kwargs={'slug': self.slug})
@@ -108,7 +108,7 @@ class StockItem(models.Model):
     # def get_actual_cost(self):
     #     return (self.open-self.sales+self.received-self.transfer-self.waste )*self.unit_cost
     
-    # objects = DataFrameManager()
+    objects = DataFrameManager()
 
 
 '''Модель передачи товаров (transfer)''' 
@@ -201,7 +201,7 @@ class SaleProduct(models.Model):
     def get_revenue(self):
         return self.price*self.sold
     
-    # objects = DataFrameManager()
+    objects = DataFrameManager()
 
 
 '''Модель Ввода метса товара (Move - Place)''' 

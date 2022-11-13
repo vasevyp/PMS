@@ -8,7 +8,6 @@ from .models import  ImpexSaleProduct
 class SaleProduct(forms.ModelForm):
     class Meta:
         model = ImpexSaleProduct
-        fields=[ 'name','code','unit',
-'price','sold','date' ,'created_date'
+        fields=[ 'name','code','unit','price','sold','date' ,'created_date'
         ] 
         

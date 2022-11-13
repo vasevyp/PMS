@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import impex_post, from_excel
+from .views import impex_post
+from .views_excel import download_sales, download_buy_item, csv_buyitem,csv_sale_product, download_transfer_item, csv_transfer_item
 from .addimpex import post_impex_category, post_impex_item, post_impex_product, post_impex_buyitem, post_impex_transfer_item, post_impex_waste_item, post_impex_recipe, post_impex_category_item, post_impex_supplier, post_impex_sale_product
 
 urlpatterns = [
@@ -15,5 +16,10 @@ urlpatterns = [
     path('x-transfer/', post_impex_transfer_item, name='xtransfer'),
     path('x-waste/', post_impex_waste_item, name='xwaste'),
     path('x-recipe/', post_impex_recipe, name='xrecipe'),
-    path('download_sales_csv/', from_excel, name='download_sales')
+    path('download_sales_csv/', download_sales, name='download_sales'),
+    path('sale_product/', csv_sale_product, name='csv_saleproduct'),
+    path('download_buy_item_csv/', download_buy_item, name='download_buy_item'),
+    path('buy_item/', csv_buyitem, name='csv_buyitem'),
+    path('dounload_transfer/', download_transfer_item, name='download_transfer_item'),
+    path('transfer_item/',csv_transfer_item, name='csv_transfer_item'),
 ]

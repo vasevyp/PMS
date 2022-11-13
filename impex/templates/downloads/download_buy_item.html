@@ -14,9 +14,8 @@
       <div class="ms-5 col-md-7 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h3>Загрузка продаж продуктов</h3>
-
-            <h5>*Выберите файл для импорта (csv)</h5>
+            <h3>Загрузка закупленных товаров</h3>
+            <h5>Выберите файл для импорта (csv)</h5>
 
             <div class="clearfix"></div>
           </div>
@@ -28,7 +27,7 @@
             </div>
 
             <input type="file" name="myfile" class="form-control">
-            <p style="font-size:1rem">В файле продаж для импорта ОБЯЗАТЕЛЬНЫ: код продукта.
+            <p style="font-size:1rem">В файле закупок для импорта ОБЯЗАТЕЛЬНЫ: код продукта.
             </p>
             <button type="submit" class="btn mb-3 btn-success">Загрузить</button>
             <br />
@@ -38,25 +37,26 @@
     </div>
   </form>
 </div>
-
 <!--cell-->
-<div class="col-10 ms-3">
-  <h5>Сохранение загруженных продаж в базу данных</h5>
+<div class="col-8 ms-5 my-3">
+  <h5>Сохранение закупок товаров в базу данных</h5>
   <div class="p-3 border bg-light">
 
-    {% if sold_success %}
+    {% if buyitem_success %}
     <div class="alert alert-success d-flex">
-      {{sold_success}}
+      {{buyitem_success}}
     </div>
-    <form action="{% url 'download_sales' %}" method="post" novalidate="novalidate">
+
+    <form action="{% url 'download_buy_item' %}" method="post" novalidate="novalidate">
       {% csrf_token %}
       <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-        value="Завершить загрузку в базу данных SoldProduct" />
+        value="Завершить сохранение в BuyItem" />
     </form>
     {% else %}
 
-    <form action="{% url 'csv_saleproduct' %}" method="post" novalidate="novalidate">
+    <form action="{% url 'csv_buyitem' %}" method="post" novalidate="novalidate">
       {% csrf_token %}
+
       <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export" value="Сохранить" />
     </form>
     {% endif %}

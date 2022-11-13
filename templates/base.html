@@ -95,17 +95,22 @@
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              IMPEX
+              IMPEX--DOWNLOAD
             </a>
 
             <ul class="dropdown-menu">
               <li> <a class="dropdown-item" target="blank" href="{% url 'impex' %}">IMPEX</a></li>
 
               <hr class="dropdown-divider">
-
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://127.0.0.1:8000/admin/impex/impexbuyitem/">Impex_buyitem</a>
+              <li> <a class="dropdown-item" target="blank" href="{% url 'download_sales' %}">Download_SaleProduct</a>
               </li>
+              <li> <a class="dropdown-item" target="blank" href="{% url 'download_buy_item' %}">Download_BuyItem</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_transfer_item' %}">Download_Transfer_Item</a>
+              </li>
+              <hr class="dropdown-divider">
+
               <li> <a class="dropdown-item" target="blank"
                   href="http://127.0.0.1:8000/admin/impex/impexcategory/">Impex_category</a>
               </li>
@@ -122,8 +127,7 @@
                   href="http://localhost:8000/admin/impex/impexrecipeingredient/">Impex_recipe</a>
 
               </li>
-              <li> <a class="dropdown-item" target="blank" href="{% url 'download_sales' %}">Download_saleproduct</a>
-              </li>
+
               <hr class="dropdown-divider">
               <p class="dropdown-item">admin:3333</p>
 
