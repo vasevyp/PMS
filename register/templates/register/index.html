@@ -85,7 +85,6 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i> -->
                   <a href="{% url 'last_order' %}" target="blank">Номенклатура к Заказу</a>
                 </div>
               </div>
@@ -96,19 +95,23 @@
               <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
                   <p class="material-icons">Запас на складе</p>
-                  <h6 class="card-title">{{stock_count.count}} ед. на {{stock_sum|floatformat:0}} руб</h6>
+                  <h6 class="card-title">{{stock_count.count}} наим. на {{stock_sum|floatformat:0}} руб</h6>
                 </div>
                 <small class="card-category">Товары в Пути</small>
-                <h6 class="card-title">{{delivery.count}} ед. - {{summ_delivery}} руб</h6>
+                <h6 class="card-title">{{delivery.count}} наим. - на
+                  {% if delivery.count %}
+                  {{summ_delivery}}
+                  {% else %}
+                  0
+                  {% endif %}
+                  руб</h6>
 
               </div>
-              <div class="card-footer fs-6">
-                <small class="stats ms-3">
+              <div class="card-footer">
+                <div class="stats">
                   <a href="{% url 'inventory' %}" target="blank">Склад</a>
-                </small>
-                <small class="stats ms-5">
-                  <a href="#pablo">Пути</a>
-                </small>
+                </div>
+
               </div>
             </div>
           </div>
@@ -159,7 +162,40 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="col-11 mx-auto">
+    <h4>Товары в пути </h4>
+    Всего позиций: {{delivery.count}}
+    <table class="table table-striped">
+      <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+        <tr>
+          <th scope="col">Код</th>
+          <th scope="col">Наименование</th>
+          <th scope="col">ед.изм</th>
+          <th scope="col">Цена</th>
+          <th scope="col">На путях</th>
+          <th scope="col">Сумма</th>
 
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in delivery %}
+        <tr>
+          <th scope="row">{{item.code}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.unit}}</td>
+          <td>{{item.last_cost}}</td>
+          <td>{{item.delivery}}</td>
+          <td>{{item.delivery_cost}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
 
 
 {% endblock %}

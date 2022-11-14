@@ -7,7 +7,7 @@ from .forms import AddSupplierForm, AddCategoryForm, AddCategoryItemForm, AddIte
 from control.models import StockItem
 from acore.models import ToOrder, ToOrder_3, LastOrder
 
-from impex.addimpex import do_slug
+from impex.views import do_slug
 
 
 def index(request):

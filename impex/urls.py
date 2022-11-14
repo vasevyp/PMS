@@ -1,25 +1,23 @@
 from django.urls import path
 
-from .views import impex_post
-from .views_excel import download_sales, download_buy_item, csv_buyitem,csv_sale_product, download_transfer_item, csv_transfer_item
-from .addimpex import post_impex_category, post_impex_item, post_impex_product, post_impex_buyitem, post_impex_transfer_item, post_impex_waste_item, post_impex_recipe, post_impex_category_item, post_impex_supplier, post_impex_sale_product
+from .views_csv_download import impex_post, download_sales,  download_transfer_item, download_waste_item, download_buy_item,download_category
+from .views import csv_category, post_impex_item, post_impex_product, post_impex_recipe, post_impex_category_item, post_impex_supplier,csv_transfer_item, csv_buyitem,csv_waste_item, csv_sale_product
 
 urlpatterns = [
-    path('import/', impex_post, name='impex'),    
-    path('x-category/', post_impex_category, name='xcategory'),
+    path('import/', impex_post, name='impex'), 
+    path('download_category/', download_category, name='download_category'),   
+    path('x-category/', csv_category, name='csv_category'),
     path('x-categoryitem/', post_impex_category_item, name='xcategoryitem'),
     path('x-supplier/', post_impex_supplier, name='xsupplier'),
     path('x-item/', post_impex_item, name='xitem'),
     path('x-product/', post_impex_product, name='xproduct'),
-    path('x-sold/', post_impex_sale_product, name='xsold'),
-    path('x-buyitem/', post_impex_buyitem, name='xbuyitem'),
-    path('x-transfer/', post_impex_transfer_item, name='xtransfer'),
-    path('x-waste/', post_impex_waste_item, name='xwaste'),
     path('x-recipe/', post_impex_recipe, name='xrecipe'),
     path('download_sales_csv/', download_sales, name='download_sales'),
-    path('sale_product/', csv_sale_product, name='csv_saleproduct'),
+    path('x-sale_product/', csv_sale_product, name='csv_saleproduct'),
     path('download_buy_item_csv/', download_buy_item, name='download_buy_item'),
-    path('buy_item/', csv_buyitem, name='csv_buyitem'),
-    path('dounload_transfer/', download_transfer_item, name='download_transfer_item'),
-    path('transfer_item/',csv_transfer_item, name='csv_transfer_item'),
+    path('x-buy_item/', csv_buyitem, name='csv_buyitem'),
+    path('download_transfer_csv/', download_transfer_item, name='download_transfer_item'),
+    path('x-transfer_item/',csv_transfer_item, name='csv_transfer_item'),
+    path('download_waste_csv/', download_waste_item, name='download_waste_item'),
+    path('x-waste_item/',csv_waste_item, name='csv_waste_item'),
 ]
