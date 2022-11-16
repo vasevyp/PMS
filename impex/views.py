@@ -172,8 +172,8 @@ def csv_category(request):
     return render(request, 'downloads/download_category.html', context={'category_success':success})
 
 
-'''6Сохранение импортированного из csv файла списка Поставщиков в Базу Данных'''
-def post_impex_supplier(request):    
+'''6.Сохранение импортированного из csv файла списка Поставщиков в Базу Данных'''
+def csv_supplier(request):    
     print('Выполняется Функция post_impex_supplier')
     supplier=ImpexSupplier.objects.all()
     for s in supplier:
@@ -185,8 +185,8 @@ def post_impex_supplier(request):
     return render(request, 'downloads/download_supplier.html', context={'supplier_success':success})
 
 
-'''7Импорт списка Категории Товаров в Базу Данных'''
-def post_impex_category_item(request):    
+'''7.Импорт списка Категории Товаров в Базу Данных'''
+def csv_category_item(request):    
     print('Выполняется Функция post_impex_category_item')
     category=ImpexCategoryItem.objects.all()
     for cat in category:
@@ -198,8 +198,8 @@ def post_impex_category_item(request):
         
         print(cat.name,' -OK.')
         cat.delete()
-    success='Импорт Category выполнен успешно!'
-    return render(request, 'impex/impex_post.html', context={'categoryitem_success':success})
+    success='Загрузка CategoryItem выполнен успешно!'
+    return render(request, 'downloads/download_category_item.html', context={'categoryitem_success':success})
 
 '''8Импорт списка Продуктов в Базу Данных'''
 def post_impex_product(request):    

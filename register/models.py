@@ -41,6 +41,8 @@ class CategoryItem(models.Model):
     code= models.DecimalField(max_digits=5, help_text="Не более 5 цифр", decimal_places=0, unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
     
     def get_absolute_url(self):        
         return reverse('categoryitem', kwargs={'slug': self.slug})
@@ -120,6 +122,8 @@ class Category(models.Model):
     code= models.CharField(max_length=5, help_text="Не более 5 цифр",  unique=True,verbose_name='Код')
     name = models.CharField(max_length=200, help_text="Не более 200 знаков", db_index=True, verbose_name='Категория')
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)
+    updated_date = models.DateField(auto_now=True,  verbose_name='Изменен', null=True) 
 
     def get_absolute_url(self):        
         return reverse('category', kwargs={'slug': self.slug})

@@ -92,41 +92,77 @@
             </ul>
           </li>
 
+
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              IMPEX--DOWNLOAD
-            </a>
+              Loading Operations</a>
 
             <ul class="dropdown-menu">
-              <li> <a class="dropdown-item" target="blank" href="{% url 'impex' %}">IMPEX</a></li>
+              <h6 class="text-center">Загрузка операций</h6>
 
-              <hr class="dropdown-divider">
-              <li> <a class="dropdown-item" target="blank" href="{% url 'download_sales' %}">Download_SaleProduct</a>
+              <li class="border">
+                <a class="dropdown-item" target="blank" href="{% url 'download_sales' %}">Download_SaleProduct</a>
+                <a class="dropdown-item text-primary" href="{% url 'sold_product' %}">Add_SaleProduct</a>
               </li>
-              <li> <a class="dropdown-item" target="blank" href="{% url 'download_buy_item' %}">Download_BuyItem</a>
+              <li class=" border">
+                <a class="dropdown-item" target="blank" href="{% url 'download_buy_item' %}">Download_BuyItem</a>
+                <a class="dropdown-item text-primary" href="{% url 'buy_item' %}">Add_BuyItem</a>
               </li>
               <li> <a class="dropdown-item" target="blank"
                   href="{% url 'download_transfer_item' %}">Download_Transfer_Item</a>
+                <a class="dropdown-item text-primary" href="{% url 'transfer' %}">Add_Transfer_Item</a>
               </li>
-              <li> <a class="dropdown-item" target="blank"
+              <li class=" border "> <a class="dropdown-item" target="blank"
                   href="{% url 'download_waste_item' %}">Download_Waste_Item</a>
+                <a class="dropdown-item text-primary" href="{% url 'waste' %}">Add_Waste_Item</a>
               </li>
-              <hr class="dropdown-divider">
 
-              <li> <a class="dropdown-item" target="blank" href="{% url 'download_category' %}">Impex_category</a>
+              <hr class="dropdown-divider">
+              <p class="dropdown-item">admin:3333</p>
+
+            </ul>
+
+          </li>
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Loading data</a>
+
+            <ul class="dropdown-menu">
+
+
+
+              <h6 class="text-center">Загрузка данных</h6>
+              <li class="border border-info"> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_supplier' %}">Download_Supplier</a>
+                <a class="dropdown-item text-primary" target="blank" href="{% url 'addsupplier' %}">Add_Supplier</a>
               </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://127.0.0.1:8000/admin/impex/impexcategoryitem/">Impex_categoryitem</a>
+              <li class="border border-info"> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_category' %}">Download_Category</a>
+                <a class="dropdown-item text-primary" href="{% url 'add-category' %}">Add_Category</a>
               </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexproduct/">Impex_product</a>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank"
+                  href="{% url 'download_categoryitem' %}">Download_CategoryItem</a>
+                <a class="dropdown-item text-primary" target="blank"
+                  href="{% url 'add-categoryitem' %}">Add_CategoryItem</a>
               </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexitem/">Impex_item</a>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_category' %}">Download_Product</a><a
+                  class="dropdown-item text-primary" target="blank"
+                  href="http://localhost:8000/admin/impex/impexproduct/">Add_Product</a>
               </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexrecipeingredient/">Impex_recipe</a>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_category' %}">Download_Item</a><a
+                  class="dropdown-item text-primary" target="blank"
+                  href="http://localhost:8000/admin/impex/impexitem/">Add_Item</a>
+              </li>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_category' %}">Download_Recipe</a><a
+                  class="dropdown-item text-primary" target="blank"
+                  href="http://localhost:8000/admin/impex/impexrecipeingredient/">Add_Recipe</a>
 
               </li>
 
@@ -136,6 +172,8 @@
             </ul>
 
           </li>
+
+
           <li class="nav-item">
             <a class="nav-link active navbutt" target="blank" href="{% url 'admin:index' %}">Admin</a>
           </li>
@@ -183,7 +221,7 @@
               Item Categories
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'add-itemcategory' %}">Add</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-categoryitem' %}">Add</a></li>
               <li><a class="dropdown-item" href="{% url 'itemcategories-list' %}">View</a></li>
 
             </ul>

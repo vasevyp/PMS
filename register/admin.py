@@ -6,7 +6,7 @@ from .models import Category, CategoryItem, Supplier, Item, Product, RecipeIngre
 
 
 class SupplierAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'contact', 'address', 'slug' ]
+    list_display = ['code', 'name', 'contact', 'address', 'slug','created_date'  ]
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ['name',]
@@ -16,7 +16,7 @@ admin.site.register(Supplier, SupplierAdmin)
 
 
 class CategoryItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'slug']
+    list_display = ['code', 'name', 'slug','created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields = ['name',]
@@ -28,7 +28,7 @@ class CategoryItemAdmin(ImportExportModelAdmin):
 admin.site.register(CategoryItem, CategoryItemAdmin)
 
 class CategoryAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'slug']
+    list_display = ['code', 'name', 'slug','created_date' ]
     prepopulated_fields= {'slug': ('name',)}
     save_on_top = True
     search_fields=['name', 'code']
@@ -38,7 +38,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     #     ordering = ['code'] #Sort in desc order
 admin.site.register(Category, CategoryAdmin)
 class ItemAdmin(ImportExportModelAdmin):
-    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'supply_pack','pack_weight', 'pack_length','pack_width', 'pack_height', 'best_befor'] 
+    list_display = ['code', 'name', 'category', 'supplier', 'unit_cost', 'delivery_time' , 'supply_pack','pack_weight', 'pack_length','pack_width', 'pack_height', 'created_date' ] 
     prepopulated_fields= {'slug': ('name',)}  
     save_on_top = True
     search_fields = ('name',  'code')
@@ -53,7 +53,7 @@ class ProductAdmin(ImportExportModelAdmin):
     search_fields = ('name','code')
     list_filter = ['category','code','name']
 class RecipeIngredientAdmin(ImportExportModelAdmin):
-    list_display = ['product', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
+    list_display = ['product', 'code','ingredient', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'created_at' ,'updated_at' ]
     # prepopulated_fields= {'slug': ('product',)}
     save_on_top = True
     search_fields = ['product__name', 'code', 'code_ingr','ingredient__name']
