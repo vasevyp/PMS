@@ -232,3 +232,92 @@ def download_categoryitem(request):
         print(identifier)
      
     return render(request, 'downloads/download_category_item.html',{})
+'''8.Загрузка списка Продуктов из csv file with pandas'''
+ 
+def download_product(request):
+    print('start download_product')               
+    try:
+        if request.method == 'POST' and request.FILES['myfile']:
+          
+            myfile = request.FILES['myfile']        
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            excel_file = uploaded_file_url
+            print('excel_file:',excel_file) 
+            empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
+            print('type(empexceldata):',type(empexceldata))
+            dbframe = empexceldata
+            for dbframe in dbframe.itertuples():                 
+                obj = ImpexProduct.objects.create(name=dbframe.name,code=dbframe.code, difficulty=dbframe.difficulty,description=dbframe.description, price=dbframe.price, category=dbframe.category, cooking=dbframe.cooking,weekday_forecast=dbframe.weekday_forecast, weekend_forecast=dbframe.weekend_forecast, holiday_forecast=dbframe.holiday_forecast,promotion_forecast=dbframe.promotion_forecast)
+                               
+                print('type obj:',type(obj))
+                obj.save()
+ 
+            return render(request, 'downloads/download_product.html', {
+                'uploaded_file_url': uploaded_file_url
+            })    
+    except Exception as identifier:            
+        print(identifier)
+     
+    return render(request, 'downloads/download_product.html',{})
+
+'''9.Загрузка списка Товаров из csv file with pandas'''
+ 
+def download_item(request):
+    print('start download_item')               
+    try:
+        if request.method == 'POST' and request.FILES['myfile']:
+          
+            myfile = request.FILES['myfile']        
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            excel_file = uploaded_file_url
+            print('excel_file:',excel_file) 
+            empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
+            print('type(empexceldata):',type(empexceldata))
+            dbframe = empexceldata
+            for dbframe in dbframe.itertuples():                 
+                obj = ImpexItem.objects.create(name=dbframe.name,code=dbframe.code, category=dbframe.category, supplier=dbframe.supplier,unit=dbframe.unit,unit_cost=dbframe.unit_cost,description=dbframe.description,delivery_time=dbframe.delivery_time,supply_pack=dbframe.supply_pack,pack_weight=dbframe.pack_weight,pack_length=dbframe.pack_length,pack_width=dbframe.pack_width,pack_height=dbframe.pack_height,best_befor=dbframe.best_befor)
+                               
+                print('type obj:',type(obj))
+                obj.save()
+ 
+            return render(request, 'downloads/download_item.html', {
+                'uploaded_file_url': uploaded_file_url
+            })    
+    except Exception as identifier:            
+        print(identifier)
+     
+    return render(request, 'downloads/download_item.html',{})
+
+'''10.Загрузка списка Рецептов из csv file with pandas'''
+ 
+def download_recipe(request):
+    print('start download_recipe')               
+    try:
+        if request.method == 'POST' and request.FILES['myfile']:
+          
+            myfile = request.FILES['myfile']        
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            excel_file = uploaded_file_url
+            print('excel_file:',excel_file) 
+            empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
+            print('type(empexceldata):',type(empexceldata))
+            dbframe = empexceldata
+            for dbframe in dbframe.itertuples():                 
+                obj = ImpexRecipeIngredient.objects.create(name=dbframe.name,code=dbframe.code)
+                               
+                print('type obj:',type(obj))
+                obj.save()
+ 
+            return render(request, 'downloads/download_recipe.html', {
+                'uploaded_file_url': uploaded_file_url
+            })    
+    except Exception as identifier:            
+        print(identifier)
+     
+    return render(request, 'downloads/download_recipe.html',{})

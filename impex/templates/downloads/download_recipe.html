@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ block.super }}: Import
+{% endblock %}
+
+{% block content %}
+<div class="shadow-lg continer">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="row">
+      <div class="ms-5 col-md-7 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Загрузка рецептов продуктов</h3>
+            <h5>Выберите файл для импорта (csv)</h5>
+
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+
+            <div class="col-md-8 col-sm-12 col-xs-12 form-group">
+
+              </label>
+            </div>
+
+            <input type="file" name="myfile" class="form-control">
+            <p style="font-size:1rem">В файле закупок для импорта ОБЯЗАТЕЛЬНЫ: код продукта и код товара.
+            </p>
+            <button type="submit" class="btn mb-3 btn-success">Загрузить</button>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--cell-->
+<div class="col-8 ms-5 my-3">
+  <h5>Сохранение рецептов продуктов в базу данных</h5>
+  <div class="p-3 border bg-light">
+
+    {% if recipe_success %}
+    <div class="alert alert-success d-flex">
+      {{recipe_success}}
+    </div>
+
+    <form action="{% url 'download_buy_recipe' %}" method="post" novalidate="novalidate">
+      {% csrf_token %}
+      <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+        value="Завершить сохранение в RecipeIngredient" />
+    </form>
+    {% else %}
+
+    <form action="{% url 'csv_recipe' %}" method="post" novalidate="novalidate">
+      {% csrf_token %}
+
+      <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export" value="Сохранить" />
+    </form>
+    {% endif %}
+
+  </div>
+</div>
+<!--/cell-->
+
+{% endblock %}
