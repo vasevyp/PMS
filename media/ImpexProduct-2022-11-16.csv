@@ -1,0 +1,2 @@
+id,code,name,category,difficulty,price,description,cooking,weekday_forecast,weekend_forecast,avrg_forecast,holiday_forecast,promotion_forecast,created_date,updated_date
+,121211111,Хлеб,Хлеб,Easy,10,хлеб,нет,500,800,,1000,200,,

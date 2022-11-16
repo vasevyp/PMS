@@ -39,6 +39,7 @@ def recalculation(request):
                 WeekendSale.objects.create(product=s.product, code=s.code, sold=s.sold, date=s.date, first_day=first_date, last_day=last_date)
             else:
                 WeekdaySale.objects.create(product=s.product, code=s.code, sold=s.sold, date=s.date, first_day=first_date, last_day=last_date)
+        #Avg - прогноз продаж на основе средних дневных фактических продаж за период
         if recalculation_model=='1':
             products=Product.objects.all()
             for i in products:
@@ -62,10 +63,9 @@ def recalculation(request):
                         s.daily_requirement=(crs['daily_requirement__sum'])
                         s.save()
                     j.save()
-                i.save()  
+                i.save()         
             
-            
-       
+       #Max - прогноз продаж на основе максимальных дневных фактических продаж за период
         if recalculation_model=='2':
             products=Product.objects.all()
             for i in products:
@@ -91,7 +91,7 @@ def recalculation(request):
                     j.save()
                 i.save()
                 
-        
+    #Avg+20% - прогноз продаж на основе средних дневных фактических продаж за период, увеличенных на 20%
         if recalculation_model=='3':
             products=Product.objects.all()
             for i in products:
@@ -119,8 +119,7 @@ def recalculation(request):
                                             
         
         print('SUCCESS!!', first_date, last_date, recalculation_model)
-        # WeekendSale.objects.all().delete()
-        # WeekdaySale.objects.all().delete()
+        
         return redirect('stock_item_days')
     else:
         form = RecalculationForm()

@@ -65,7 +65,7 @@ class AddProductForm(ModelForm):
     # price= forms.DecimalField(max_digits=10, decimal_places=2)
     class Meta:
         model = Product
-        fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking']
+        fields=['name', 'code','category', 'difficulty', 'price', 'description', 'cooking', 'weekday_forecast', 'weekend_forecast', 'holiday_forecast', 'promotion_forecast']
         # field_classes={'price':DecimalField}
         widgets={
             'name':forms.TextInput(attrs={'class':'form-control','id': 'product'}),
@@ -75,6 +75,10 @@ class AddProductForm(ModelForm):
             'price':forms.NumberInput(attrs={'class':'form-control'},),
             'description':forms.Textarea(attrs={'class':'form-control'}),
             'cooking':forms.TextInput(attrs={'class':'form-control'}),
+            'weekday_forecast':forms.NumberInput(attrs={'class':'form-control'},),
+            'weekend_forecast':forms.NumberInput(attrs={'class':'form-control'},),
+            'holiday_forecast':forms.NumberInput(attrs={'class':'form-control'},),
+            'promotion_forecast':forms.NumberInput(attrs={'class':'form-control'},),
               
         }                          
         
