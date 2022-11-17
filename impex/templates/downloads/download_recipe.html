@@ -47,7 +47,7 @@
       {{recipe_success}}
     </div>
 
-    <form action="{% url 'download_buy_recipe' %}" method="post" novalidate="novalidate">
+    <form action="{% url 'download_recipe' %}" method="post" novalidate="novalidate">
       {% csrf_token %}
       <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
         value="Завершить сохранение в RecipeIngredient" />

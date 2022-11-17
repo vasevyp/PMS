@@ -198,9 +198,16 @@ def order_required(request):
         i.save()
         if i.fullstock_days<i.delivery_time+1:
             i.supply_pack=Item.objects.get(name=i.name).supply_pack
-            i.supplier_id=Item.objects.get(name=i.name).supplier_id
-            i.supplier=Supplier.objects.get(id=i.supplier_id).name
-            ToOrder.objects.create(code=i.code, name=i.name, supplier=i.supplier, delivery_time=i.delivery_time, supply_pack=i.supply_pack, daily_requirement=i.daily_requirement, to_order=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement), to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack,  status=i.last_cost)
+            ToOrder.objects.create(code=i.code, name=i.name, supplier=i.supplier, delivery_time=i.delivery_time, supply_pack=i.supply_pack, daily_requirement=i.daily_requirement, 
+            
+            to_order=math.ceil((i.delivery_time+d-int(i.fullstock_days))*i.daily_requirement), 
+            
+            to_orders=math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack, 
+            
+            order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack,  
+            
+            status=i.last_cost)
+            # строка 207 - проблема в типе данных !!!
             
     toorder=ToOrder.objects.all()
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')

@@ -119,7 +119,7 @@ def csv_transfer_item(request):
         print(i.item_name,'-OK.')
         i.delete()
     stock_recalculation()
-    success='Загрузка и сохранение переданных товаров в TransferItem выполнен успешно!'
+    success='Загрузка и сохранение переданных товаров в TransferItem выполнена успешно!'
 
     return render(request, 'downloads/download_transfer_item.html', context={'transferitem_success':success})
 
@@ -149,7 +149,7 @@ def csv_waste_item(request):
         print(i.item_name,'-OK.')
         i.delete()
     stock_recalculation()
-    success='Загрузка и сохранение WasteItems выполнен успешно!'
+    success='Загрузка и сохранение WasteItems выполнена успешно!'
 
     return render(request, 'downloads/download_waste_item.html', context={'wasteitem_success':success})
 
@@ -167,7 +167,7 @@ def csv_category(request):
         
         print(cat.name,'-OK.')
         cat.delete()
-    success='Загрузка Category выполнена успешно!'
+    success='Загрузка и сохранение Category выполнена успешно!'
 
     return render(request, 'downloads/download_category.html', context={'category_success':success})
 
@@ -180,12 +180,12 @@ def csv_supplier(request):
         Supplier.objects.get_or_create(name=s.name, code=s.code, address=s.address, contact=s.contact, slug=do_slug(s.name))        
         print(s.name,' -OK')
         s.delete()
-    success='Загрузка Supplier выполнен успешно!'
+    success='Загрузка и сохранение Supplier выполнена успешно!'
 
     return render(request, 'downloads/download_supplier.html', context={'supplier_success':success})
 
 
-'''7.Импорт списка Категории Товаров в Базу Данных'''
+'''7.Сохранение импортированного из csv файла списка Категории Товаров в Базу Данных'''
 def csv_category_item(request):    
     print('Выполняется Функция post_impex_category_item')
     category=ImpexCategoryItem.objects.all()
@@ -198,10 +198,10 @@ def csv_category_item(request):
         
         print(cat.name,' -OK.')
         cat.delete()
-    success='Загрузка CategoryItem выполнен успешно!'
+    success='Загрузка и сохранение CategoryItem выполнена успешно!'
     return render(request, 'downloads/download_category_item.html', context={'categoryitem_success':success})
 
-'''8.Импорт списка Продуктов в Базу Данных'''
+'''8.Сохранение импортированного из csv файла списка Продуктов в Базу Данных'''
 def csv_product(request):    
     print('Выполняется Функция add_impex_product')
     req=ImpexProduct.objects.all()
@@ -229,7 +229,7 @@ def csv_product(request):
     return render(request, 'downloads/download_product.html', context={'product_success':success})
 
 
-'''9.Импорт списка Товаров в Базу Данных'''
+'''9.Сохранение импортированного из csv файла списка Товаров в Базу Данных'''
 def csv_item(request):    
     print('Выполняется Функция csv_item')
     req=ImpexItem.objects.all()
@@ -254,18 +254,18 @@ def csv_item(request):
                             best_befor=i.best_befor, 
                             slug=do_slug(i.name)
                             )
-        StockItem.objects.get_or_create(code=i.code, name=i.name, supplier=i.supplier, slug=do_slug(i.name), unit=i.unit, first_cost=i.unit_cost, unit_cost=i.unit_cost, delivery_time=i.delivery_time) 
+        StockItem.objects.get_or_create(code=i.code, name=i.name, supplier=i.supplier, slug=do_slug(i.name), unit=i.unit, first_cost=i.unit_cost, last_cost=i.unit_cost, unit_cost=i.unit_cost, delivery_time=i.delivery_time) 
         
         print(i.name,'-OK')
         # i.delete()
     ImpexItem.objects.all().delete()    
-    success='Импорт Items выполнен успешно!'
+    success='Загрузка и сохранение Items выполнена успешно!'
 
     return render(request, 'downloads/download_item.html', context={'item_success':success})
 
 
 
-'''10Импорт списка Рецептов продуктов в Базу Данных'''
+'''10.Импорт списка Рецептов продуктов в Базу Данных'''
 def csv_recipe(request):    
     print('Выполняется Функция add_impex_recipe')
     req=ImpexRecipeIngredient.objects.all()
@@ -292,5 +292,6 @@ def csv_recipe(request):
             )
         
         print(i.name,i.name_ingr,'-OK.')
-    success='Импорт Recipe выполнен успешно!'
-    return render(request, 'impex/impex_post.html', context={'recipe_success':success})
+    ImpexRecipeIngredient.objects.all().delete()
+    success='Загрузка и сохранение Recipe выполнена успешно!'
+    return render(request, 'downloads/download_recipe.html', context={'recipe_success':success})

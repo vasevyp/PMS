@@ -180,7 +180,7 @@ def add_item(request):
             unit= form.cleaned_data.get("unit")
             unit_cost= form.cleaned_data.get("unit_cost")
             delivery_time= form.cleaned_data.get("delivery_time")
-            StockItem.objects.create(code=code, name=name, slug=do_slug(name), unit=unit, unit_cost=unit_cost, first_cost=unit_cost, delivery_time=delivery_time, supplier=supplier)             
+            StockItem.objects.create(code=code, name=name, slug=do_slug(name), unit=unit, unit_cost=unit_cost, first_cost=unit_cost, last_cost=unit_cost, delivery_time=delivery_time, supplier=supplier)             
             form.save()
             it=Item.objects.get(name=name)
             it.slug=do_slug(name)

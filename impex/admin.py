@@ -42,7 +42,7 @@ class ImpexProductAdmin(ImportExportModelAdmin):
 
 @admin.register(ImpexRecipeIngredient)
 class ImpexRecipeIngredientAdmin(ImportExportModelAdmin):
-    list_display = ['name', 'code','name_ingr', 'code_ingr', 'unit', 'unit_cost', 'ratio', 'updated_at']
+    list_display = ['name', 'code','name_ingr', 'code_ingr', 'unit', 'ratio', 'updated_at']
     save_on_top = True
     list_filter= ('name', 'name_ingr')
 

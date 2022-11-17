@@ -309,7 +309,7 @@ def download_recipe(request):
             print('type(empexceldata):',type(empexceldata))
             dbframe = empexceldata
             for dbframe in dbframe.itertuples():                 
-                obj = ImpexRecipeIngredient.objects.create(name=dbframe.name,code=dbframe.code)
+                obj = ImpexRecipeIngredient.objects.create(name=dbframe.name,code=dbframe.code, name_ingr=dbframe.name_ingr,code_ingr=dbframe.code_ingr,unit=dbframe.unit,ratio=dbframe.ratio)
                                
                 print('type obj:',type(obj))
                 obj.save()
