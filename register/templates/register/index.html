@@ -23,7 +23,7 @@
       <div class="container-fluid">
 
         <div class="row ">
-          <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-3 ">
             <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
@@ -119,11 +119,27 @@
             <div class="card card-stats">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
-                  <p class="card-category">Среднесуточные продажи - НЕ СДЕЛАНО</p>
-                  <small class="material-icons">за 7 дней</small>
-                  <small class="card-title font100-b">3 245 руб</small><br>
-                  <small class="material-icons">за 30 дней</small>
-                  <small class="card-title font100-b">2 984 руб</small>
+                  <p class="card-category">Среднесуточные продажи</p>
+                  <small class="material-icons">за 7 дней</small><br>
+                  <small class="card-title ms-5 font100-b">{{weeksales|floatformat:0}} тыс.руб
+                    {% if pr_week > 0 %}
+                    +{{pr_week|floatformat:0}}
+                    {%else%}
+                    <small class="text-danger"> {{pr_week|floatformat:0}}</small>
+
+                    {% endif %}%
+
+                  </small><br>
+                  <small class="material-icons">за 30 дней</small><br>
+                  <small class="card-title ms-5 font100-b">{{monthsales|floatformat:0}}
+                    тыс.руб
+                    {% if pr_month > 0 %}
+                    +{{pr_month|floatformat:0}}
+                    {%else%}
+                    <small class="text-danger">{{pr_month|floatformat:0}}</small>
+
+                    {% endif %}%
+                  </small>
                 </div>
               </div>
 
@@ -131,7 +147,7 @@
             <div class="card-footer">
               <div class="stats">
                 <!-- <i class="material-icons text-danger">warning</i> -->
-                <a href="{% url 'sold_product_list' %}" target="blank">Номенклатура проданная</a>
+                <a href="{% url 'sold_product_list' %}" target="blank">Номенклатура проданных продуктов</a>
               </div>
             </div>
           </div>
@@ -143,13 +159,14 @@
                 <div class="card-icon">
                   <i class="fa fa-twitter"></i>
                 </div>
-                <p class="card-category">Потребность товаров в деньгах - НЕ СДЕЛАНО</p>
-                <small class="card-category">на 30 дней продаж</small>
-                <h6 class="card-title">293 104 руб</h6>
+                <p class="card-category">Потребность для закупки товаров на месяц</p>
+
+                <h6 class="card-title">{{daily_sum|floatformat:0}} тыс.руб</h6><small class="card-category">на 30 дней
+                  продаж</small>
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <a href="#" target="blank">Посмотреть список - НЕ СДЕЛАНО</a>
+                  <a href="{% url 'materials' %}" target="blank">Список на месяц</a>
                 </div>
               </div>
             </div>

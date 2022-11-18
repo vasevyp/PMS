@@ -83,6 +83,7 @@ class StockItem(models.Model):
     fullstock=models.DecimalField(max_digits=10, help_text="Не более 10 знаков", decimal_places=0, default=0,null=True,verbose_name='Запас, ед.')
     fullstock_days=models.IntegerField( null=True,verbose_name='Запас, дней', default=3000)    
     delivery_time = models.IntegerField(verbose_name='Буфер, дней', null=True, default=5) #from Item -- Это буфер для товарной позиции
+    daily_cost=models.DecimalField(max_digits=12, help_text="Не более 12 знаков", decimal_places=2, default=0,null=True,verbose_name='Суточная, руб')
     
     # def save(self, *args, **kwargs):
     #     actual = self.open-self.sales+self.received-self.transfer-self.waste

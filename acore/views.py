@@ -29,7 +29,7 @@ def recalculation(request):
         first_date = request.POST.get("first_date")
         last_date = request.POST.get("last_date")
         recalculation_model = request.POST.get("recalculation_model")
-        print('START!!', first_date, last_date, recalculation_model)
+        print('START!!', first_date, last_date, 'rec_mod=',recalculation_model)
         WeekendSale.objects.all().delete()
         WeekdaySale.objects.all().delete()
         print('WeekendSale -DELETE;  WeekdaySale - DELETE')
@@ -43,13 +43,20 @@ def recalculation(request):
         if recalculation_model=='1':
             products=Product.objects.all()
             for i in products:
-                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                we=int(weekend['sold__avg'])
-                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                wd=int(weekday['sold__avg'])
+                # условие - что были продажи
+                if SaleProduct.objects.filter(code=i.code):
+                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    
+                    we=int(weekend['sold__avg'])
+                    weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    wd=int(weekday['sold__avg'])
+                else:
+                    we=0
+                    wd=0    
                 i.weekend_forecast=we
                 i.weekday_forecast=wd
                 i.avrg_forecast=(we*2+wd*5)/7
+                print(i.code, i.avrg_forecast)
                 rq=DailyRequirement.objects.filter(code=i.code)
                 for j in rq:
                     j.avrg_forecast=(we*2+wd*5)/7
@@ -69,10 +76,18 @@ def recalculation(request):
         if recalculation_model=='2':
             products=Product.objects.all()
             for i in products:
-                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Max('sold'))
-                we=int(weekend['sold__max'])
-                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Max('sold'))
-                wd=int(weekday['sold__max'])
+                if SaleProduct.objects.filter(code=i.code):
+                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))                    
+                    we=int(weekend['sold__max'])
+                    weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    wd=int(weekday['sold__max'])
+                else:
+                    we=0
+                    wd=0 
+                # weekend=WeekendSale.objects.filter(code=i.code).aggregate(Max('sold'))
+                # we=int(weekend['sold__max'])
+                # weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Max('sold'))
+                # wd=int(weekday['sold__max'])
                 i.weekend_forecast=we
                 i.weekday_forecast=wd
                 i.avrg_forecast=(we*2+wd*5)/7
@@ -95,10 +110,19 @@ def recalculation(request):
         if recalculation_model=='3':
             products=Product.objects.all()
             for i in products:
-                weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                we=int(weekend['sold__avg'])*1.2
-                weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                wd=int(weekday['sold__avg'])*1.2
+                if SaleProduct.objects.filter(code=i.code):
+                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    
+                    we=int(weekend['sold__avg'])*1.2
+                    weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    wd=int(weekday['sold__avg'])*1.2
+                else:
+                    we=0
+                    wd=0 
+                # weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                # we=int(weekend['sold__avg'])*1.2
+                # weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                # wd=int(weekday['sold__avg'])*1.2
                 i.weekend_forecast=we
                 i.weekday_forecast=wd
                 i.avrg_forecast=(we*2+wd*5)/7

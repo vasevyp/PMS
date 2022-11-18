@@ -23,6 +23,7 @@
 </head>
 
 <body>
+  <!-- Navbar -->
   {% block navbar %}
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -48,7 +49,7 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Memo</a></li>
+              <li><a class="dropdown-item" href="#">reserve</a></li>
             </ul>
           </li>
 
@@ -64,10 +65,8 @@
                 <a class="dropdown-item" href="{% url 'stock_in_days' %}">Stock in days</a>
               </li>
 
-
               <hr class="dropdown-divider">
 
-              <!-- <li><a class="dropdown-item" href="{% url 'impex' %}" target="_blank">IMPEX</a></li> -->
             </ul>
           </li>
 
@@ -192,6 +191,8 @@
     </div>
   </nav>
   {% endblock %}
+  <!-- /Navbar -->
+
   <div class="ms-3">
     {% block menu%}
 

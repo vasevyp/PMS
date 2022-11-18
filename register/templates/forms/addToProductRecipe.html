@@ -8,16 +8,12 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <div class="card-header">
-        <strong class="card-title">Add Ingedient to Product Recipe</strong> <span>
-          <button id="payment-button" type="submit" class="btn btn-lg navbutt btn-block">
-            <a id="payment-button-amount" href="{% url 'recipes-list' %}">Выйти из формы</a>
-          </button>
-        </span>
+      <div class="card-header row col-12">
+        <strong class="card-title col-4">Add Ingedient to Product Recipe</strong>
       </div>
 
       <div class="card-body">
-        <p>Добавлять в продукт по одному ингредиенту и сохранять в базу данных</p>
+        <p>Добавлять в продукт по одному ингредиенту</p>
         <!-- Credit Card -->
         <div id="pay-invoice">
           <div class="card-body">
@@ -30,28 +26,14 @@
                 <label for="name" class="control-label mb-1">Name product</label>
                 {{ form.product }}
               </div>
-              <div class="form-group">
-                <label for="name" class="control-label mb-1">Code product</label>
-                {{ form.code }}
-              </div>
+
 
               <div class="form-group">
                 <label for="name" class="control-label mb-1">ingredient</label>
                 {{ form.ingredient }}
               </div>
-              <div class="form-group">
-                <label for="name" class="control-label mb-1">ingr_code</label>
-                {{ form.code_ingr }}
-              </div>
 
-              <div class="form-group">
-                <label for="name" class="control-label mb-1">unit</label>
-                {{ form.unit }}
-              </div>
-              <div class="form-group">
-                <label for="name" class="control-label mb-1">unit cost</label>
-                {{ form.unit_cost }}
-              </div>
+
               <div class="form-group">
                 <label for="name" class="control-label mb-1">Ratio</label>
                 {{ form.ratio }}
@@ -59,10 +41,16 @@
 
 
 
-              <div>
-                <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
+              <div class="row">
+                <button id="payment-button" type="submit" class="col-4 mx-2 btn btn-lg btn-success btn-block">
                   <span id="payment-button-amount">Добавить ингредиент</span>
                 </button>
+
+                <button id="payment-button" type="submit" class="col-3 ms-5 btn btn-lg btn-secondary  btn-block">
+                  <a id="payment-button-amount" class="text-white text-decoration-none"
+                    href="{% url 'recipes-list' %}">Выйти из формы</a>
+                </button>
+
 
 
               </div>

@@ -100,7 +100,8 @@ class RecipeIngredient(models.Model):
     code_ingr= models.DecimalField(max_digits=12, help_text="Не более 12 знаков",decimal_places=0, verbose_name='Код ингредиента', null=True)
     unit = models.CharField(max_length=10, help_text="Не более 10 знаков", default='kg', choices=UNITS, null=True ) 
     unit_cost = models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True)
-    ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True)  
+    ratio= models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=3, default=1, null=True) 
+    ingredient_cost=models.DecimalField(max_digits=10, help_text="Не более 10 знаков",decimal_places=2, null=True) 
     created_at= models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True,  verbose_name='Изменен') 
     
@@ -112,9 +113,9 @@ class RecipeIngredient(models.Model):
         verbose_name = 'Рецепт с ингредиентами'
         verbose_name_plural = 'Рецепты с ингредиентами'
     
-    @property
-    def ingredient_cost(self):
-        return format((float(self.unit_cost) * float(self.ratio)), '.2f')    
+    # @property
+    # def ingredient_cost22(self):
+    #     return format((float(self.unit_cost) * float(self.ratio)), '.2f')    
 
 
 '''Модель категорий готовых продуктов'''
@@ -155,7 +156,7 @@ class Product(models.Model):
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     weekday_forecast=models.PositiveIntegerField(verbose_name='Будни', null = True)
     weekend_forecast=models.PositiveIntegerField(verbose_name='Выходные', null = True)
-    avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные', null = True)
+    avrg_forecast= models.PositiveIntegerField(editable=False, verbose_name='Суточные', default=1, null = True)
     holiday_forecast=models.PositiveIntegerField(verbose_name='Праздники', null = True)
     promotion_forecast=models.PositiveIntegerField(verbose_name='Промо', null = True)
     created_date= models.DateField(auto_now_add=True, verbose_name='Создан',null=True)

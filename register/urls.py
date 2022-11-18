@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import index, register, add_supplier, add_category, add_category_item, add_item, add_product, add_to_recipe,SupplierListView, ProductCategoriesListView, ItemCategoriesListView, ItemsListView, ProductListView, ResiperListView, memo
+from .views import index, materials, add_supplier, add_category, add_category_item, add_item, add_product, add_to_recipe,SupplierListView, ProductCategoriesListView, ItemCategoriesListView, ItemsListView, ProductListView, ResiperListView, memo
 
 
 urlpatterns = [    
-    path('register/', register, name='register'),
+    path('materials', materials, name='materials'),
     path('', index, name='dashbord'),   
     path('supplier-list/', SupplierListView.as_view(), name='supplier-list'),
     path('categories-list/', ProductCategoriesListView.as_view(), name='categories-list'),
