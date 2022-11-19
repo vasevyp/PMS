@@ -56,16 +56,17 @@
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Operation
+              Forecast
             </a>
             <ul class="dropdown-menu">
               <li> <a class="dropdown-item" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a></li>
               <li><a class="dropdown-item" href="{% url 'stock_item_days' %}">Stock item in days</a></li>
+
+
+              <hr class="dropdown-divider">
               <li>
                 <a class="dropdown-item" href="{% url 'stock_in_days' %}">Stock in days</a>
               </li>
-
-              <hr class="dropdown-divider">
 
             </ul>
           </li>
@@ -76,20 +77,17 @@
               Order
             </a>
             <ul class="dropdown-menu">
+
               <li><a class="dropdown-item" href="{% url 'order_calc' %}">Order_calc</a></li>
               <li><a class="dropdown-item" href="{% url 'order' %}" target="_blank">Order</a></li>
-
+              <hr class="dropdown-divider">
 
               <li><a class="dropdown-item" href="{% url 'last_order' %}">Last Order</a></li>
               <li>
               <li><a class="dropdown-item" href="{% url 'orders_list' %}">Order List</a></li>
-
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="{% url 'order' %}">Goods in transit</a></li>
             </ul>
           </li>
+
 
 
           <li class="navbar-nav nav-item dropdown">

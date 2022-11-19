@@ -30,6 +30,9 @@ def index(request):
     summa_stock=stock_actual_cost
     last_order=LastOrder.objects.all()
     summ_lastorder = LastOrder.objects.aggregate(sum_order=Sum('order_cost')).get('sum_order')
+    # Критическая номенклатура товаров, остаток на 3 дня и менее
+    critical_stock=StockItem.objects.all()
+    #Товары на путях
     delivery=StockItem.objects.exclude(delivery = 0)
     summ_delivery=StockItem.objects.exclude(delivery = 0).aggregate(sum_order=Sum('delivery_cost')).get('sum_order')
     # Среднесуточные продажи    
@@ -61,6 +64,7 @@ def index(request):
         'dif_summa':dif_summa,
         'last_order': last_order,
         'summ_lastorder':summ_lastorder,
+        'critical_stock':critical_stock,
         'delivery':delivery,
         'summ_delivery':summ_delivery,
         'weeksales':weeksales,

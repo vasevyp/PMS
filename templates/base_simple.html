@@ -25,8 +25,9 @@
 
 <body>
 
-  {% block navbar %}
 
+  <!-- Navbar -->
+  {% block navbar %}
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand font1-b navbutt" href="{% url 'dashbord' %}">Dashbord</a>
@@ -37,7 +38,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %} " target="_blank">На
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}" target="_blank">На
               главный</a>
           </li>
           <li class=" navbar-nav nav-item dropdown">
@@ -46,31 +47,30 @@
               Manual
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'memo' %}" target="_blank">Заметки</a></li>
+              <li><a class="dropdown-item" href="{% url 'memo' %} " target="_blank">Заметки</a></li>
               <li><a class="dropdown-item" href="#">Руководство</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Memo</a></li>
+              <li><a class="dropdown-item" href="#">reserve</a></li>
             </ul>
           </li>
 
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Operation
+              Forecast
             </a>
             <ul class="dropdown-menu">
               <li> <a class="dropdown-item" aria-current="page" href="{% url 'recalculation' %}">Recalculation</a></li>
               <li><a class="dropdown-item" href="{% url 'stock_item_days' %}">Stock item in days</a></li>
+
+
+              <hr class="dropdown-divider">
               <li>
                 <a class="dropdown-item" href="{% url 'stock_in_days' %}">Stock in days</a>
               </li>
 
-
-              <hr class="dropdown-divider">
-
-              <li><a class="dropdown-item" href="{% url 'impex' %}" target="_blank">IMPEX</a></li>
             </ul>
           </li>
 
@@ -80,66 +80,107 @@
               Order
             </a>
             <ul class="dropdown-menu">
+
               <li><a class="dropdown-item" href="{% url 'order_calc' %}">Order_calc</a></li>
               <li><a class="dropdown-item" href="{% url 'order' %}" target="_blank">Order</a></li>
-
+              <hr class="dropdown-divider">
 
               <li><a class="dropdown-item" href="{% url 'last_order' %}">Last Order</a></li>
               <li>
               <li><a class="dropdown-item" href="{% url 'orders_list' %}">Order List</a></li>
-
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="{% url 'order' %}">Goods in transit</a></li>
             </ul>
           </li>
+
 
 
           <li class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              IMPEX
-            </a>
+              Loading Operations</a>
 
             <ul class="dropdown-menu">
-              <li> <a class="dropdown-item" target="blank" href="{% url 'impex' %}">IMPEX</a></li>
+              <h6 class="text-center">Загрузка операций</h6>
 
-              <hr class="dropdown-divider">
+              <li class="border">
+                <a class="dropdown-item" target="blank" href="{% url 'download_sales' %}">Download_SaleProduct</a>
+                <a class="dropdown-item text-primary" href="{% url 'sold_product' %}">Add_SaleProduct</a>
+              </li>
+              <li class=" border">
+                <a class="dropdown-item" target="blank" href="{% url 'download_buy_item' %}">Download_BuyItem</a>
+                <a class="dropdown-item text-primary" href="{% url 'buy_item' %}">Add_BuyItem</a>
+              </li>
+              <li> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_transfer_item' %}">Download_Transfer_Item</a>
+                <a class="dropdown-item text-primary" href="{% url 'transfer' %}">Add_Transfer_Item</a>
+              </li>
+              <li class=" border "> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_waste_item' %}">Download_Waste_Item</a>
+                <a class="dropdown-item text-primary" href="{% url 'waste' %}">Add_Waste_Item</a>
+              </li>
 
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://127.0.0.1:8000/admin/impex/impexbuyitem/">Impex_buyitem</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://127.0.0.1:8000/admin/impex/impexcategory/">Impex_category</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://127.0.0.1:8000/admin/impex/impexcategoryitem/">Impex_categoryitem</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexsaleproduct/">Impex_saleproduct</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexproduct/">Impex_product</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexitem/">Impex_item</a>
-              </li>
-              <li> <a class="dropdown-item" target="blank"
-                  href="http://localhost:8000/admin/impex/impexrecipeingredient/">Impex_recipe</a>
-
-              </li>
               <hr class="dropdown-divider">
               <p class="dropdown-item">admin:3333</p>
 
             </ul>
 
           </li>
+
+          <li class="navbar-nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbutt" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Loading data</a>
+
+            <ul class="dropdown-menu">
+
+
+
+              <h6 class="text-center">Загрузка данных</h6>
+              <li class="border border-info"> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_supplier' %}">Download_Supplier</a>
+                <a class="dropdown-item text-primary" target="blank" href="{% url 'addsupplier' %}">Add_Supplier</a>
+              </li>
+              <li class="border border-info"> <a class="dropdown-item" target="blank"
+                  href="{% url 'download_category' %}">Download_Category</a>
+                <a class="dropdown-item text-primary" href="{% url 'add-category' %}">Add_Category</a>
+              </li>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank"
+                  href="{% url 'download_categoryitem' %}">Download_CategoryItem</a>
+                <a class="dropdown-item text-primary" target="blank"
+                  href="{% url 'add-categoryitem' %}">Add_CategoryItem</a>
+              </li>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_product' %}">Download_Product</a><a
+                  class="dropdown-item text-primary" target="blank" href="{% url 'add-product' %}">Add_Product</a>
+              </li>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_item' %}">Download_Item</a><a
+                  class="dropdown-item text-primary" target="blank" href="{% url 'add-item' %}">Add_Item</a>
+              </li>
+              <li class="border border-info">
+                <a class="dropdown-item" target="blank" href="{% url 'download_recipe' %}">Download_Recipe</a><a
+                  class="dropdown-item text-primary" target="blank" href="{% url 'add-to-recipe' %}">Add_Recipe</a>
+
+              </li>
+
+              <hr class="dropdown-divider">
+              <p class="dropdown-item">admin:3333</p>
+
+            </ul>
+
+          </li>
+
+
           <li class="nav-item">
-            <a class="nav-link active navbutt" href="{% url 'admin:index' %}">Admin</a>
+            <a class="nav-link active navbutt" target="blank" href="{% url 'admin:index' %}">Admin</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active navbutt" href="http://127.0.0.1:8000/admin/impex/impexbuyitem/">Reserve</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled navbutt" href="{% url 'dashbord' %}">reserve</a>
+            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На
+              главный</a>
           </li>
         </ul>
         <!-- 
@@ -151,6 +192,8 @@
     </div>
   </nav>
   {% endblock %}
+  <!-- /Navbar -->
+
 
 
 

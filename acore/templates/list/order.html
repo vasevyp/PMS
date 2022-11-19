@@ -37,7 +37,13 @@
 
 
 
-    <h5>Позиций {{order.count}}. Сумма всего: {{order_costs}} руб. </h5>
+    <h5>Позиций {{order.count}}. Сумма всего:
+      {%if order_costs %}
+      {{order_costs}}
+      {% else %}
+      0
+      {% endif%}
+      руб. </h5>
 
 
   </div>

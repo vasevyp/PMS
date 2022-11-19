@@ -9,7 +9,9 @@
 <div class="col-12">
 
   <div class="p-3 border bg-light">
-    <h5> Позиций {{toorders.count}}. Сумма заказа {{summa}} руб.</h5>
+    <h5> Позиций {{toorders.count}}. Сумма заказа
+      {%if summa%}{{summa}}{%else%}0{%endif%}
+      руб.</h5>
 
 
   </div>

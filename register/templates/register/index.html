@@ -13,7 +13,7 @@
     <header id="header" class="tab-header">
       <div class="top-left">
         <div class="navbar-header text-center" style="background: black">
-          <h1 class="navbar-brand " style="color: white">Inventory Management System</h1>
+          <h1 class="navbar-brand " style="color: white">Управления закупками (Procurement Management System)</h1>
 
         </div>
       </div>
@@ -34,13 +34,14 @@
                 </h6>
                 <smal class="card-category">На сумму</smal>
                 <h6 class="card-title">{{summa}}
-                  <small>Rub</small>
+                  <small>руб.</small>
                 </h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="{% url 'order_required' %}" target="blank">Номенклатура к Заказу</a>
+                  <a class="text-decoration-none" href="{% url 'order_required' %}" target="blank">Номенклатура к
+                    Заказу</a>
                 </div>
               </div>
             </div>
@@ -57,13 +58,14 @@
                 </h6>
                 <small class="card-category">На сумму</small>
                 <h6 class="card-title">{{summa_3}}
-                  <small>Rub</small> +({{dif_summa}})
+                  <small>руб.</small> +({{dif_summa}})
                 </h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
                   <!-- <i class="material-icons text-danger">warning</i> -->
-                  <a href="{% url 'order_required_3' %}" target="blank">Номенклатура к Заказу</a>
+                  <a class="text-decoration-none" href="{% url 'order_required_3' %}" target="blank">Номенклатура к
+                    Заказу</a>
                 </div>
               </div>
             </div>
@@ -79,13 +81,17 @@
                   <small>наименований</small>
                 </h6>
                 <smal class="card-category">На сумму</smal>
-                <h6 class="card-title">{{summ_lastorder}}
-                  <small>Rub</small>
+                <h6 class="card-title">
+                  {% if summ_lastorder %}
+                  {{summ_lastorder}}
+                  {% else %}
+                  0
+                  {% endif %}руб.
                 </h6>
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <a href="{% url 'last_order' %}" target="blank">Номенклатура к Заказу</a>
+                  <a class="text-decoration-none" href="{% url 'last_order' %}" target="blank">Номенклатура к Заказу</a>
                 </div>
               </div>
             </div>
@@ -97,7 +103,7 @@
                   <p class="material-icons">Запас на складе</p>
                   <h6 class="card-title">{{stock_count.count}} наим. на {{stock_sum|floatformat:0}} руб</h6>
                 </div>
-                <small class="card-category">Товары в Пути</small>
+                <div class="card-category my-4">Товары в Пути</div>
                 <h6 class="card-title">{{delivery.count}} наим. - на
                   {% if delivery.count %}
                   {{summ_delivery}}
@@ -109,7 +115,7 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <a href="{% url 'inventory' %}" target="blank">Склад</a>
+                  <a class="text-decoration-none" href="{% url 'inventory' %}" target="blank">Склад</a>
                 </div>
 
               </div>
@@ -120,34 +126,36 @@
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
                   <p class="card-category">Среднесуточные продажи</p>
-                  <small class="material-icons">за 7 дней</small><br>
-                  <small class="card-title ms-5 font100-b">{{weeksales|floatformat:0}} тыс.руб
-                    {% if pr_week > 0 %}
-                    +{{pr_week|floatformat:0}}
-                    {%else%}
-                    <small class="text-danger"> {{pr_week|floatformat:0}}</small>
+                  <div class="material-icons">за 7 дней<small
+                      class="card-title ms-3 font100-b">{{weeksales|floatformat:0}} тыс.руб</small></div>
+                  <div class="card-title ms-3"> динамика <small class="card-title ms-5 font100-b">
+                      {% if pr_week > 0 %}
+                      +{{pr_week|floatformat:0}}
+                      {%else%}
+                      <small class="text-danger"> {{pr_week|floatformat:0}}</small>
+                      {% endif %}%
+                    </small>
 
-                    {% endif %}%
+                  </div>
+                  <div class="material-icons">за 30 дней<small
+                      class="card-title ms-3 font100-b">{{monthsales|floatformat:0}} тыс.руб</small></div>
+                  <div class="card-title ms-3">динамика <small class="card-title ms-5 font100-b">
+                      {% if pr_month > 0 %}
+                      +{{pr_month|floatformat:0}}
+                      {%else%}
+                      <small class="text-danger">{{pr_month|floatformat:0}}</small>
 
-                  </small><br>
-                  <small class="material-icons">за 30 дней</small><br>
-                  <small class="card-title ms-5 font100-b">{{monthsales|floatformat:0}}
-                    тыс.руб
-                    {% if pr_month > 0 %}
-                    +{{pr_month|floatformat:0}}
-                    {%else%}
-                    <small class="text-danger">{{pr_month|floatformat:0}}</small>
-
-                    {% endif %}%
-                  </small>
+                      {% endif %}%
+                    </small>
+                  </div>
                 </div>
               </div>
 
             </div>
-            <div class="card-footer">
+            <div class="card-footer border">
               <div class="stats">
-                <!-- <i class="material-icons text-danger">warning</i> -->
-                <a href="{% url 'sold_product_list' %}" target="blank">Номенклатура проданных продуктов</a>
+                <a class="text-decoration-none" href="{% url 'sold_product_list' %}" target="blank">Список продаж
+                  продуктов</a>
               </div>
             </div>
           </div>
@@ -159,14 +167,15 @@
                 <div class="card-icon">
                   <i class="fa fa-twitter"></i>
                 </div>
-                <p class="card-category">Потребность для закупки товаров на месяц</p>
+                <p class="card-category">Потребность средств на закупку товаров для обеспечения прогноза продаж</p>
 
-                <h6 class="card-title">{{daily_sum|floatformat:0}} тыс.руб</h6><small class="card-category">на 30 дней
-                  продаж</small>
+                <h6 class="card-title my-3">{{daily_sum|floatformat:0}} тыс.руб</h6>
+                <div class="card-category my-3">на 30 дней продаж</div>
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <a href="{% url 'materials' %}" target="blank">Список на месяц</a>
+                  <a class="text-decoration-none" href="{% url 'materials' %}" target="blank">Потребность товаров на
+                    месяц</a>
                 </div>
               </div>
             </div>
@@ -179,6 +188,55 @@
   </div>
 </div>
 
+<!-- Критическая номенклатура в остатках -->
+<div class="container">
+  <div class="col-11 mx-auto">
+    <h4>Критическая номенклатура товаров, остаток на 5 дней и менее </h4>
+    <table class="table table-striped demotable">
+      <thead style="position: sticky;
+  top: -1px;
+  z-index: 2;background: #9d9e9e;">
+        <tr>
+
+          <th scope="col">№</th>
+          <th scope="col">Код</th>
+          <th scope="col">Наименование</th>
+          <th scope="col">Остаток</th>
+          <th scope="col">Суточная норма</th>
+          <th scope="col">Остаток в днях</th>
+          <th scope="col">На путях</th>
+          <!-- <th scope="col">Поставщик</th> -->
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in critical_stock %}
+        {% if item.stock_days < 6 %}
+        <tr>
+
+          <th scope="row">{{item.code}}</th>
+
+
+          <td>{{item.name}}</td>
+
+          <td>{{item.actual|floatformat:2}}</td>
+
+          <td>{{item.daily_requirement|floatformat:2}}</td>
+
+          <th>{{item.stock_days}}</th>
+
+          <td>{{item.delivery}}</td>
+
+          <!-- <td>{{item.supplier}}</td> -->
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- Товары в пути -->
 <div class="container">
   <div class="col-11 mx-auto">
     <h4>Товары в пути </h4>

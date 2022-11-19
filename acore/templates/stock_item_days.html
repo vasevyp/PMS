@@ -7,37 +7,42 @@
 <div class="ms-3">
 
   <div class="container">
-    <h3 style="color:rgb(5, 146, 5)">Вы успешно выполнили перерасчет остатков!<h3>
 
 
 
-        <!--cell-->
-        <div class="col-12">
-          <h5> Сформируйте запас товаров в днях продаж.</h5>
-          <div class="p-3 border bg-light">
-            <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
+
+    <!--cell-->
+    <div class="col-12">
+
+      <div class="p-3 border bg-light">
+        <!-- <p style="font-size:1rem">В таблице рецептов для импорта ОБЯЗАТЕЛЬНЫ: наименование продукта и ингредиента.
             </p> -->
-            {% if stock_success %}
-            <div class="alert alert-success d-flex">
-              {{stock_success}}
-            </div>
-            <form action="{% url 'order_required' %}" method="post" novalidate="novalidate">
-              {% csrf_token %}
-              <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
-                value="Рассчитать Заказ на сегодня" />
-            </form>
-            {% else %}
+        {% if stock_success %}
+        <div class="alert alert-success d-flex">
+          <h4>
+            {{stock_success}}</h4>
+        </div>
+        <form action="{% url 'order_required' %}" method="post" novalidate="novalidate">
+          {% csrf_token %}
+          <input id="payment-button" type="submit" class="btn btn-lg btn-success btn-block" name="export"
+            value="Рассчитать Заказ на сегодня" />
+        </form>
+        {% else %}
+        <h4 style="color:rgb(5, 146, 5)">Перерасчет суточной потребности товаров (ингредиентов) на
+          основе
+          фактических продаж выполнен успешно !<h4>
+            <h5> Сформируйте запас товаров в днях продаж.</h5>
 
             <form action="{% url 'stock_forecast_days' %}" method="post" novalidate="novalidate">
               {% csrf_token %}
               <input id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="export"
-                value="Сформировать отстаки в днях" />
+                value="Сформировать отстаки в днях продаж" />
             </form>
             {% endif %}
 
-          </div>
-        </div>
-        <!--/cell-->
+      </div>
+    </div>
+    <!--/cell-->
 
 
 

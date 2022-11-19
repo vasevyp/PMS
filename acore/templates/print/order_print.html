@@ -54,7 +54,11 @@
       <div class="p-3 border bg-light">
 
 
-        <h6>Позиций {{order.count}}. Сумма всего: {{order_costs}} руб. </h6>
+        <h6>Позиций {{order.count}}. Сумма всего: {%if order_costs %}
+          {{order_costs}}
+          {% else %}
+          0
+          {% endif%} руб. </h6>
 
 
       </div>

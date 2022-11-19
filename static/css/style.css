@@ -94,3 +94,35 @@ hr {
 }
 
 /*END Ограничение времени показа {{message}}*/
+/* Автонумерация строк таблицы. Начинать подсчёт со второй и более строки */
+.demotable {
+  border-collapse: collapse;
+  counter-reset: schetchik;
+}
+
+.demotable tbody tr:nth-child(n+2) {
+  counter-increment: schetchik;
+}
+
+.demotable td,
+.demotable tbody tr:before {
+  padding: .1em .5em;
+  border: 1px solid #E7D5C0;
+}
+
+.demotable tbody tr:before {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.demotable tbody tr:before,
+.demotable b:after {
+  content: counter(schetchik);
+  color: #978777;
+}
+
+.demotable tbody tr:nth-child(-n+1):before {
+  content: "";
+}
+
+/* END Автонумерация строк таблицы. Начинать подсчёт со второй и более строки  */

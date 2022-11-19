@@ -13,8 +13,10 @@
 
   <h2>Потребность для закупки товаров на месяц</h2>
   <h4>Наименований товаров: {{items.count}}, на сумму {{daily_sum|floatformat:0}}тыс.руб</h4>
-  <table class="table">
-    <thead>
+  <table class="table table-striped">
+    <thead style="position: sticky;
+    top: -1px;
+    z-index: 2;background: #9d9e9e;">
       <tr>
         <th scope="col">Code</th>
         <th scope="col">Name</th>
@@ -30,8 +32,8 @@
         <td>{{item.code}}</td>
         <td>{{item.name}}</td>
         <th scope="row">{{item.last_cost}}</th>
-        <td>{{item.daily_requirement}}</td>
-        <td>{{item.daily_cost|floatformat:1}}</td>
+        <td>{{item.daily_requirement|floatformat:2}}</td>
+        <td>{{item.daily_cost|floatformat:0}}</td>
         {% endif %}
       </tr>
       {% endfor %}

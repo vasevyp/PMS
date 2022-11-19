@@ -45,8 +45,7 @@ def recalculation(request):
             for i in products:
                 # условие - что были продажи
                 if SaleProduct.objects.filter(code=i.code):
-                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                    
+                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))                    
                     we=int(weekend['sold__avg'])
                     weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
                     wd=int(weekday['sold__avg'])
@@ -77,17 +76,14 @@ def recalculation(request):
             products=Product.objects.all()
             for i in products:
                 if SaleProduct.objects.filter(code=i.code):
-                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))                    
+                    weekend=WeekendSale.objects.filter(code=i.code).aggregate(Max('sold'))                    
                     we=int(weekend['sold__max'])
-                    weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
+                    weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Max('sold'))
                     wd=int(weekday['sold__max'])
                 else:
                     we=0
                     wd=0 
-                # weekend=WeekendSale.objects.filter(code=i.code).aggregate(Max('sold'))
-                # we=int(weekend['sold__max'])
-                # weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Max('sold'))
-                # wd=int(weekday['sold__max'])
+                
                 i.weekend_forecast=we
                 i.weekday_forecast=wd
                 i.avrg_forecast=(we*2+wd*5)/7
@@ -119,10 +115,7 @@ def recalculation(request):
                 else:
                     we=0
                     wd=0 
-                # weekend=WeekendSale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                # we=int(weekend['sold__avg'])*1.2
-                # weekday=WeekdaySale.objects.filter(code=i.code).aggregate(Avg('sold'))
-                # wd=int(weekday['sold__avg'])*1.2
+                
                 i.weekend_forecast=we
                 i.weekday_forecast=wd
                 i.avrg_forecast=(we*2+wd*5)/7
@@ -155,10 +148,6 @@ def stock_item_days(request):
         'title':'StockItem days',
     }    
     return render(request, 'stock_item_days.html', context)
-
-
-
-
 
 '''Формируем запас товаров/ингредиентов в днях продаж.'''
 def stock_forecast_days(request):
@@ -231,7 +220,6 @@ def order_required(request):
             order_sum =i.last_cost*math.ceil((i.delivery_time+d-i.fullstock_days)*i.daily_requirement/i.supply_pack)*i.supply_pack,  
             
             status=i.last_cost)
-            # строка 207 - проблема в типе данных !!!
             
     toorder=ToOrder.objects.all()
     summ_toorder = ToOrder.objects.aggregate(sum_order=Sum('order_sum')).get('sum_order')
