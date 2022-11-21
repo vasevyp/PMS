@@ -34,7 +34,12 @@
             <input type="file" name="myfile" class="form-control">
 
             <button type="submit" class="btn my-3 btn-success">Загрузить</button>
-            <br />
+            {% if myfile%}
+            <h6 class="text-success">
+              Файл <b>{{myfile}}</b> успешно загружен!</h6>
+            {% else %}
+            <h6 class="text-danger">Файл пока не загружен</h6>
+            {% endif %}
           </div>
         </div>
       </div>

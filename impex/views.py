@@ -22,6 +22,7 @@ def csv_sale_product(request):
             unit='шт.',
             price=i.price, 
             sold=i.sold,
+            revenue=i.price*i.sold,
             date=i.date,
             name_id=Product.objects.get(code=i.code).id
             )
@@ -61,6 +62,7 @@ def csv_buyitem(request):
                             code=i.code,
                             unit=i.unit,
                             unit_cost=i.unit_cost,
+                            cost=unit_cost*quantity,
                             slug='buy-'+do_slug(i.name),
                             item_supplier=i.supplier,
                             name_id=n_id,
@@ -78,10 +80,15 @@ def csv_buyitem(request):
                 item.received=(item.received + quantity)
                 item.last_cost=unit_cost
                 item.actual=actual+quantity
+                item.stock_days=item.actual/item.daily_requirement 
                 if quantity>=item.delivery:
                     item.delivery=0
                 else:
                     item.delivery=item.delivery-quantity
+                item.actual_cost=item.actual*item.unit_cost
+                item.delivery_cost=item.delivery*item.last_cost
+                item.fullstock=item.actual+item.delivery
+                item.fullstock_days=item.fullstock/item.daily_requirement    
                 item.save() 
                      
         
@@ -276,6 +283,7 @@ def csv_recipe(request):
             unit=Item.objects.get(code=i.code_ingr).unit,
             unit_cost=Item.objects.get(code=i.code_ingr).unit_cost,
             ratio=i.ratio,
+            ingredient_cost=Item.objects.get(code=i.code_ingr).unit_cost*i.ratio,
             ingredient_id=Item.objects.get(code=i.code_ingr).id,
             product_id=Product.objects.get(code=i.code).id
             )

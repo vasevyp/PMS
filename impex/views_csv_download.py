@@ -35,10 +35,10 @@ def download_sales(request):
                 obj.save()
  
             return render(request, 'downloads/download_sales.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_sales.html',{})
 
@@ -50,30 +50,27 @@ def download_buy_item(request):
     print('start download_buy_item')               
     try:
         if request.method == 'POST' and request.FILES['myfile']:
-          
-            myfile = request.FILES['myfile']        
+            print('1==123')          
+            myfile = request.FILES['myfile']      
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             excel_file = uploaded_file_url
-            print('excel_file:',excel_file) 
+            print('2==excel_file:',excel_file) 
             empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
-            print('type(empexceldata):',type(empexceldata))
+            print('3==type(empexceldata):',type(empexceldata))
             dbframe = empexceldata
             for dbframe in dbframe.itertuples():                 
-                # fromdate_time_obj = dt.datetime.strptime('%d-%m-%Y')
                 obj = ImpexBuyItem.objects.create(name=dbframe.name,code=dbframe.code, unit=dbframe.unit,
                                                 unit_cost=dbframe.unit_cost, quantity=dbframe.quantity, cost=dbframe.cost, supplier=dbframe.supplier, invoice=dbframe.invoice,)
-               
-                print('type obj:',type(obj))
-                obj.save()
+                print('4==type obj:',type(obj))
+                obj.save()        
  
             return render(request, 'downloads/download_buy_item.html', {
-                'uploaded_file_url': uploaded_file_url
-            })    
-    except Exception as identifier:            
-        print(identifier)
-     
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile })    
+    except Exception as identifier:
+        print('Exception as identifier=',identifier)
+    
     return render(request, 'downloads/download_buy_item.html',{})
 
 
@@ -101,10 +98,10 @@ def download_transfer_item(request):
                 obj.save()
  
             return render(request, 'downloads/download_transfer_item.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_transfer_item.html',{})
 
@@ -133,10 +130,10 @@ def download_waste_item(request):
                 obj.save()
  
             return render(request, 'downloads/download_waste_item.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_waste_item.html',{})
 
@@ -165,21 +162,19 @@ def download_category(request):
                 obj.save()
  
             return render(request, 'downloads/download_category.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_category.html',{})
 
 
-'''6.Загрузка списка Поставщиков из csv file with pandas'''
- 
+'''6.Загрузка списка Поставщиков из csv file with pandas''' 
 def download_supplier(request):
     print('start download_supplier')               
     try:
-        if request.method == 'POST' and request.FILES['myfile']:
-          
+        if request.method == 'POST' and request.FILES['myfile']:          
             myfile = request.FILES['myfile']        
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
@@ -196,15 +191,14 @@ def download_supplier(request):
                 obj.save()
  
             return render(request, 'downloads/download_supplier.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_supplier.html',{})
 
-'''7.Загрузка списка Категорий товаров из csv file with pandas'''
- 
+'''7.Загрузка списка Категорий товаров из csv file with pandas''' 
 def download_categoryitem(request):
     print('start download_categoryitem')               
     try:
@@ -226,14 +220,15 @@ def download_categoryitem(request):
                 obj.save()
  
             return render(request, 'downloads/download_category_item.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_category_item.html',{})
-'''8.Загрузка списка Продуктов из csv file with pandas'''
- 
+
+
+'''8.Загрузка списка Продуктов из csv file with pandas''' 
 def download_product(request):
     print('start download_product')               
     try:
@@ -255,10 +250,10 @@ def download_product(request):
                 obj.save()
  
             return render(request, 'downloads/download_product.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_product.html',{})
 
@@ -285,10 +280,10 @@ def download_item(request):
                 obj.save()
  
             return render(request, 'downloads/download_item.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url, 'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_item.html',{})
 
@@ -297,27 +292,27 @@ def download_item(request):
 def download_recipe(request):
     print('start download_recipe')               
     try:
-        if request.method == 'POST' and request.FILES['myfile']:
-          
-            myfile = request.FILES['myfile']        
+        if request.method == 'POST' and request.FILES['myfile']:          
+            myfile = request.FILES['myfile']
+            print('1==123')        
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             excel_file = uploaded_file_url
-            print('excel_file:',excel_file) 
+            print('2==excel_file:',excel_file) 
             empexceldata = pd.read_csv("."+excel_file,encoding='utf-8')
-            print('type(empexceldata):',type(empexceldata))
+            print('3==type(empexceldata):',type(empexceldata))
             dbframe = empexceldata
             for dbframe in dbframe.itertuples():                 
                 obj = ImpexRecipeIngredient.objects.create(name=dbframe.name,code=dbframe.code, name_ingr=dbframe.name_ingr,code_ingr=dbframe.code_ingr,unit=dbframe.unit,ratio=dbframe.ratio)
                                
-                print('type obj:',type(obj))
+                print('4==type obj:',type(obj))
                 obj.save()
  
             return render(request, 'downloads/download_recipe.html', {
-                'uploaded_file_url': uploaded_file_url
+                'uploaded_file_url': uploaded_file_url,'myfile':myfile
             })    
     except Exception as identifier:            
-        print(identifier)
+        print('Exception as identifier=',identifier)
      
     return render(request, 'downloads/download_recipe.html',{})

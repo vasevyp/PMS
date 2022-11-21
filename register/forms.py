@@ -85,12 +85,12 @@ class AddProductForm(ModelForm):
 class AddRecipeIngredientForm(ModelForm):
     class Meta:
         model = RecipeIngredient
-        fields=['product','ingredient','unit', 'ratio']
+        fields=['product','ingredient', 'ratio']
         field_classes={'unit_cost':DecimalField, 'quantity':DecimalField}
         widgets={
             'product':forms.Select(attrs={'class':'form-control','id': 'product'}),
             'ingredient':forms.Select(attrs={'class':'form-control'}),
-            'unit':forms.Select(attrs={'class':'form-control'}),
+            # 'unit':forms.Select(attrs={'class':'form-control'}),
             'ratio':forms.NumberInput(attrs={'class':'form-control'}),
         }             
         

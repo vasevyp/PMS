@@ -26,7 +26,7 @@ STATUS_CHOICE = (
 
 '''Модель IMPEX поставщиков закупаемых товаров'''
 class ImpexSupplier(models.Model):
-    code=models.DecimalField(max_digits=4, help_text="Не более 4 знаков", decimal_places=0, unique=True)
+    code=models.DecimalField(max_digits=8, help_text="Не более 4 знаков", decimal_places=0, unique=True)
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
     address = models.CharField(max_length=220)
     contact=models.CharField(max_length=250, null=True)

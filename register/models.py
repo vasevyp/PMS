@@ -18,7 +18,7 @@ UNITS=(
 
 '''Модель поставщиков закупаемых товаров'''
 class Supplier(models.Model):
-    code=models.CharField(max_length=4, null=True)
+    code=models.CharField(max_length=8, null=True)
     name = models.CharField(max_length=200, help_text="Не более 200 знаков",db_index=True)
     slug= models.SlugField(max_length=255, verbose_name='Url', unique=True)
     address = models.CharField(max_length=220)

@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import control, add_buy_item, sold_product,  BuyItemsListView, SoldProductListView, InventoryListView,inventory_about, add_transfer_item, TransferItemsListView, add_waste_item, WasteItemsListView, move_item, PlaceItemsListView
+from .views import  add_buy_item, sold_product,  BuyItemsListView, SoldProductListView, InventoryListView,inventory_about, add_transfer_item, TransferItemsListView, add_waste_item, WasteItemsListView, move_item, PlaceItemsListView
 
 urlpatterns = [
-    path('', control, name='control'),
     path('buy_item/', add_buy_item, name='buy_item'),
     path('buy_item_list/', BuyItemsListView.as_view(), name='buy_item_list'),
     path('sold_product/', sold_product, name='sold_product'),

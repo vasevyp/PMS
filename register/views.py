@@ -113,7 +113,7 @@ class ItemCategoriesListView(ListView):
 
 class ProductCategoriesListView(ListView):
     model = Category
-    template_name = 'register/items/category.html'
+    template_name = 'register/products/categoryproducts.html'
     context_object_name = 'categories'
     
 class ItemsListView(ListView):
@@ -242,13 +242,16 @@ def add_product(request):
 Добавление позиции рецепта продукта в базу данных RecipeIngredient.
 '''
 def add_to_recipe(request):
+    print('Start add to recipe')
     form = AddRecipeIngredientForm()
     if request.method == 'POST':
+        print('POST')
         form = AddRecipeIngredientForm(request.POST)
         if form.is_valid():
             product= form.cleaned_data.get("product")
             ingredient= form.cleaned_data.get("ingredient")
             ratio= form.cleaned_data.get("ratio")
+            print(product,ingredient,ratio, '=OK')
             code=Product.objects.get(name=product).code            
             code_ingr=Item.objects.get(name=ingredient).code
             unit=Item.objects.get(name=ingredient).unit
