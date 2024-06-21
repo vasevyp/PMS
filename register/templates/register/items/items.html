@@ -1,7 +1,9 @@
 {% extends 'base_simple.html' %}
 {% load static %}
+
 {% block title %} {{block.super }}: Items {% endblock %} {{number}}
 {% block content %}
+
 <div class="col-11 mx-auto">
   <h2 class="custom">Items </h2>
   Всего позиций: {{items.count}}
@@ -17,8 +19,8 @@
         <th scope="col">Category</th>
         <th scope="col">Supplier</th>
         <th scope="col">unit</th>
-        <th scope="col">u_cost</th>
-        <th scope="col">d_time</th>
+        <th scope="col">цена, руб</th>
+        <th scope="col">Срок поставки, дней</th>
         <th scope="col">Упак.ед.</th>
         <th scope="col">weight</th>
         <th scope="col">length</th>
@@ -50,4 +52,5 @@
     </tbody>
   </table>
 </div>
+
 {% endblock %}

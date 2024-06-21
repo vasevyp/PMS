@@ -206,7 +206,7 @@ class SaleProduct(models.Model):
     objects = DataFrameManager()
 
 
-'''Модель Ввода метса товара (Move - Place)''' 
+'''Модель Ввода места товара (Move - Place)''' 
  
 class MoveItem(models.Model):
     name = models.ForeignKey(Item, null=True, verbose_name='Наименование', on_delete=models.CASCADE)# для form buy_item.html
