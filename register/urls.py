@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, materials, add_supplier, add_category, add_category_item, add_item, add_product, add_to_recipe,SupplierListView, ProductCategoriesListView, ItemCategoriesListView, ItemsListView, ProductListView, ResiperListView, memo
+from .views import index, materials, add_supplier, add_category, add_category_item, add_item, add_product, add_to_recipe,SupplierListView, ProductCategoriesListView, ItemCategoriesListView, ItemsListView, ProductListView, ResiperListView
 
 
 urlpatterns = [    
@@ -18,7 +18,7 @@ urlpatterns = [
     path('add-to-recipe/', add_to_recipe, name='add-to-recipe'),
     path('add-item/',add_item, name='add-item' ),
     path('add-product/',add_product, name='add-product' ),
-    path('memo/', memo, name='memo'),
+
     
    
 ]

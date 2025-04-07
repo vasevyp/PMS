@@ -90,8 +90,6 @@ def index(request):
     return render(request, template_name='register/index.html', context=context)
 
 
-def memo(request):
-    return render(request, template_name='memo/memo.html', context={'title': 'Заметки'})
 
 
 @cache_page(60*100)
