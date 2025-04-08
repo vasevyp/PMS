@@ -30,7 +30,7 @@
   {% block navbar %}
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand font1-b navbutt" href="{% url 'dashbord' %}">SR MMS22</a>
+      <a class="navbar-brand font1-b navbutt" href="{% url 'dashbord' %}">PMS-22</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -162,19 +162,9 @@
             <a class="nav-link active navbutt" target="blank" href="{% url 'admin:index' %}">Admin</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link active navbutt" href="http://127.0.0.1:8000/admin/impex/impexbuyitem/">Reserve</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active navbutt" aria-current="page" href="{% url 'dashbord' %}">На
-              главный</a>
-          </li>
+        
         </ul>
-        <!--
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
+     
       </div>
     </div>
   </nav>

@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   web:
@@ -14,6 +13,7 @@ services:
 
   db:
     image: nouchka/sqlite3:latest
+    restart: always
     volumes:
       - ./code/db :/root/db
     environment:
